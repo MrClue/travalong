@@ -25,11 +25,11 @@ jobs:
       # - uses: dart-lang/setup-dart@v1
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
       
-      - name: Run echo $PATH
-        run: echo $PATH
+      # - name: Run echo $PATH
+      #  run: echo $PATH
       
-      - name: Upgrade Flutter
-        run: flutter upgrade
+      # - name: Upgrade Flutter
+      #  run: flutter upgrade
 
       - name: Install dependencies
         run: flutter pub get
