@@ -21,6 +21,9 @@ jobs:
       
       - name: Run echo $PATH
         run: echo $PATH
+      
+      - name: Upgrade Flutter
+        run: flutter upgrade
 
       - name: Install dependencies
         run: flutter pub get
