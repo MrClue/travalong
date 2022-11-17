@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 class TravalongTitle extends StatelessWidget {
-  const TravalongTitle({super.key});
+  TravalongTitle({super.key});
 
+  Color buttonColor = Color(0xFF2ABAFF);
 
   @override
   Widget build(BuildContext context) =>
       RichText(
-        text: const TextSpan(text:'TRAV',
+        text: TextSpan(text:'TRAV',
           style: TextStyle(
             color:Colors.black,fontSize:38,fontWeight:FontWeight.bold,
           letterSpacing: 10),
           children: <TextSpan>[
             TextSpan(text: 'A',
                 style: TextStyle(
-                    color:Colors.blue,fontSize:38,fontWeight:FontWeight.bold,
+                    color:buttonColor,fontSize:38,fontWeight:FontWeight.bold,
                     letterSpacing: 10)),
             TextSpan(text: 'LONG',
                 style: TextStyle(
