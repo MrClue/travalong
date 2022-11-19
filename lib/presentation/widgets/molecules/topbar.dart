@@ -14,8 +14,9 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
         centerTitle: true,
         title: Text(title,
           style: GoogleFonts.poppins(
-            color: Colors.grey,
-            fontWeight: FontWeight.w400,
+            fontSize: 18,
+            color: Colors.black45,
+            fontWeight: FontWeight.w500,
             letterSpacing: 2,
             decoration: TextDecoration.none,
           ),

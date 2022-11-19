@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:travalong/presentation/widgets/molecules/topbar.dart';
 
 import '../widgets/molecules/slideupWidget.dart';
 
@@ -15,8 +16,8 @@ class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Startscreen"),
+      appBar: TopBar(
+        title: "Startscreen",
       ),
       body: SlideUpWidget(),
     );
