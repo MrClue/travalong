@@ -52,12 +52,6 @@ class SlideUpWidget extends StatelessWidget {
             height: 50,
             child: FloatingActionButton.extended(
               backgroundColor: textFieldFormColor,
-              onPressed:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpScreen()),
-                );
-              },
               label: Text("Sign Up",
                 style: const TextStyle(
                   fontSize: 16,
@@ -65,6 +59,12 @@ class SlideUpWidget extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                );
+              },
             ),
           ),
         ],
