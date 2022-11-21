@@ -45,7 +45,7 @@ class _NavBarState extends State<NavBar>{
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.person_2_outlined),
           label: 'Profile',
           backgroundColor: Colors.white,
         ),

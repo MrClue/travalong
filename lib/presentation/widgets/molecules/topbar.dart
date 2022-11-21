@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/presentation/widgets/atoms/back_arrow.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
@@ -11,12 +12,13 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     return SafeArea(
       child: AppBar(
+        leading: BackArrow(),
         centerTitle: true,
         title: Text(title,
           style: GoogleFonts.poppins(
             fontSize: 18,
-            color: Colors.black45,
-            fontWeight: FontWeight.w500,
+            color: Colors.black54,
+            fontWeight: FontWeight.bold,
             letterSpacing: 2,
             decoration: TextDecoration.none,
           ),
