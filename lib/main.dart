@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/widgets/molecules/topbar.dart';
-import 'package:travalong/presentation/screens/start_screen.dart';
+import 'package:travalong/presentation/profile_screens/profile_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TravalongApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TravalongApp extends StatelessWidget {
+  const TravalongApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'App name',
-      theme: ThemeData(
-        primaryColor: Colors.grey,
-        primarySwatch: Colors.blue,
-      ),
-      home: StartScreen(),
+    return const MaterialApp(
+      title: 'TRAVALONG',
+      home:
+          ProfilePage(), // ! route that is displayed first when app starts (unless "initialRoute" is specified)
     );
   }
 }
