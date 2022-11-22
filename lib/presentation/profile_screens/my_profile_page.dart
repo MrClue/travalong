@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../resources/colors.dart';
+import "package:travalong/presentation/widgets/molecules/topbar.dart";
 
 class MyProfilePage extends StatelessWidget {
   const MyProfilePage({super.key});
@@ -9,19 +9,9 @@ class MyProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("My Profile"),
-        ),
-        body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                FaIcon(
-                  FontAwesomeIcons.magnifyingGlassPlus,
-                  size: 35,
-                  color: TravalongColors.secondary_10,
-                ),
-              ]),
-        ));
+      appBar: TopBar(
+        title: "My Profile",
+      ),
+    );
   }
 }

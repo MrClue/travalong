@@ -9,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/widgets/profile_widget.dart';
 import 'package:travalong/presentation/resources/widgets/icon_text_btn_widget.dart';
 
+import '../widgets/molecules/navbar.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -18,6 +20,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: TravalongColors.neutral_60,
+      bottomNavigationBar: NavBar(),
       body: SafeArea(
         child: Column(
           children: [
