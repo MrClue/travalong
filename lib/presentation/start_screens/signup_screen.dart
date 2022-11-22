@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 
-class SignUpScreen extends StatefulWidget{
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
@@ -14,16 +14,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  int _selectedIndex = 0;
-
-  Color textFieldFormColor = Color(0xFFF5F8FD);
-  Color buttonColor = Color(0xFF2ABAFF);
-  Color strokeColor = Color(0xFFE8F0FF);
+  final int _selectedIndex = 0;
 
   Widget _renderSignUp() {
     return SlidingUpPanel(
-      body: const Center(
-      ),
+      body: const Center(),
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(20.0),
         topRight: Radius.circular(20.0),
@@ -36,27 +31,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.all(40.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget> [
-            Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Sign Up",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    FloatingActionButton.small(
-                      backgroundColor: buttonColor,
-                      child: Icon(Icons.close_rounded, color: Colors.white, weight: 2,),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                )
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                FloatingActionButton.small(
+                  heroTag: "close_btn2",
+                  backgroundColor: TravalongColors.secondary_10,
+                  child: const Icon(
+                    Icons.close_rounded,
+                    color: TravalongColors.neutral_60, /*weight: 2,*/
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: 60),
             TextField(
@@ -66,24 +64,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enableSuggestions: false,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: textFieldFormColor,
-                labelText: 'Password',
-                floatingLabelStyle: TextStyle(color: Colors.black),
+                fillColor: TravalongColors.primary_30,
+                labelText: 'Name',
+                floatingLabelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: buttonColor),
+                  borderSide:
+                      const BorderSide(color: TravalongColors.secondary_10),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            const SizedBox(
+              height: 20.0,
+            ),
             TextField(
               controller: _emailController,
               autofocus: false,
@@ -91,24 +94,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enableSuggestions: false,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: textFieldFormColor,
+                fillColor: TravalongColors.primary_30,
                 labelText: 'Email',
-                floatingLabelStyle: TextStyle(color: Colors.black),
+                floatingLabelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: buttonColor),
+                  borderSide:
+                      const BorderSide(color: TravalongColors.secondary_10),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
             ),
-            SizedBox(height: 20.0,),
+            const SizedBox(
+              height: 20.0,
+            ),
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -117,19 +125,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enableSuggestions: false,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: textFieldFormColor,
+                fillColor: TravalongColors.primary_30,
                 labelText: 'Password',
-                floatingLabelStyle: TextStyle(color: Colors.black),
+                floatingLabelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: buttonColor),
+                  borderSide:
+                      const BorderSide(color: TravalongColors.secondary_10),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
@@ -143,35 +154,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enableSuggestions: false,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: textFieldFormColor,
+                fillColor: TravalongColors.primary_30,
                 labelText: 'Repeat Password',
-                floatingLabelStyle: TextStyle(color: Colors.black),
+                floatingLabelStyle: const TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: buttonColor),
+                  borderSide:
+                      const BorderSide(color: TravalongColors.secondary_10),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: strokeColor),
+                  borderSide: const BorderSide(
+                      color: TravalongColors.primary_30_stroke),
                   borderRadius: BorderRadius.circular(25.0),
                 ),
               ),
             ),
-            SizedBox(height: 40.0,),
+            const SizedBox(
+              height: 40.0,
+            ),
             SizedBox(
               width: double.infinity,
               height: 50,
               child: FloatingActionButton.extended(
-                backgroundColor: buttonColor,
-                label: const Text("Sign Up",
+                heroTag: "sign_up_btn2",
+                backgroundColor: TravalongColors.secondary_10,
+                label: const Text(
+                  "Sign Up",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18.0
-                  ),
+                      fontSize: 18.0),
                 ),
                 onPressed: () async {
                   final email = _emailController.text;
@@ -181,18 +198,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     showDialog(
                         context: context,
                         builder: (_) => AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text(
-                              'Please enter your email and password'),
-                          actions: [
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () =>
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop('dialog'),
-                            )
-                          ],
-                        ));
+                              title: const Text('Error'),
+                              content: const Text(
+                                  'Please enter your email and password'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () =>
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog'),
+                                )
+                              ],
+                            ));
                     return;
                   }
                   //_signIn();
@@ -205,21 +222,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    _emailController.text = "";
 
-@override
-Widget build(BuildContext context) {
-  _emailController.text = "";
-
-  return Scaffold(
-    //extendBodyBehindAppBar: true,
-    //resizeToAvoidBottomInset: false,
-    body: IndexedStack(
-      index: _selectedIndex,
-      children: [
-        //_renderSignIn(),
-        _renderSignUp(),
-      ],
-    ),
-  );
-}
+    return Scaffold(
+      //extendBodyBehindAppBar: true,
+      //resizeToAvoidBottomInset: false,
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          //_renderSignIn(),
+          _renderSignUp(),
+        ],
+      ),
+    );
+  }
 }

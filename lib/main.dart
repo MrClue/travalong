@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/profile_screens/profile_page.dart';
+import 'package:travalong/presentation/start_screens/start_screen.dart';
 
 void main() {
   runApp(const TravalongApp());

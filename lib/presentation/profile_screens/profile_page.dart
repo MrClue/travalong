@@ -6,10 +6,10 @@ import 'package:travalong/presentation/profile_screens/my_goals_page.dart';
 import 'package:travalong/presentation/profile_screens/my_profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travalong/presentation/resources/widgets/profile_widget.dart';
-import 'package:travalong/presentation/resources/widgets/icon_text_btn_widget.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
 
-import '../widgets/molecules/navbar.dart';
+import '../resources/widgets/molecules/navbar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

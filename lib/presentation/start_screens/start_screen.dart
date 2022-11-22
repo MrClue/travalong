@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:travalong/presentation/widgets/molecules/topbar.dart';
 
-import '../widgets/molecules/navbar.dart';
-import '../widgets/molecules/slideup_widget.dart';
+import '../resources/widgets/molecules/slideup_widget.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -13,16 +10,11 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: TopBar(
-        title: "Startscreen",
-      ),
+    return const Scaffold(
       body: SlideUpWidget(),
       //bottomNavigationBar: NavBar(),
     );
   }
 }
-
