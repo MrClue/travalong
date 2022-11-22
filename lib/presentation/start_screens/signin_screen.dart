@@ -165,15 +165,18 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     _emailController.text = "";
 
-    return Scaffold(
-      //extendBodyBehindAppBar: true,
-      //resizeToAvoidBottomInset: false,
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          _renderSignIn(),
-          //_renderSignUp(),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: TravalongColors.primary_30,
+        //extendBodyBehindAppBar: true,
+        //resizeToAvoidBottomInset: false,
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: [
+            _renderSignIn(),
+            //_renderSignUp(),
+          ],
+        ),
       ),
     );
   }

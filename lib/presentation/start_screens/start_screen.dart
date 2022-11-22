@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 
 import '../resources/widgets/molecules/slideup_widget.dart';
 
@@ -12,9 +13,12 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SlideUpWidget(),
-      //bottomNavigationBar: NavBar(),
+    return const SafeArea(
+      child: Scaffold(
+        backgroundColor: TravalongColors.primary_30,
+        body: SlideUpWidget(),
+        //bottomNavigationBar: NavBar(),
+      ),
     );
   }
 }

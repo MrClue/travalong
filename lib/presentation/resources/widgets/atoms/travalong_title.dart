@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
 class TravalongTitle extends StatelessWidget {
@@ -6,28 +7,36 @@ class TravalongTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => RichText(
-        text: const TextSpan(
+        text: TextSpan(
           text: 'TRAV',
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 38,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 10),
+          style: GoogleFonts.poppins(
+            color: Colors.black,
+            fontSize: 48,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 0,
+            height: 1,
+          ),
           children: <TextSpan>[
             TextSpan(
-                text: 'A',
-                style: TextStyle(
-                    color: TravalongColors.secondary_10,
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 10)),
+              text: 'A',
+              style: GoogleFonts.poppins(
+                color: TravalongColors.secondary_10,
+                fontSize: 48,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0,
+                height: 1,
+              ),
+            ),
             TextSpan(
-                text: 'LONG',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 10)),
+              text: 'LONG',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 48,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 0,
+                height: 1,
+              ),
+            ),
           ],
         ),
       );
