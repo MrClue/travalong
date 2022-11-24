@@ -9,8 +9,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
 
-import '../resources/widgets/molecules/navbar.dart';
-
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -20,29 +18,30 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: TravalongColors.neutral_60,
-      bottomNavigationBar: NavBar(),
       body: SafeArea(
-        child: Column(
-          children: [
-            ProfileWidget(user: user),
-            SizedBox(
-              height: 30,
-            ),
-            IconTextButton(
-              faIcon: FontAwesomeIcons.solidUser,
-              label: "My Profile",
-              description: "Update your profile information here.",
-              goToPage: MyProfilePage(),
-            ),
-            SizedBox(height: 8),
-            IconTextButton(
-              faIcon: FontAwesomeIcons.list,
-              label: "My Goals",
-              description: "Set travel goals, and stay on track.",
-              goToPage: MyGoalsPage(),
-            ),
-            // TODO: Shared Media
-          ],
+        child: Center(
+          child: Column(
+            children: [
+              ProfileWidget(user: user),
+              SizedBox(
+                height: 30,
+              ),
+              IconTextButton(
+                faIcon: FontAwesomeIcons.solidUser,
+                label: "My Profile",
+                description: "Update your profile information here.",
+                goToPage: MyProfilePage(),
+              ),
+              SizedBox(height: 8),
+              IconTextButton(
+                faIcon: FontAwesomeIcons.list,
+                label: "My Goals",
+                description: "Set travel goals, and stay on track.",
+                goToPage: MyGoalsPage(),
+              ),
+              // TODO: Shared Media
+            ],
+          ),
         ),
       ),
     );
