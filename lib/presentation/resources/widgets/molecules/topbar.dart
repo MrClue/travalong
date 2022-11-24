@@ -19,13 +19,14 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
+      leadingWidth: 100,
       centerTitle: true,
       title: Text(
         title,
         style: GoogleFonts.poppins(
           fontSize: 24,
           color: Colors.black54,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.normal,
           letterSpacing: 2,
           decoration: TextDecoration.none,
         ),
@@ -71,13 +72,14 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
+      leadingWidth: 100,
       centerTitle: true,
       title: Text(
         title,
         style: GoogleFonts.poppins(
           fontSize: 24,
           color: Colors.black54,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.normal,
           letterSpacing: 2,
           decoration: TextDecoration.none,
         ),
@@ -87,7 +89,61 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-    static final _topBar = AppBar();
-    @override
-    Size get preferredSize => _topBar.preferredSize;
+  static final _topBar = AppBar();
+
+  @override
+  Size get preferredSize => _topBar.preferredSize;
+
+}
+
+class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final goToPage;
+  final Widget? leading;
+
+  const TopBarChat({
+    Key ? key,
+    required this.title,
+    required this.goToPage,
+    this.leading,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      leadingWidth: 100,
+      centerTitle: true,
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.black54,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 2,
+          decoration: TextDecoration.none,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.edit_outlined,
+            color: TravalongColors.secondary_10,
+          ),
+          onPressed: () {
+            goToPage();
+          },
+        ),
+      ],
+    );
   }
+
+  static final _topBarChat = AppBar();
+
+  @override
+  Size get preferredSize => _topBarChat.preferredSize;
+
+}
+

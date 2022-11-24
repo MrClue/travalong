@@ -27,9 +27,18 @@ class _MessageScreenState extends State<MessagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBarWithAction(
+      appBar: TopBarChat(
         title: 'Chats',
-        goToPage: NewChatPage(),
+        goToPage: () => showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return const NewChatWidget();
+          }
+        ),
       ),
       body: CustomScrollView(
         slivers: [
@@ -193,8 +202,8 @@ class _Connections extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0, left: 12, right: 12),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 12.0, left: 12, right: 12),
                     child: SearchBar(
                     ),
                   ),
