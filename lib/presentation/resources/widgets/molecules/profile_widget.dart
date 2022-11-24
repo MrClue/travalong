@@ -66,7 +66,7 @@ class ProfileWidget extends StatelessWidget {
                             style: GoogleFonts.poppins(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
-                                color: TravalongColors.secondary_text_bright,
+                                color: TravalongColors.secondary_text_dark,
                                 height: 0),
                             textAlign: TextAlign.left,
                             ", ${user.age}",
@@ -78,7 +78,7 @@ class ProfileWidget extends StatelessWidget {
                         style: GoogleFonts.poppins(
                             fontSize: 22,
                             fontWeight: FontWeight.w500,
-                            color: TravalongColors.secondary_text_bright,
+                            color: TravalongColors.secondary_text_dark,
                             height: 1),
                         textAlign: TextAlign.left,
                         maxLines: 1,
@@ -111,7 +111,7 @@ class ProfileWidget extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
+                          color: TravalongColors.secondary_text_dark),
                     ),
                   ],
                 ),
@@ -129,7 +129,7 @@ class ProfileWidget extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
+                          color: TravalongColors.secondary_text_dark),
                     ),
                   ],
                 ),
@@ -147,7 +147,7 @@ class ProfileWidget extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
+                          color: TravalongColors.secondary_text_dark),
                     ),
                   ],
                 ),

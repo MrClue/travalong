@@ -23,7 +23,7 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          fontSize: 18,
+          fontSize: 24,
           color: Colors.black54,
           fontWeight: FontWeight.bold,
           letterSpacing: 2,
@@ -75,7 +75,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: GoogleFonts.poppins(
-          fontSize: 18,
+          fontSize: 24,
           color: Colors.black54,
           fontWeight: FontWeight.bold,
           letterSpacing: 2,
