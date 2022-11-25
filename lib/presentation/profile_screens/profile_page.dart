@@ -17,10 +17,12 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const user = UserData.dummyUser;
+    // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
     return Scaffold(
       backgroundColor: TravalongColors.neutral_60,
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar:
+          NavBar(), // * maybee move into body (wrap with safe-area)
       body: SafeArea(
         child: Column(
           children: [

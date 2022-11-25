@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/profile_screens/profile_page.dart';
 //import 'package:travalong/presentation/profile_screens/profile_page.dart';
 import 'package:travalong/presentation/start_screens/start_screen.dart';
 
@@ -15,7 +16,7 @@ class TravalongApp extends StatelessWidget {
     return const MaterialApp(
       title: 'TRAVALONG',
       home:
-          StartScreen(), // ! route that is displayed first when app starts (unless "initialRoute" is specified)
+          ProfilePage(), // ! route that is displayed first when app starts (unless "initialRoute" is specified)
     );
   }
 }
