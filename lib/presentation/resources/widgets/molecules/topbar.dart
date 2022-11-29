@@ -4,7 +4,7 @@ import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 
 class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
-  final String title;
+  final Widget? title;
   final Widget goToPage;
   final Widget? leading;
 
@@ -22,7 +22,7 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
       leadingWidth: 100,
       centerTitle: true,
       title: Text(
-        title,
+        title as String,
         style: GoogleFonts.poppins(
           fontSize: 24,
           color: Colors.black54,
@@ -57,7 +57,7 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
 }
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
   final Widget? goToPage;
   final Widget? leading;
 
@@ -75,7 +75,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 100,
       centerTitle: true,
       title: Text(
-        title,
+        title!,
         style: GoogleFonts.poppins(
           fontSize: 24,
           color: Colors.black54,
@@ -127,15 +127,15 @@ class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0.0,
       actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.edit_outlined,
-            color: TravalongColors.secondary_10,
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: TravalongColors.secondary_10,
+            ),
+            onPressed: () {
+              goToPage();
+            },
           ),
-          onPressed: () {
-            goToPage();
-          },
-        ),
       ],
     );
   }

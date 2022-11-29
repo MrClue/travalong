@@ -2,6 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:travalong/presentation/chat_screens/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
 import '../../data/messages_data.dart';
@@ -13,6 +14,7 @@ import '../resources/widgets/molecules/search_bar.dart';
 import '../resources/widgets/molecules/topbar.dart';
 import 'chat_search_results.dart';
 import 'new_chat_page.dart';
+import 'chat_screen.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({super.key});
@@ -82,7 +84,7 @@ class _MessageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //Navigator.of(context).push(ChatScreen.route(messageData));
+        Navigator.of(context).push(ChatScreen.route(messageData));
       },
       child: Container(
         height: 95,
@@ -225,7 +227,12 @@ class _Connections extends StatelessWidget {
                           width: 63,
                           child: FloatingActionButton.extended(
                             backgroundColor: TravalongColors.secondary_10,
-                            onPressed:(){},
+                            onPressed:(){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (BuildContext context) => ConnectionPage()),
+                              );
+                            },
                             label: Text(
                               "View all",
                               style: GoogleFonts.poppins(

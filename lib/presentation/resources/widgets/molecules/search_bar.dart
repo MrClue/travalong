@@ -29,7 +29,7 @@ class _SearchBarState extends State<SearchBar> {
                   flex: 1,
                   child: TextField(
                     textAlignVertical: TextAlignVertical.bottom,
-                    cursorColor: Colors.grey,
+                    cursorColor: Colors.white,
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,

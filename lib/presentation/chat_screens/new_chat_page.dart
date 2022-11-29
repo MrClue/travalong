@@ -17,7 +17,7 @@ class NewChatWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       color: TravalongColors.primary_text_bright,
       child: Scaffold(
-        appBar: TopBar(
+        appBar: const TopBar(
           title: "New Chat",
           leading: CancelArrow(),
         ),
@@ -27,7 +27,7 @@ class NewChatWidget extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: [
+              children: const [
                 IconTitleButton(
                     faIcon: Icons.people_outlined,
                     label: "Start a group chat",
