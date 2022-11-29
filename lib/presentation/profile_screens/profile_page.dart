@@ -20,9 +20,9 @@ class ProfilePage extends StatelessWidget {
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
     return Scaffold(
+      resizeToAvoidBottomInset: false, // prevents overflow if keyboard was open
       backgroundColor: TravalongColors.neutral_60,
-      bottomNavigationBar:
-          NavBar(), // * maybee move into body (wrap with safe-area)
+
       body: SafeArea(
         child: Column(
           children: [
@@ -47,6 +47,9 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
+
+      bottomNavigationBar:
+          NavBar(), // * maybee move into body (wrap with safe-area)
     );
   }
 }
