@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 
 import '../resources/widgets/molecules/topbar.dart';
 
@@ -7,24 +8,9 @@ class MyGoalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: TopBar(
-        title: "My Goals",
-      ),
+    return SafeScaffoldNoNavbar(
+      topbar: const TopBar(title: "My Goals"),
+      child: Container(),
     );
-  }
-}
-
-class TestWidget extends StatefulWidget {
-  const TestWidget({super.key});
-
-  @override
-  State<TestWidget> createState() => _TestWidgetState();
-}
-
-class _TestWidgetState extends State<TestWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
