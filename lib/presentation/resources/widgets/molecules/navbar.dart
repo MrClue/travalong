@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/chat_screens/chat_screen.dart';
+import 'package:travalong/presentation/chat_screens/messages_screen.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/start_screens/start_screen.dart';
+
+import '../../../profile_screens/profile_page.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -11,12 +15,14 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
+  
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  
   static const List<Widget> _widgetOptions = <Widget>[
-    StartScreen(),
-    // Profile
-    // Search
+    MessagesScreen(),
+    MessagesScreen(), // ! Search skal være her
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

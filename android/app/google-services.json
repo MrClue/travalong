@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881914006921",
+    "project_id": "travalong-33ad7",
+    "storage_bucket": "travalong-33ad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881914006921:android:eda0b404d859bac9926558",
+        "android_client_info": {
+          "package_name": "com.example.travalong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881914006921-mehd0m43ju6kj8qn9ra3qp3hamnrlo83.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfHKlwAxd04K7AVkbr7Yxpil6MfZEkC7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881914006921-mehd0m43ju6kj8qn9ra3qp3hamnrlo83.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

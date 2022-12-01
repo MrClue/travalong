@@ -1,35 +1,149 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 
-class TopBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
+  final Widget? title;
+  final Widget goToPage;
+  final Widget? leading;
 
-  const TopBar({Key? key, required this.title, style}) : super(key: key);
+  const TopBarWithAction({
+    Key ? key,
+    required this.title,
+    required this.goToPage,
+    this.leading,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AppBar(
-        leading: const BackArrow(),
-        centerTitle: true,
-        title: Text(
-          title,
-          style: GoogleFonts.poppins(
-            fontSize: 18,
-            color: Colors.black54,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2,
-            decoration: TextDecoration.none,
-          ),
+    return AppBar(
+      leading: leading,
+      leadingWidth: 100,
+      centerTitle: true,
+      title: Text(
+        title as String,
+        style: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.black54,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 2,
+          decoration: TextDecoration.none,
         ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
       ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.edit_outlined,
+            color: TravalongColors.secondary_10,
+          ),
+          onPressed: (() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => goToPage),
+            );
+          }),
+        ),
+      ],
     );
   }
 
-  static final _appBar = AppBar();
+  static final _topBarWithAction = AppBar();
   @override
-  Size get preferredSize => _appBar.preferredSize;
+  Size get preferredSize => _topBarWithAction.preferredSize;
+
 }
+
+class TopBar extends StatelessWidget implements PreferredSizeWidget {
+  final String? title;
+  final Widget? goToPage;
+  final Widget? leading;
+
+  const TopBar({
+    Key ? key,
+    required this.title,
+    this.goToPage,
+    this.leading,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      leadingWidth: 100,
+      centerTitle: true,
+      title: Text(
+        title!,
+        style: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.black54,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 2,
+          decoration: TextDecoration.none,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+    );
+  }
+
+  static final _topBar = AppBar();
+
+  @override
+  Size get preferredSize => _topBar.preferredSize;
+
+}
+
+class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final goToPage;
+  final Widget? leading;
+
+  const TopBarChat({
+    Key ? key,
+    required this.title,
+    required this.goToPage,
+    this.leading,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      leadingWidth: 100,
+      centerTitle: true,
+      title: Text(
+        title,
+        style: GoogleFonts.poppins(
+          fontSize: 24,
+          color: Colors.black54,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 2,
+          decoration: TextDecoration.none,
+        ),
+      ),
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+      actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.edit_outlined,
+              color: TravalongColors.secondary_10,
+            ),
+            onPressed: () {
+              goToPage();
+            },
+          ),
+      ],
+    );
+  }
+
+  static final _topBarChat = AppBar();
+
+  @override
+  Size get preferredSize => _topBarChat.preferredSize;
+
+}
+

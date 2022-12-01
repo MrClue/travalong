@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/user_data.dart';
 import 'package:travalong/presentation/profile_screens/my_goals_page.dart';
@@ -14,11 +15,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = FirebaseAuth.instance.currentUser!;
+
     const user = UserData.dummyUser;
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
     return SafeScaffoldNoTopbar(
-      navbar: const NavBar(),
+      navbar: NavBar(),
       child: Column(
         children: const [
           ProfileWidget(user: user),

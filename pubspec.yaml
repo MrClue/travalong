@@ -35,6 +35,12 @@ dependencies:
   google_fonts: ^3.0.1
   sliding_up_panel: ^2.0.0+1
   font_awesome_flutter: ^10.2.1
+  jiffy: ^5.0.0
+  faker: ^2.0.0
+  firebase_auth: ^4.1.4
+  firebase_core: ^2.3.0
+  cloud_functions: ^4.0.5
+  cloud_firestore: ^4.1.0
   #location: ^4.4.0
   geocoding: ^2.0.5
   geolocator: ^9.0.2
@@ -43,7 +49,6 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

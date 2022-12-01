@@ -17,7 +17,6 @@ class _StartScreenState extends State<StartScreen> {
       child: Scaffold(
         backgroundColor: TravalongColors.primary_30,
         body: SlideUpWidget(),
-        //bottomNavigationBar: NavBar(),
       ),
     );
   }
