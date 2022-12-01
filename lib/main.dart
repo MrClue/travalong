@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:travalong/presentation/screens.dart';
 import 'package:travalong/presentation/profile_screens/home_page.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/show_snack_bar.dart';
+import 'package:travalong/presentation/start_screens/auth_page.dart';
 import 'package:travalong/presentation/start_screens/start_screen.dart';
 
 Future main() async {
@@ -52,20 +53,26 @@ class TravalongApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'TRAVALONG',
+        theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
         home: Scaffold(
-          body: StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
+          body: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData) {
                   return HomePage();
                 } else if (snapshot.hasError) {
                   return const Center(
                     child: Text("Something went wrong..."),
                   );
                 } else {
-                  return StartScreen();
+                  return AuthPage();
                 }
-              }),
+            },
+          ),
         ),
       ),
     );

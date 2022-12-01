@@ -15,7 +15,7 @@ class NewChatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-      color: TravalongColors.primary_text_bright,
+      color: TravalongColors.primary_text_dark,
       child: Scaffold(
         appBar: const TopBar(
           title: "New Chat",
@@ -29,9 +29,9 @@ class NewChatWidget extends StatelessWidget {
             child: Column(
               children: const [
                 IconTitleButton(
-                    faIcon: Icons.people_outlined,
-                    label: "Start a group chat",
-                    goToPage: MessagesScreen(),
+                  faIcon: Icons.people_outlined,
+                  label: "Start a group chat",
+                  goToPage: MessagesScreen(),
                 ),
                 Padding(
                   padding: EdgeInsets.all(8.0),

@@ -2,9 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-
 import '../../main.dart';
-import '../resources/widgets/molecules/show_snack_bar.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -24,8 +22,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
     super.dispose();
   }
-
-  final int _selectedIndex = 0;
 
   Widget _renderSignIn() {
     return SlidingUpPanel(
@@ -190,10 +186,11 @@ class _SignInScreenState extends State<SignInScreen> {
         password: _passwordController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
+      //Utils.showSnackBar(e.message);
+      print(e);
     }
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 
   @override
@@ -205,14 +202,9 @@ class _SignInScreenState extends State<SignInScreen> {
         backgroundColor: TravalongColors.primary_30,
         //extendBodyBehindAppBar: true,
         //resizeToAvoidBottomInset: false,
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: [
-            _renderSignIn(),
+        body: _renderSignIn(),
             //_renderSignUp(),
-          ],
         ),
-      ),
     );
   }
 }
