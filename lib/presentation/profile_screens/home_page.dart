@@ -30,11 +30,6 @@ class _HomeState extends State<HomePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 40,
         items: items(),
@@ -42,6 +37,9 @@ class _HomeState extends State<HomePage>{
         selectedItemColor: TravalongColors.secondary_10,
         onTap: _onItemTapped,
       ),
+      body: HomePageWidget(
+        widgetOptions: _widgetOptions, 
+        selectedIndex: _selectedIndex),
     );
   }
 
@@ -64,5 +62,25 @@ class _HomeState extends State<HomePage>{
           backgroundColor: Colors.white,
         ),
       ];
+  }
+}
+
+class HomePageWidget extends StatelessWidget {
+  const HomePageWidget({
+    super.key,
+    required List<Widget> widgetOptions,
+    required int selectedIndex,
+  }) : _widgetOptions = widgetOptions, _selectedIndex = selectedIndex;
+
+  final List<Widget> _widgetOptions;
+  final int _selectedIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+    );
   }
 }

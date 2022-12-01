@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+
+import '../../main.dart';
+import '../resources/widgets/molecules/show_snack_bar.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -12,6 +16,14 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
 
   final int _selectedIndex = 0;
 
@@ -151,7 +163,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ));
                     return;
                   }
-                  //_signIn();
+                  _signIn();
                 },
               ),
             ),
@@ -161,9 +173,32 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  Future _signIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(
+          color: TravalongColors.secondary_10,
+        ),
+      ),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      Utils.showSnackBar(e.message);
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _emailController.text = "";
+    //_emailController.text = "";
 
     return SafeArea(
       child: Scaffold(

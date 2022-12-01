@@ -11,7 +11,7 @@ class Subtext extends StatelessWidget {
   Widget build(BuildContext context) => Text(
         text,
         style: GoogleFonts.poppins(
-          color: TravalongColors.secondary_text_bright,
+          color: TravalongColors.secondary_text_dark,
           fontWeight: FontWeight.w400,
           fontSize: 15,
         ),
