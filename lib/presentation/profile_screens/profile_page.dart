@@ -8,6 +8,8 @@ import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dar
 import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
 
+import '../resources/widgets/molecules/navbar.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -19,7 +21,7 @@ class ProfilePage extends StatelessWidget {
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
     return SafeScaffoldNoTopbar(
-      navbar: const NavBar(),
+      navbar: NavBar(),
       child: Column(
         children: const [
           ProfileWidget(user: user),

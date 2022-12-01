@@ -174,15 +174,15 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future _signIn() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(
-          color: TravalongColors.secondary_10,
-        ),
-      ),
-    );
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => const Center(
+    //     child: CircularProgressIndicator(
+    //       color: TravalongColors.secondary_10,
+    //     ),
+    //   ),
+    // );
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(

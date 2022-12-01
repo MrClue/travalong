@@ -49,33 +49,25 @@ class TravalongApp extends StatelessWidget {
           FocusManager.instance.primaryFocus!.unfocus(); // cant be null
         }
       },
-      child: const MaterialApp(
-        title: 'TRAVALONG',
-        home:
-            ProfilePage(), // * route that is displayed first when app starts (unless "initialRoute" is specified)
-      ),
-    );
-  }
-
-  /*
-  @override
-  Widget build(BuildContext context) => MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        title: 'TRAVALONG',
         home: Scaffold(
           body: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return const HomePage();
+                  return HomePage();
                 } else if (snapshot.hasError) {
                   return const Center(
                     child: Text("Something went wrong..."),
                   );
                 } else {
-                  return const StartScreen();
+                  return StartScreen();
                 }
               }),
         ),
-      );
-  */
+      ),
+    );
+  }
 }

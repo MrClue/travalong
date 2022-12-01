@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
@@ -10,9 +11,7 @@ class SignOutBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // TODO: implement sign out logic
-      },
+      onTap: () => FirebaseAuth.instance.signOut(),
       child: ThemeContainerAlt(
         height: 45,
         child: Row(
