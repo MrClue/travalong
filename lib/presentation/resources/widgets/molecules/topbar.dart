@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 
 class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
   final Widget? title;
