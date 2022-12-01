@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/screens.dart';
 
 class SignOutBtnWidget extends StatelessWidget {
   const SignOutBtnWidget({super.key});
@@ -11,7 +12,14 @@ class SignOutBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => FirebaseAuth.instance.signOut(),
+      onTap: () {
+        FirebaseAuth.instance.signOut();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const StartScreen(),
+          ),
+        );
+      },
       child: ThemeContainerAlt(
         height: 45,
         child: Row(

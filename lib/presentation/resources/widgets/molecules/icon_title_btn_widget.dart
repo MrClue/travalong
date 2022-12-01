@@ -19,7 +19,7 @@ class IconTitleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // ÆNDRE TIL AT ROUTE TIL RIGTIG SIDE
+      // ! ÆNDRE TIL AT ROUTE TIL RIGTIG SIDE
       onTap: (() {
         Navigator.pop(context);
       }),
@@ -28,7 +28,7 @@ class IconTitleButton extends StatelessWidget {
         height: 65,
         padding: const EdgeInsets.only(left: 12, right: 12),
         decoration: BoxDecoration(
-          color: TravalongColors.primary_text_bright,
+          color: TravalongColors.primary_text_dark,
           border: Border.all(
             color: TravalongColors.primary_30_stroke,
             width: 1.5,

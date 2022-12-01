@@ -21,26 +21,23 @@ class MessagesScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _MessageScreenState();
-
 }
 
 class _MessageScreenState extends State<MessagesScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBarChat(
         title: 'Chats',
         goToPage: () => showModalBottomSheet(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          ),
-          context: context,
-          builder: (BuildContext context) {
-            return const NewChatWidget();
-          }
-        ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            ),
+            context: context,
+            builder: (BuildContext context) {
+              return const NewChatWidget();
+            }),
       ),
       body: CustomScrollView(
         slivers: [
@@ -68,9 +65,7 @@ class _MessageScreenState extends State<MessagesScreen> {
       ),
     );
   }
-
 }
-
 
 class _MessageTile extends StatelessWidget {
   const _MessageTile({
@@ -206,8 +201,7 @@ class _Connections extends StatelessWidget {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(top: 12.0, left: 12, right: 12),
-                    child: SearchBar(
-                    ),
+                    child: SearchBar(),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 16, right: 16, top: 16),
@@ -227,19 +221,20 @@ class _Connections extends StatelessWidget {
                           width: 63,
                           child: FloatingActionButton.extended(
                             backgroundColor: TravalongColors.secondary_10,
-                            onPressed:(){
+                            onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (BuildContext context) => ConnectionPage()),
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        ConnectionPage()),
                               );
                             },
                             label: Text(
                               "View all",
                               style: GoogleFonts.poppins(
-                                  color: TravalongColors.secondary_text_bright,
+                                  color: TravalongColors.secondary_text_dark,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 10
-                              ),
+                                  fontSize: 10),
                             ),
                           ),
                         ),

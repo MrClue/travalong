@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/screens.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -9,8 +10,12 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPage extends State<AuthPage> {
   bool isSignin = true;
+
   @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+  Widget build(BuildContext context) =>
+      isSignin ? SignInScreen() : SignUpScreen();
+
+  void toggle() => setState(() {
+        isSignin = !isSignin;
+      });
 }
