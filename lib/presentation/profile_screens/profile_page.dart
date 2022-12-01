@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/user_data.dart';
 import 'package:travalong/presentation/profile_screens/my_goals_page.dart';
