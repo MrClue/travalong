@@ -13,9 +13,9 @@ class TravalongColors {
   static const primary_30_stroke = Color.fromRGBO(232, 240, 255, 1.0);
 
   // * Conditional colors
-  static const primary_text_dark = Colors.black;
-  static const primary_text_bright = Colors.white;
+  static const primary_text_bright = Colors.black;
+  static const primary_text_dark = Colors.white;
 
-  static const secondary_text_dark = Color.fromRGBO(62, 62, 62, 1.0);
-  static const secondary_text_bright = Color.fromRGBO(232, 240, 255, 1.0);
+  static const secondary_text_bright = Color.fromRGBO(62, 62, 62, 1.0);
+  static const secondary_text_dark = Color.fromRGBO(232, 240, 255, 1.0);
 }
