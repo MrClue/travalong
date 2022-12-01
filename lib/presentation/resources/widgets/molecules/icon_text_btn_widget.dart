@@ -70,7 +70,7 @@ class IconTextButton extends StatelessWidget {
                       style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          color: TravalongColors.secondary_text_dark),
+                          color: TravalongColors.secondary_text_bright),
                     ),
                   ],
                 ),
