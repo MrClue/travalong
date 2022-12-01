@@ -15,13 +15,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userAuth = FirebaseAuth.instance.currentUser!;
+    //final userAuth = FirebaseAuth.instance.currentUser!;
 
     const user = UserData.dummyUser;
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
-    return SafeScaffoldNoTopbar(
-      navbar: NavBar(),
+    return SafeScaffoldPure(
+      //navbar: NavBar(),
       child: Column(
         children: const [
           ProfileWidget(user: user),
