@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
@@ -13,10 +14,39 @@ class SignOutBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        FirebaseAuth.instance.signOut();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const StartScreen(),
+        showCupertinoDialog(
+          context: context,
+          builder: (_) => CupertinoAlertDialog(
+            title: const Text('Sign out'),
+            content: const Text('Are you sure you want to sign out?'),
+            actions: [
+              TextButton(
+                child: const ThemeText(
+                  textString: "No",
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  textColor: Colors.black,
+                ),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop('dialog'),
+              ),
+              TextButton(
+                child: const ThemeText(
+                  textString: "Sign out",
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  textColor: Colors.red,
+                ),
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const StartScreen(),
+                    ),
+                  );
+                },
+              )
+            ],
           ),
         );
       },
