@@ -17,19 +17,19 @@ class ProfileWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width, //double.infinity,
       height: 215,
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            spreadRadius: 0,
-            blurRadius: 4,
-            offset: const Offset(0, 4), // changes position of shadow
-          )
-        ],
         color: TravalongColors.neutral_60,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(15.0),
           bottomRight: Radius.circular(15.0),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            spreadRadius: 0, // -2
+            blurRadius: 3, // 4
+            offset: const Offset(0, 5), // changes position of shadow
+          )
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),

@@ -6,8 +6,9 @@ import '../atoms/theme_container.dart';
 import '../atoms/theme_text.dart';
 
 class InterestsHobbiesWidget extends StatelessWidget {
+  final Widget goToPage;
   const InterestsHobbiesWidget({
-    Key? key,
+    Key? key, required this.goToPage,
   }) : super(key: key);
 
   @override
@@ -22,10 +23,10 @@ class InterestsHobbiesWidget extends StatelessWidget {
         const SizedBox(height: 12),
         InkWell(
           onTap: (() {
-            /*Navigator.push(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => goToPage),
-            );*/
+            );
           }),
           child: ThemeContainer(
             height: 65,

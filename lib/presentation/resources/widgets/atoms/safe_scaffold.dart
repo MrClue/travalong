@@ -15,15 +15,13 @@ class SafeScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false, // prevents keyboard overflow
-        backgroundColor: TravalongColors.neutral_60,
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // prevents keyboard overflow
+      backgroundColor: TravalongColors.neutral_60,
 
-        appBar: topbar,
-        bottomNavigationBar: navbar,
-        body: child,
-      ),
+      appBar: topbar,
+      bottomNavigationBar: navbar,
+      body: SafeArea(child: child),
     );
   }
 }
@@ -38,14 +36,12 @@ class SafeScaffoldNoNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false, // prevents keyboard overflow
-        backgroundColor: TravalongColors.neutral_60,
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // prevents keyboard overflow
+      backgroundColor: TravalongColors.neutral_60,
 
-        appBar: topbar,
-        body: child,
-      ),
+      appBar: topbar,
+      body: SafeArea(child: child),
     );
   }
 }
@@ -59,14 +55,12 @@ class SafeScaffoldNoTopbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false, // prevents keyboard overflow
-        backgroundColor: TravalongColors.neutral_60,
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // prevents keyboard overflow
+      backgroundColor: TravalongColors.neutral_60,
 
-        bottomNavigationBar: navbar,
-        body: child,
-      ),
+      bottomNavigationBar: navbar,
+      body: SafeArea(child: child),
     );
   }
 }
@@ -79,13 +73,11 @@ class SafeScaffoldPure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false, // prevents keyboard overflow
-        backgroundColor: TravalongColors.neutral_60,
+    return Scaffold(
+      resizeToAvoidBottomInset: false, // prevents keyboard overflow
+      backgroundColor: TravalongColors.neutral_60,
 
-        body: child,
-      ),
+      body: SafeArea(child: child),
     );
   }
 }
