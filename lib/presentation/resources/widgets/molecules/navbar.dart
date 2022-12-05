@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/chat_screens/chat_screen.dart';
 import 'package:travalong/presentation/chat_screens/messages_screen.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/start_screens/start_screen.dart';
 
 import '../../../profile_screens/profile_page.dart';
 
