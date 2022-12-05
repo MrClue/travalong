@@ -124,6 +124,7 @@ class _InterestsWidgetState extends State<InterestsWidget> {
                       newValues.forEach((element) {
                         bufferSelectedInterest.add(element.value);
                       });
+                      _selectedInterests = bufferSelectedInterest;
                     },
                     chipDisplay: MultiSelectChipDisplay(
                       onTap: (value) {
