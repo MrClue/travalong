@@ -29,6 +29,13 @@
             {
               "client_id": "881914006921-mehd0m43ju6kj8qn9ra3qp3hamnrlo83.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "881914006921-2lvfq2h0l2b39umibma1db06lltv2k9j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travalong"
+              }
             }
           ]
         }

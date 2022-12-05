@@ -30,6 +30,7 @@ class _HomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeScaffoldNoTopbar(
       navbar: BottomNavigationBar(
+        elevation: 0,
         iconSize: 40,
         items: items(),
         currentIndex: _selectedIndex,
@@ -37,7 +38,9 @@ class _HomeState extends State<HomePage> {
         onTap: _onItemTapped,
       ),
       child: HomePageWidget(
-          widgetOptions: _widgetOptions, selectedIndex: _selectedIndex),
+        widgetOptions: _widgetOptions,
+        selectedIndex: _selectedIndex,
+      ),
     );
   }
 
