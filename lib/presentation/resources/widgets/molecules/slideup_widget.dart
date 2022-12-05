@@ -17,7 +17,6 @@ class SlideUpWidget extends StatelessWidget {
         // Title, sub-title, Sign in, Sign up
         panel: Container(
             alignment: Alignment.topCenter,
-            //padding: const EdgeInsets.all(40.0),
             child: Column(
               children: [
                 Container(
@@ -53,13 +52,21 @@ class SlideUpWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpScreen()),
-                      );
-                    },
+                    onPressed: () => showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                        ),
+                        context: context,
+                        builder: (context) {
+                          return SizedBox(
+                              height: 750,
+                              width: MediaQuery.of(context).size.width,
+                              child: const SignUpScreen());
+                        }),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -76,13 +83,6 @@ class SlideUpWidget extends StatelessWidget {
                         width: 1.5,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignInScreen()),
-                      );
-                    },
                     label: Text(
                       "Sign In",
                       style: GoogleFonts.poppins(
@@ -91,9 +91,22 @@ class SlideUpWidget extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
+                    onPressed: () => showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                        ),
+                        context: context,
+                        builder: (context) {
+                          return SizedBox(
+                              height: 400,
+                              width: MediaQuery.of(context).size.width,
+                              child: const SignInScreen());
+                        }),
                   ),
                 ),
-                //),
               ],
             )),
 

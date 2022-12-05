@@ -1,8 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:travalong/presentation/profile_screens/home_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import '../../main.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -15,6 +18,22 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void _signIn() async {
+    final User? user = (await _auth.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text))
+        .user;
+
+    if (user != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    }
+
+    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -24,18 +43,16 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _renderSignIn() {
-    return SlidingUpPanel(
-      body: const Center(),
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(20.0),
-        topRight: Radius.circular(20.0),
+    return Container(
+      decoration: const BoxDecoration(
+        color: TravalongColors.neutral_60,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
       ),
-      defaultPanelState: PanelState.OPEN,
-      minHeight: 400,
-      maxHeight: 400,
-      isDraggable: false,
-      panel: Container(
-        padding: const EdgeInsets.all(40.0),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -44,6 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 const Text(
                   "Sign In",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -65,11 +83,16 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
             const SizedBox(height: 40),
-            TextField(
+            TextFormField(
               controller: _emailController,
               autofocus: false,
               autocorrect: false,
               enableSuggestions: false,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (email) =>
+                  email != null && !EmailValidator.validate(email)
+                      ? 'Enter a valid email'
+                      : null,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: TravalongColors.primary_30,
@@ -95,12 +118,16 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(
               height: 20.0,
             ),
-            TextField(
+            TextFormField(
               controller: _passwordController,
               obscureText: true,
               autofocus: false,
               autocorrect: false,
               enableSuggestions: false,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) => value != null && value.length < 6
+                  ? 'Password must be min. 6 characters'
+                  : null,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: TravalongColors.primary_30,
@@ -142,12 +169,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   final password = _passwordController.text;
 
                   if (email.isEmpty || password.isEmpty) {
-                    showDialog(
+                    showCupertinoDialog(
                         context: context,
-                        builder: (_) => AlertDialog(
-                              title: const Text('Error'),
+                        builder: (_) => CupertinoAlertDialog(
+                              title: const Text('Fill in your user details'),
                               content: const Text(
-                                  'Please enter your email and password'),
+                                  'Inorder to sign in, you must fill in the details'),
                               actions: [
                                 TextButton(
                                   child: const Text('OK'),
@@ -159,7 +186,29 @@ class _SignInScreenState extends State<SignInScreen> {
                             ));
                     return;
                   }
-                  _signIn();
+                  if (_auth.currentUser == null) {
+                    showCupertinoDialog(
+                        context: context,
+                        builder: (_) => CupertinoAlertDialog(
+                              title: const Text('Incorrect details'),
+                              content: const Text(
+                                  'Please enter a correct email and password inorder to sign in'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () =>
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog'),
+                                )
+                              ],
+                            ));
+                    return;
+                  }
+                  try {
+                    _signIn();
+                  } catch (e) {
+                    return;
+                  }
                 },
               ),
             ),
@@ -169,42 +218,11 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Future _signIn() async {
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => const Center(
-    //     child: CircularProgressIndicator(
-    //       color: TravalongColors.secondary_10,
-    //     ),
-    //   ),
-    // );
-
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      //Utils.showSnackBar(e.message);
-      print(e);
-    }
-
-    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
-  }
-
   @override
   Widget build(BuildContext context) {
     //_emailController.text = "";
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: TravalongColors.primary_30,
-        //extendBodyBehindAppBar: true,
-        //resizeToAvoidBottomInset: false,
-        body: _renderSignIn(),
-            //_renderSignUp(),
-        ),
-    );
+    return _renderSignIn();
+    //extendBodyBehindAppBar: true,
   }
 }
