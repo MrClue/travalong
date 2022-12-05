@@ -19,22 +19,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _signIn() async {
-    final User? user = (await _auth.signInWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text))
-        .user;
-
-    if (user != null) {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    }
-
-    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
-  }
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -187,24 +171,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ));
                     return;
                   }
-                  if (_auth.currentUser == null) {
-                    showCupertinoDialog(
-                        context: context,
-                        builder: (_) => CupertinoAlertDialog(
-                              title: const Text('Incorrect details'),
-                              content: const Text(
-                                  'Please enter a correct email and password inorder to sign in'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () =>
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop('dialog'),
-                                )
-                              ],
-                            ));
-                    return;
-                  }
+
                   try {
                     _signIn();
                   } catch (e) {
@@ -225,5 +192,39 @@ class _SignInScreenState extends State<SignInScreen> {
 
     return _renderSignIn();
     //extendBodyBehindAppBar: true,
+  }
+
+  void _signIn() async {
+    final User? user = (await _auth.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text))
+        .user;
+
+    if (user != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } /*else {
+      
+      showCupertinoDialog(
+          context: context,
+          builder: (_) => CupertinoAlertDialog(
+                title: const Text('Incorrect details'),
+                content: const Text(
+                    'Please enter a correct email and password inorder to sign in'),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () => Navigator.of(context, rootNavigator: true)
+                        .pop('dialog'),
+                  )
+                ],
+              ));
+      return;
+      
+    } */
+
+    //navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
