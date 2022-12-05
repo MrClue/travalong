@@ -80,11 +80,11 @@ class _InterestsWidgetState extends State<InterestsWidget> {
     Interest(id: 8, name: "Interest8"),
   ];
   final _items = _interests
-      .map((interest) => MultiSelectItem<Interest>(interest, interest.name))
+      .map((interest) => MultiSelectItem<Interest?>(interest, interest.name))
       .toList();
 
   List<Interest> _selectedInterests = [];
-  final _multiSelectKey = GlobalKey<FormFieldState>();
+  //final _multiSelectKey = GlobalKey<FormFieldState>();
 
   @override
   void initState() {
@@ -100,7 +100,7 @@ class _InterestsWidgetState extends State<InterestsWidget> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 40),
+            //const SizedBox(height: 40),
             Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor.withOpacity(.4),
@@ -112,19 +112,24 @@ class _InterestsWidgetState extends State<InterestsWidget> {
               child: Column(
                 children: <Widget>[
                   MultiSelectBottomSheetField(
+                    isDismissible:
+                        false, // ! throws error if "true" (when clicking outside widget to close it down)
                     initialChildSize: 0.4,
                     listType: MultiSelectListType.CHIP,
                     searchable: true,
-                    buttonText: const Text("Your Interests"),
+                    buttonText: const Text("Select your interests"),
                     title: const Text("Interests"),
                     items: _items,
                     onConfirm: (values) {
+                      /*
                       List<Interest> bufferSelectedInterest = [];
-                      var newValues = values as List<MultiSelectItem<Interest>>;
+                      var newValues = values as List<MultiSelectItem<Interest>>
                       newValues.forEach((element) {
                         bufferSelectedInterest.add(element.value);
                       });
                       _selectedInterests = bufferSelectedInterest;
+                      */
+                      _selectedInterests = values.cast<Interest>();
                     },
                     chipDisplay: MultiSelectChipDisplay(
                       onTap: (value) {
@@ -134,19 +139,20 @@ class _InterestsWidgetState extends State<InterestsWidget> {
                       },
                     ),
                   ),
-                  _selectedInterests.isEmpty
+                  /*_selectedInterests.isEmpty // TODO: not working properly
                       ? Container(
                           padding: const EdgeInsets.all(10),
                           alignment: Alignment.centerLeft,
                           child: const Text(
                             "None selected",
                             style: TextStyle(color: Colors.black54),
-                          ))
-                      : Container(),
+                          ),
+                        )
+                      : Container(),*/
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            //const SizedBox(height: 40),
           ],
         ),
       ),
