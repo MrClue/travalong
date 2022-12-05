@@ -9,7 +9,7 @@ import 'logic/services/AuthService.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "FixError", // ! maybee remove
+    //name: "FixError", // ! maybee remove
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
