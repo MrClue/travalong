@@ -1,4 +1,3 @@
-name: MrCI
 on:
   push:
     branches:
@@ -7,18 +6,19 @@ on:
 
 jobs:
   build:
+    name: My CI Pipeline
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Flutter and Dart
+    - name: Set up Flutter
       uses: subosito/flutter-action@v1
       with:
         channel: stable
-        dart-version: '2.17.5'
         flutter-version: '1.22.0'
+        dart-version: '2.17.5'
     - name: Build and test
       run: |
-        flutter build ios
-        flutter build android
-        flutter build web
-        flutter test
+        flutter --dart-version=2.17.5 build ios
+        flutter --dart-version=2.17.5 build android
+        flutter --dart-version=2.17.5 build web
+        flutter --dart-version=2.17.5 test
