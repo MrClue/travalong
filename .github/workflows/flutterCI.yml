@@ -1,4 +1,4 @@
-name: CI
+name: CI_Fix
 on:
   push:
     branches: [ "main", "development"]
