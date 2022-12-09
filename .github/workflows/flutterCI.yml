@@ -18,7 +18,7 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+#      - name: Verify formatting
+#        run: dart format --output=none --set-exit-if-changed .
       - run: flutter analyze --no-unused-imports
       - run: flutter test
