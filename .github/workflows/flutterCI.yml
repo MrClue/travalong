@@ -20,5 +20,5 @@ jobs:
       - run: flutter pub get
 #      - name: Verify formatting
 #        run: dart format --output=none --set-exit-if-changed .
-      - run: flutter analyze --no-unused-imports
+      - run: flutter analyze --watch
       - run: flutter test
