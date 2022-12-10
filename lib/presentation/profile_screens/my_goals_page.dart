@@ -3,8 +3,6 @@ import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 
-import '../resources/widgets/molecules/topbar.dart';
-
 class MyGoalsPage extends StatelessWidget {
   const MyGoalsPage({super.key});
 
