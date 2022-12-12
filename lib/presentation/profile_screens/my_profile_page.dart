@@ -24,9 +24,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
     return SafeScaffoldNoNavbar(
       topbar: ThemeTopBar(
         title: "My Profile",
-        backArrow: BackArrow(),
+        backArrow: const BackArrow(),
         enableCustomButton: true,
-        customButtonWidget: SaveButtonWidget(onPress: saveAction()),
+        customButtonWidget:
+            SaveButtonWidget(onPress: () => saveAction()), // todo: fix warning
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
