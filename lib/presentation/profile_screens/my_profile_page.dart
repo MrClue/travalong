@@ -22,11 +22,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
-      topbar: const ThemeTopBar(
+      topbar: ThemeTopBar(
         title: "My Profile",
-        backArrow: BackArrow(),
+        backArrow: const BackArrow(),
         enableCustomButton: true,
-        customButtonWidget: SaveButtonWidget(),
+        customButtonWidget:
+            SaveButtonWidget(onPress: () => saveAction()), // todo: fix warning
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -47,16 +48,18 @@ class _MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
+  // * onPress parameter for SaveButtonWidget
   void saveAction() {
-    // TODO: First save all data
-
-    Navigator.pop(context); // return to previous page
+    // TODO: Save stuff to database
   }
 }
 
 class SaveButtonWidget extends StatelessWidget {
+  final void onPress;
+
   const SaveButtonWidget({
     Key? key,
+    required this.onPress,
   }) : super(key: key);
 
   @override
@@ -72,8 +75,7 @@ class SaveButtonWidget extends StatelessWidget {
             color: TravalongColors.secondary_10),
       ),
       onPressed: (() => {
-            // TODO: First save all data
-
+            onPress,
             Navigator.pop(context) // return to previous page
           }),
     );

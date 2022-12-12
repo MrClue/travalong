@@ -29,13 +29,24 @@ class _HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoTopbar(
-      navbar: BottomNavigationBar(
-        elevation: 0,
-        iconSize: 40,
-        items: items(),
-        currentIndex: _selectedIndex,
-        selectedItemColor: TravalongColors.secondary_10,
-        onTap: _onItemTapped,
+      navbar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: TravalongColors.primary_30,
+              width: 1.5,
+            ),
+          ),
+        ),
+        child: BottomNavigationBar(
+          elevation: 0,
+          iconSize: 40,
+          items: items(),
+          currentIndex: _selectedIndex,
+          selectedItemColor: TravalongColors.secondary_10,
+          backgroundColor: TravalongColors.neutral_60,
+          onTap: _onItemTapped,
+        ),
       ),
       child: HomePageWidget(
         widgetOptions: _widgetOptions,

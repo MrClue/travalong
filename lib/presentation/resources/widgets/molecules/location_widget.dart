@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
@@ -13,11 +15,11 @@ class LocationWidget extends StatefulWidget {
 }
 
 class _LocationWidgetState extends State<LocationWidget> {
-  /*
-  String userLocation = "Current Location";
-  late String lat;
-  late String long;
+  String _userLocation = "";
+  //late String lat;
+  //late String long;
 
+  /*
   // * Getting Current User Location
   Future<Position> _getCurrentLocation() async {
     // check if location service is enabled on user device
@@ -42,10 +44,14 @@ class _LocationWidgetState extends State<LocationWidget> {
 
     // when permissions are granted we can
     // get the current position of device
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-  }
-  */
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    return position;
+
+    /*return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);*/
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -66,39 +72,70 @@ class _LocationWidgetState extends State<LocationWidget> {
         ThemeContainer(
           height: 40,
           child: Row(
-            children: const [
+            children: [
               ThemeText(
-                textString: "City, Country", // TODO: fetch device location
+                textString: _userLocation, // TODO: fetch device location
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 textColor: TravalongColors.primary_text_bright,
               ),
+              const Spacer(), // moves button to right side
+              ElevatedButton(
+                // TODO: change ElevatedButton to custom button
+                onPressed: () async {
+                  // TODO: move logic to "Domain" layer
+
+                  // check if location service is enabled on user device
+                  bool serviceEnabled =
+                      await Geolocator.isLocationServiceEnabled();
+                  if (!serviceEnabled) {
+                    return Future.error("Location services are disabled.");
+                  }
+
+                  // check/get permission for location access
+                  LocationPermission permission =
+                      await Geolocator.checkPermission();
+
+                  if (permission == LocationPermission.denied) {
+                    permission = await Geolocator.requestPermission();
+                    if (permission == LocationPermission.denied) {
+                      return Future.error("Location permissions are denied.");
+                    }
+                  }
+
+                  if (permission == LocationPermission.deniedForever) {
+                    return Future.error(
+                        "Location permissions are permanently denied, cannot request permissions.");
+                  }
+
+                  // when permissions are granted we can
+                  // get the current position of device
+                  Position position = await Geolocator.getCurrentPosition(
+                      desiredAccuracy: LocationAccuracy.high);
+
+                  // get city and country based on coordinates
+                  List<Placemark> placemarks = await GeocodingPlatform.instance
+                      .placemarkFromCoordinates(
+                          position.latitude, position.longitude);
+
+                  // Get the first placemark from the list
+                  Placemark placemark = placemarks[0];
+
+                  // Store the city and country in a string
+                  String? city = placemark.locality;
+                  String? country = placemark.country;
+
+                  setState(() {
+                    _userLocation = '$city, $country';
+                  });
+
+                  // todo: update database with _userLocation
+                },
+                child: const Icon(Icons.update),
+              ),
             ],
           ),
         ),
-
-        /*
-        Text(
-          userLocation,
-          textAlign: TextAlign.center,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            _getCurrentLocation().then((position) {
-              lat = "${position.latitude}";
-              long = "${position.longitude}";
-
-              // update values
-              setState(() {
-                userLocation = "Lat: $lat, Long: $long";
-              });
-
-              // * video 1:18
-            });
-          },
-          child: const Text("Get Current Location"),
-        ),
-        */
       ],
     );
   }

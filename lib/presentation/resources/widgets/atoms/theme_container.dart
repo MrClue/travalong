@@ -4,9 +4,14 @@ import '../../colors.dart';
 
 class ThemeContainer extends StatelessWidget {
   final double height;
+  //final double width;
   final Widget child;
 
-  const ThemeContainer({super.key, required this.height, required this.child});
+  const ThemeContainer({
+    super.key,
+    required this.height,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
