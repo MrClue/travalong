@@ -1,18 +1,18 @@
 class User {
-  final String imagePath;
-  final String name;
-  final int age, connections, media, goalsCompleted;
-  final String city;
-  final String country;
+  String uid, name, city, country;
+  int age, connections, sharedMedia, goalsCompleted;
+  late Map<String, String> media, chats, interest, travelGoals;
+  //connection
 
-  const User({
-    required this.imagePath,
+  User({
+    required this.uid,
     required this.name,
-    required this.age,
     required this.city,
     required this.country,
+    required this.age,
     required this.connections,
-    required this.media,
+    required this.sharedMedia,
     required this.goalsCompleted,
+    // required this.connection,
   });
 }

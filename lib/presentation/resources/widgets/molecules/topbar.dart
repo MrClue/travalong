@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
+class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
   final Widget goToPage;
   final Widget? leading;
 
   const TopBarWithAction({
-    Key ? key,
+    Key? key,
     required this.title,
     required this.goToPage,
     this.leading,
@@ -52,7 +52,6 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget{
   static final _topBarWithAction = AppBar();
   @override
   Size get preferredSize => _topBarWithAction.preferredSize;
-
 }
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
@@ -61,7 +60,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
 
   const TopBar({
-    Key ? key,
+    Key? key,
     required this.title,
     this.goToPage,
     this.leading,
@@ -92,7 +91,6 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => _topBar.preferredSize;
-
 }
 
 class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
@@ -101,7 +99,7 @@ class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
 
   const TopBarChat({
-    Key ? key,
+    Key? key,
     required this.title,
     required this.goToPage,
     this.leading,
@@ -111,7 +109,7 @@ class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
-      leadingWidth: 100,
+      //leadingWidth: 80,
       centerTitle: true,
       title: Text(
         title,
@@ -126,15 +124,15 @@ class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 0.0,
       actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.edit_outlined,
-              color: TravalongColors.secondary_10,
-            ),
-            onPressed: () {
-              goToPage();
-            },
+        IconButton(
+          icon: const Icon(
+            Icons.edit_outlined,
+            color: TravalongColors.secondary_10,
           ),
+          onPressed: () {
+            goToPage();
+          },
+        ),
       ],
     );
   }
@@ -143,6 +141,34 @@ class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => _topBarChat.preferredSize;
-
 }
 
+class TopBarChatName extends StatelessWidget implements PreferredSizeWidget {
+  final Widget? goToPage;
+  final Widget? leading;
+  final Widget title;
+
+  const TopBarChatName({
+    Key? key,
+    this.goToPage,
+    this.leading,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      centerTitle:
+          true, // ! Does not affect the centerTitle of a row in a widget...
+      title: title,
+      backgroundColor: Colors.white,
+      elevation: 0.0,
+    );
+  }
+
+  static final _topBarChatName = AppBar();
+
+  @override
+  Size get preferredSize => _topBarChatName.preferredSize;
+}

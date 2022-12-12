@@ -8,7 +8,7 @@ class BackArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-        constraints: const BoxConstraints.expand(width: 80),
+        //constraints: const BoxConstraints.expand(width: 80),
         onPressed: () {
           Navigator.pop(context);
         },
