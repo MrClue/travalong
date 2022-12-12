@@ -45,7 +45,10 @@ class _MessageScreenState extends State<MessagesScreen> {
             child: _Connections(),
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate(_delegate),
+            delegate: SliverChildBuilderDelegate(
+              _delegate,
+              childCount: 3, // !Number of chats
+            ),
           )
         ],
       ),
@@ -211,9 +214,9 @@ class _Connections extends StatelessWidget {
                         Text(
                           'Connections',
                           style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.normal,
                             fontSize: 16,
-                            color: TravalongColors.primary_text_dark,
+                            color: TravalongColors.primary_text_bright,
                           ),
                         ),
                         SizedBox(
@@ -243,6 +246,7 @@ class _Connections extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.builder(
+                      itemCount: 4, // !Number of connections
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
                         final faker = Faker();

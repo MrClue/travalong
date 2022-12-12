@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 
 import '../../data/messages_data.dart';
-import '../resources/widgets/atoms/icon_border.dart';
 import '../resources/widgets/atoms/send_button.dart';
 import '../resources/widgets/molecules/avatar.dart';
 
@@ -26,10 +26,12 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopBar(
-        //title: _AppBarTitle(messageData: messageData,),
-        title: "TODO Person",
-        leading: BackArrow(), 
+      appBar: TopBarChatName(
+        title: _AppBarTitle(
+          messageData: messageData,
+        ),
+        //title: "TODO Person",
+        leading: BackArrow(),
       ),
       body: Column(
         children: const [
@@ -129,10 +131,11 @@ class _MessageTile extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
-                child: Text(message,
-                style: const TextStyle(
-                      color: TravalongColors.primary_text_dark,
-                    ),
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: TravalongColors.primary_text_bright,
+                  ),
                 ),
               ),
             ),
@@ -141,7 +144,7 @@ class _MessageTile extends StatelessWidget {
               child: Text(
                 messageDate,
                 style: const TextStyle(
-                  color: TravalongColors.primary_text_dark,
+                  color: TravalongColors.primary_text_bright,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -190,7 +193,7 @@ class _MessageOwnTile extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
                 child: Text(message,
                     style: const TextStyle(
-                      color: TravalongColors.primary_text_bright,
+                      color: TravalongColors.primary_text_dark,
                     )),
               ),
             ),
@@ -199,7 +202,7 @@ class _MessageOwnTile extends StatelessWidget {
               child: Text(
                 messageDate,
                 style: const TextStyle(
-                  color: TravalongColors.primary_text_dark,
+                  color: TravalongColors.primary_text_bright,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -233,7 +236,7 @@ class _DateLable extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                color: TravalongColors.primary_text_dark,
+                color: TravalongColors.primary_text_bright,
               ),
             ),
           ),
@@ -254,6 +257,8 @@ class _AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Avatar.small(
           url: messageData.profilePicture,
@@ -261,28 +266,14 @@ class _AppBarTitle extends StatelessWidget {
         const SizedBox(
           width: 16,
         ),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                messageData.senderName,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 14),
-              ),
-              const SizedBox(height: 2),
-              const Text(
-                'Online now',
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-        )
+        Text(
+          messageData.senderName,
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.normal,
+              fontSize: 20,
+              color: TravalongColors.primary_text_bright),
+        ),
       ],
     );
   }

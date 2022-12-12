@@ -1,15 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travalong/logic/user.dart';
-import "package:travalong/presentation/resources/colors.dart";
+import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/logic/services/database_service.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
     Key? key,
-    required this.user,
+    //required this.user,
   }) : super(key: key);
 
-  final User user;
+  @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+var collection = FirebaseFirestore.instance.collection('users');
+
+class _ProfileWidgetState extends State<ProfileWidget> {
+  String? docId = FirebaseAuth.instance.currentUser?.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +51,10 @@ class ProfileWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(user.imagePath),
+                  backgroundImage: NetworkImage(
+                      'https://pfpmaker.com/_nuxt/img/profile-3-1.3e702c5.png'),
                 ),
                 const SizedBox(
                   width: 15.0,
@@ -54,13 +65,29 @@ class ProfileWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            style: GoogleFonts.poppins(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w700,
-                                height: 0),
-                            textAlign: TextAlign.left,
-                            user.name,
+                          // ! get name from Firabase Firestore
+                          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                            stream:
+                                collection.doc(docId.toString()).snapshots(),
+                            builder: (_, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Error = ${snapshot.error}');
+                              }
+                              if (snapshot.hasData) {
+                                var output = snapshot.data!.data();
+                                var value = output!['name']; // <-- Your value
+                                return Text(
+                                  '$value',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      height: 0),
+                                  textAlign: TextAlign.left,
+                                );
+                              }
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            },
                           ),
                           Text(
                             style: GoogleFonts.poppins(
@@ -69,7 +96,7 @@ class ProfileWidget extends StatelessWidget {
                                 color: TravalongColors.secondary_text_bright,
                                 height: 0),
                             textAlign: TextAlign.left,
-                            ", ${user.age}",
+                            ", 26",
                           ),
                         ],
                       ),
@@ -83,7 +110,7 @@ class ProfileWidget extends StatelessWidget {
                         textAlign: TextAlign.left,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        "${user.city}, ${user.country}",
+                        "Odense, Denmark",
                       ),
                     ],
                   ),
@@ -100,7 +127,7 @@ class ProfileWidget extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "${user.connections}",
+                      "5",
                       style: GoogleFonts.poppins(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
@@ -118,7 +145,7 @@ class ProfileWidget extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "${user.media}",
+                      "3",
                       style: GoogleFonts.poppins(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
@@ -136,7 +163,7 @@ class ProfileWidget extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "${user.goalsCompleted}%",
+                      "40%",
                       style: GoogleFonts.poppins(
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
