@@ -1,10 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/logic/services/database_service.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -45,7 +44,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center, // ! maybee not needed
           children: [
             // * top row
             Row(
@@ -62,6 +60,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -76,7 +75,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               if (snapshot.hasData) {
                                 var output = snapshot.data!.data();
                                 var value = output!['name']; // <-- Your value
-                                return Text(
+                                return AutoSizeText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                   '$value',
                                   style: GoogleFonts.poppins(
                                       fontSize: 30,
@@ -89,7 +90,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   child: CircularProgressIndicator());
                             },
                           ),
-                          Text(
+                          /*AutoSizeText(
                             style: GoogleFonts.poppins(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
@@ -97,7 +98,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 height: 0),
                             textAlign: TextAlign.left,
                             ", 26",
-                          ),
+                            maxLines: 1,
+                          ),*/
                         ],
                       ),
                       Text(

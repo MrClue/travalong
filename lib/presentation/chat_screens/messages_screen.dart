@@ -9,10 +9,8 @@ import '../../data/messages_data.dart';
 import '../../data/story_data.dart';
 import '../resources/Helpers.dart';
 import '../resources/widgets/molecules/avatar.dart';
-import '../resources/widgets/molecules/icon_text_btn_widget.dart';
 import '../resources/widgets/molecules/search_bar.dart';
 import '../resources/widgets/molecules/topbar.dart';
-import 'chat_search_results.dart';
 import 'new_chat_page.dart';
 import 'chat_screen.dart';
 

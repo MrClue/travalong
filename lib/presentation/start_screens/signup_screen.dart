@@ -297,7 +297,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (value == true) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const StartScreen(),
+            builder: (context) =>
+                const ProfilePage(), // ! changed from StartScreen()
           ),
         );
       }
