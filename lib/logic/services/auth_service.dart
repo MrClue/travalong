@@ -1,7 +1,5 @@
-import 'dart:js';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/data/model/user.dart';
 import 'database_service.dart';
 
 class AuthService {
@@ -10,15 +8,25 @@ class AuthService {
   // ! Register user
   Future registerUser(String name, String email, String password) async {
     try {
-      User user = (await firebaseAuth.createUserWithEmailAndPassword(
+      // User is FirebaseAuth user account that is used to sign in
+      User authUser = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
           .user!;
 
-      if (user != null) {
+      // AppUser refers to the user in the app. The current user and its data.
+      AppUser user = AppUser(
+        name: name,
+        email: email,
+        uid: authUser.uid,
+      );
+
+      if (authUser != null) {
         // call our database service to update the user data.
-        await DatabaseService(uid: user.uid).savingUserData(name, email);
+        await DatabaseService(uid: authUser.uid).savingUserData(
+          AppUser(uid: authUser.uid, name: name, email: email),
+        );
         return true;
-      } else if (user == null) {
+      } else if (authUser == null) {
         return false;
       }
     } on FirebaseAuthException catch (e) {

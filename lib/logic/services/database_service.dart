@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travalong/data/model/user.dart';
 
 class DatabaseService {
   final String? uid;
@@ -12,21 +13,9 @@ class DatabaseService {
       FirebaseFirestore.instance.collection("chats");
 
   // saving the userdata
-  Future savingUserData(String name, String email) async {
-    return await userCollection.doc(uid).set({
-      "uid": uid,
-      "name": name,
-      "email": email,
-      "age": "",
-      "city": "",
-      "connections": "",
-      "shareMedia": "",
-      "goalsCompleted": "",
-      "media": {},
-      "chats": {},
-      "interest": {},
-      "travelgoals": {},
-    });
+  Future savingUserData(AppUser user) async {
+    final json = user.toJson();
+    return await userCollection.doc(uid).set(json);
   }
 
   // getting user data

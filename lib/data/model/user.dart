@@ -1,49 +1,103 @@
-import 'package:meta/meta.dart';
+// ! This is User and its data, followed by a toJSON conversion
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UserField {
-  static final String lastMessageTime = 'lastMessageTime';
+final String usersField = 'users'; // Used to refer to collection in Firebase
+
+class UserData {
+  static List<String> values = [
+    uid, name, email, urlAvatar, city, country, age, connections, sharedMedia,
+    goalsCompleted, media, chats, interests, travelgoals
+    //connection
+  ];
+
+  static String uid = 'uid';
+  static String name = 'name';
+  static String email = 'email';
+  static String urlAvatar = 'urlAvatar';
+  static String city = 'city';
+  static String country = 'country';
+  static String age = 'age';
+  static String connections = 'connections';
+  static String sharedMedia = 'sharedMedia';
+  static String goalsCompleted = 'goalsCompleted';
+  static String media = 'media';
+  static String chats = 'chats';
+  static String interests = 'interests';
+  static String travelgoals = 'travelgoals';
 }
 
-class User {
-  final String idUser;
-  final String name;
-  final String urlAvatar;
-  final DateTime lastMessageTime;
+class AppUser {
+  String? uid, name, email, urlAvatar, city, country;
+  int? age, connections, sharedMedia, goalsCompleted;
+  Map<String, Object>? media, chats, interests, travelgoals;
 
-  const User({
-    required this.idUser,
+  AppUser({
+    required this.uid,
     required this.name,
-    required this.urlAvatar,
-    required this.lastMessageTime,
+    required this.email,
+    this.urlAvatar,
+    this.city,
+    this.country,
+    this.age,
+    this.connections,
+    this.sharedMedia,
+    this.goalsCompleted,
+    this.media,
+    this.chats,
+    this.interests,
+    this.travelgoals,
+    // required this.connection,
   });
 
-  User copyWith({
-    String? idUser,
-    String? name,
-    String? urlAvatar,
-    String? lastMessageTime,
-  }) =>
-      User(
-        idUser: idUser ?? this.idUser,
-        name: name ?? this.name,
-        urlAvatar: urlAvatar ?? this.urlAvatar,
-        lastMessageTime: this.lastMessageTime,
-      );
-
-  static User fromJson(Map<String, dynamic> json) => User(
-        idUser: json['idUser'],
-        name: json['name'],
-        urlAvatar: json['urlAvatar'],
-        lastMessageTime: Utils.toDateTime(json['lastMessageTime']),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'idUser': idUser,
-        'name': name,
-        'urlAvatar': urlAvatar,
-        'lastMessageTime': Utils.fromDateTimeToJson(lastMessageTime),
+  //To assist in JSON conversion
+  //Map of key value
+  Map<String, Object?> toJson() => {
+        UserData.uid: uid,
+        UserData.name: name,
+        UserData.email: email,
+        UserData.urlAvatar: urlAvatar,
+        UserData.city: city,
+        UserData.country: country,
+        UserData.age: age,
+        UserData.connections: connections,
+        UserData.sharedMedia: sharedMedia,
+        UserData.goalsCompleted: goalsCompleted,
+        UserData.media: media,
+        UserData.chats: chats,
+        UserData.interests: interests,
+        UserData.travelgoals: travelgoals,
       };
+
+  AppUser copyWith({
+    String? uid,
+    String? name,
+    String? email,
+    String? urlAvatar,
+  }) =>
+      AppUser(
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        urlAvatar: urlAvatar ?? this.urlAvatar,
+      );
+
+  static AppUser fromJSON(Map<String, Object?> json) => AppUser(
+        uid: json[UserData.uid] as String,
+        name: json[UserData.name] as String,
+        email: json[UserData.email] as String,
+        urlAvatar: json[UserData.urlAvatar] as String,
+        city: json[UserData.city] as String,
+        country: json[UserData.country] as String,
+        age: json[UserData.age] as int,
+        connections: json[UserData.connections] as int,
+        sharedMedia: json[UserData.sharedMedia] as int,
+        goalsCompleted: json[UserData.goalsCompleted] as int,
+        media: json[UserData.media] as Map<String, Object>,
+        chats: json[UserData.chats] as Map<String, Object>,
+        interests: json[UserData.interests] as Map<String, Object>,
+        travelgoals: json[UserData.travelgoals] as Map<String, Object>,
+      );
 }
 
 class Utils {
