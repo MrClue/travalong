@@ -1,5 +1,4 @@
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/profile_screens/my_goals_page.dart';
 import 'package:travalong/presentation/profile_screens/my_profile_page.dart';
@@ -9,8 +8,6 @@ import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dar
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
-
-import '../resources/widgets/molecules/navbar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

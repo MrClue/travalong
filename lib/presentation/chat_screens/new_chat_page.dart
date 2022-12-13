@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/chat_screens/messages_screen.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
