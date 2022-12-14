@@ -51,6 +51,7 @@ class TravalongApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: SafeScaffoldPure(
+          // * Listen for auth state changes (if user is logged in)
           child: StreamBuilder<User?>(
             stream: AuthService().firebaseAuth.authStateChanges(),
             builder: (context, snapshot) {
@@ -58,13 +59,15 @@ class TravalongApp extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData) // * User is signed in
+              {
                 return const TravalongNavbar();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong..."),
                 );
-              } else {
+              } else // * User needs to sign in
+              {
                 return const StartScreen(); //StartScreen();
               }
             },
