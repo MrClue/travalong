@@ -59,7 +59,7 @@ class TravalongApp extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasData) {
-                return const HomePage();
+                return const TravalongNavbar();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong..."),

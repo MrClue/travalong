@@ -7,7 +7,7 @@ export 'start_screens/signup_screen.dart';
 export 'profile_screens/profile_page.dart';
 export 'profile_screens/my_profile_page.dart';
 export 'profile_screens/my_goals_page.dart';
-export 'home_page.dart';
+export 'travalong_navbar.dart';
 
 // * chat screens
 export 'chat_screens/chat_screen.dart';

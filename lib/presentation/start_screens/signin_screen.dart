@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../home_page.dart';
+import '../travalong_navbar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -203,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
       // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const TravalongNavbar()),
       );
     } /*else {
       

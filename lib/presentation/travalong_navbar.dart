@@ -3,19 +3,20 @@ import 'package:travalong/presentation/chat_screens/messages_screen.dart';
 import 'package:travalong/presentation/profile_screens/profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/search_screens/test_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class TravalongNavbar extends StatefulWidget {
+  const TravalongNavbar({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  TravalongNavbarState createState() => TravalongNavbarState();
 }
 
-class _HomeState extends State<HomePage> {
+class TravalongNavbarState extends State<TravalongNavbar> {
   int _selectedIndex = 2;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    MessagesScreen(), // SearchScreen()
+    TestPage(), // SearchScreen()
     MessagesScreen(),
     ProfilePage(),
   ];
