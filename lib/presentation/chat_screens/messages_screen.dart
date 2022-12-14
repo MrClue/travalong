@@ -1,11 +1,14 @@
 import 'package:faker/faker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:travalong/logic/services/database_service.dart';
 import 'package:travalong/presentation/chat_screens/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
 import '../../data/messages_data.dart';
+import '../../data/model/user.dart';
 import '../../data/story_data.dart';
 import '../resources/Helpers.dart';
 import '../resources/widgets/molecules/avatar.dart';
@@ -21,7 +24,13 @@ class MessagesScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MessageScreenState();
 }
 
+DatabaseService db = DatabaseService();
+FirebaseAuth auth = FirebaseAuth.instance;
+
 class _MessageScreenState extends State<MessagesScreen> {
+  final Faker faker = Faker();
+  final date = Helpers.randomDate();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,28 +46,58 @@ class _MessageScreenState extends State<MessagesScreen> {
               return const NewChatWidget();
             }),
       ),
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: _Connections(),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              _delegate,
-              childCount: 3, // !Number of chats
-            ),
-          )
-        ],
-      ),
+      body: StreamBuilder<List<AppUser>>(
+          stream: readUsers(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong! ${snapshot.error}');
+              }
+            }
+            if (snapshot.hasData) {
+              final users = snapshot.data!;
+              return
+                  //CustomScrollView(
+                  // slivers: [
+                  //const SliverToBoxAdapter(
+                  //child: _Connections(),
+                  //),
+                  //SliverList
+                  ListView(
+                children: users.map(buildUser).toList(),
+                //),
+                //],
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(
+                color: TravalongColors.secondary_10,
+              ),
+            );
+          }),
     );
   }
 
-  Widget _delegate(BuildContext context, int index) {
-    final Faker faker = Faker();
-    final date = Helpers.randomDate();
+  // Stream to get list of users in firebase
+  Stream<List<AppUser>> readUsers() =>
+      db.userCollection.snapshots().map((list) => list.docs
+          .map((doc) => AppUser.newfromJSON(doc.data() as Map<String, dynamic>))
+          .toList());
+
+  Widget buildUser(AppUser user) => ListTile(
+        leading: CircleAvatar(child: Text(Helpers.randomPictureUrl())),
+        title: Text(user.name!),
+        subtitle: Text(faker.lorem.sentence()),
+      );
+
+  // ! Not using currently
+  Widget _delegate(
+    BuildContext context,
+    int index,
+  ) {
     return _MessageTile(
       messageData: MessageData(
-        senderName: faker.person.name(),
+        senderName: 'name',
         message: faker.lorem.sentence(),
         messageDate: date,
         dateMessage: Jiffy(date).fromNow(),
@@ -68,7 +107,8 @@ class _MessageScreenState extends State<MessagesScreen> {
   }
 }
 
-class _MessageTile extends StatelessWidget {
+// ! Not using currently
+class _MessageTile extends StatefulWidget {
   const _MessageTile({
     Key? key,
     required this.messageData,
@@ -77,10 +117,15 @@ class _MessageTile extends StatelessWidget {
   final MessageData messageData;
 
   @override
+  State<_MessageTile> createState() => _MessageTileState();
+}
+
+class _MessageTileState extends State<_MessageTile> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(ChatScreen.route(messageData));
+        Navigator.of(context).push(ChatScreen.route(widget.messageData));
       },
       child: Container(
         height: 95,
@@ -100,7 +145,7 @@ class _MessageTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: Avatar.large(url: messageData.profilePicture),
+                child: Avatar.large(url: widget.messageData.profilePicture),
               ),
               Expanded(
                 child: Column(
@@ -110,7 +155,7 @@ class _MessageTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2.0),
                       child: Text(
-                        messageData.senderName,
+                        widget.messageData.senderName,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           letterSpacing: 0.2,
@@ -122,7 +167,7 @@ class _MessageTile extends StatelessWidget {
                     SizedBox(
                       height: 20,
                       child: Text(
-                        messageData.message,
+                        widget.messageData.message,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12,
@@ -143,7 +188,7 @@ class _MessageTile extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      messageData.dateMessage.toUpperCase(),
+                      widget.messageData.dateMessage.toUpperCase(),
                       style: const TextStyle(
                         fontSize: 11,
                         letterSpacing: -0.2,

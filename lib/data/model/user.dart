@@ -6,7 +6,8 @@ final String usersField = 'users'; // Used to refer to collection in Firebase
 
 class UserData {
   static List<String> values = [
-    uid, name, email, urlAvatar, city, country, age, connections, sharedMedia,
+    uid, name, email, urlAvatar, city, country, age, bio, connections,
+    sharedMedia,
     goalsCompleted, media, chats, interests, travelgoals
     //connection
   ];
@@ -18,6 +19,7 @@ class UserData {
   static String city = 'city';
   static String country = 'country';
   static String age = 'age';
+  static String bio = 'bio';
   static String connections = 'connections';
   static String sharedMedia = 'sharedMedia';
   static String goalsCompleted = 'goalsCompleted';
@@ -28,7 +30,7 @@ class UserData {
 }
 
 class AppUser {
-  String? uid, name, email, urlAvatar, city, country;
+  String? uid, name, email, urlAvatar, bio, city, country;
   int? age, connections, sharedMedia, goalsCompleted;
   Map<String, Object>? media, chats, interests, travelgoals;
 
@@ -37,6 +39,7 @@ class AppUser {
     required this.name,
     required this.email,
     this.urlAvatar,
+    this.bio,
     this.city,
     this.country,
     this.age,
@@ -52,11 +55,12 @@ class AppUser {
 
   //To assist in JSON conversion
   //Map of key value
-  Map<String, Object?> toJson() => {
+  Map<String, dynamic> toJson() => {
         UserData.uid: uid,
         UserData.name: name,
         UserData.email: email,
         UserData.urlAvatar: urlAvatar,
+        UserData.bio: bio,
         UserData.city: city,
         UserData.country: country,
         UserData.age: age,
@@ -82,11 +86,18 @@ class AppUser {
         urlAvatar: urlAvatar ?? this.urlAvatar,
       );
 
-  static AppUser fromJSON(Map<String, Object?> json) => AppUser(
+  static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
+        uid: json[UserData.uid] as String,
+        name: json[UserData.name] as String,
+        email: json[UserData.email] as String,
+      );
+
+  static AppUser fromJSON(Map<String, dynamic> json) => AppUser(
         uid: json[UserData.uid] as String,
         name: json[UserData.name] as String,
         email: json[UserData.email] as String,
         urlAvatar: json[UserData.urlAvatar] as String,
+        bio: json[UserData.bio] as String,
         city: json[UserData.city] as String,
         country: json[UserData.country] as String,
         age: json[UserData.age] as int,
