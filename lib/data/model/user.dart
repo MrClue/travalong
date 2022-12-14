@@ -1,17 +1,7 @@
 // ! This is User and its data, followed by a toJSON conversion
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-final String usersField = 'users'; // Used to refer to collection in Firebase
-
+// * This class handles the JSON key-value pairs with the UserData being the key
 class UserData {
-  static List<String> values = [
-    uid, name, email, urlAvatar, city, country, age, bio, connections,
-    sharedMedia,
-    goalsCompleted, media, chats, interests, travelgoals
-    //connection
-  ];
-
   static String uid = 'uid';
   static String name = 'name';
   static String email = 'email';
@@ -29,10 +19,11 @@ class UserData {
   static String travelgoals = 'travelgoals';
 }
 
+// * This class provides the values for each key in the JSON format
 class AppUser {
   String? uid, name, email, urlAvatar, bio, city, country;
   int? age, connections, sharedMedia, goalsCompleted;
-  Map<String, Object>? media, chats, interests, travelgoals;
+  Map<String, dynamic>? media, chats, interests, travelgoals;
 
   AppUser({
     required this.uid,
@@ -53,8 +44,8 @@ class AppUser {
     // required this.connection,
   });
 
-  //To assist in JSON conversion
-  //Map of key value
+  // To assist in JSON conversion
+  // Map of key value
   Map<String, dynamic> toJson() => {
         UserData.uid: uid,
         UserData.name: name,
@@ -73,17 +64,41 @@ class AppUser {
         UserData.travelgoals: travelgoals,
       };
 
-  AppUser copyWith({
+  // * This method can be used on a current AppUser to return a new instance of the AppUser,
+  // * with updated values for each of the properties listed below.
+  AppUser updateField({
     String? uid,
     String? name,
     String? email,
     String? urlAvatar,
+    String? city,
+    String? country,
+    int? age,
+    String? bio,
+    int? connections,
+    int? sharedMedia,
+    int? goalsCompleted,
+    Map<String, dynamic>? media,
+    Map<String, dynamic>? chats,
+    Map<String, dynamic>? interests,
+    Map<String, dynamic>? travelgoals,
   }) =>
       AppUser(
         uid: uid ?? this.uid,
         name: name ?? this.name,
         email: email ?? this.email,
         urlAvatar: urlAvatar ?? this.urlAvatar,
+        city: city ?? this.city,
+        country: country ?? this.country,
+        age: age ?? this.age,
+        bio: bio ?? this.bio,
+        connections: connections ?? this.connections,
+        sharedMedia: sharedMedia ?? this.sharedMedia,
+        goalsCompleted: goalsCompleted ?? this.goalsCompleted,
+        media: media ?? this.media,
+        chats: chats ?? this.chats,
+        interests: interests ?? this.interests,
+        travelgoals: travelgoals ?? this.travelgoals,
       );
 
   static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
@@ -92,6 +107,8 @@ class AppUser {
         email: json[UserData.email] as String,
       );
 
+  // * This method can be used to get the AppUser data from the Firebase DB (stored in JSON format),
+  // * and convert it to an object instance of AppUser
   static AppUser fromJSON(Map<String, dynamic> json) => AppUser(
         uid: json[UserData.uid] as String,
         name: json[UserData.name] as String,
@@ -104,19 +121,9 @@ class AppUser {
         connections: json[UserData.connections] as int,
         sharedMedia: json[UserData.sharedMedia] as int,
         goalsCompleted: json[UserData.goalsCompleted] as int,
-        media: json[UserData.media] as Map<String, Object>,
-        chats: json[UserData.chats] as Map<String, Object>,
-        interests: json[UserData.interests] as Map<String, Object>,
-        travelgoals: json[UserData.travelgoals] as Map<String, Object>,
+        media: json[UserData.media] as Map<String, dynamic>,
+        chats: json[UserData.chats] as Map<String, dynamic>,
+        interests: json[UserData.interests] as Map<String, dynamic>,
+        travelgoals: json[UserData.travelgoals] as Map<String, dynamic>,
       );
-}
-
-class Utils {
-  static DateTime toDateTime(Timestamp value) {
-    return value.toDate();
-  }
-
-  static dynamic fromDateTimeToJson(DateTime date) {
-    return date.toUtc();
-  }
 }

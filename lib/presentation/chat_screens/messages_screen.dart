@@ -10,7 +10,7 @@ import 'package:travalong/presentation/resources/colors.dart';
 import '../../data/messages_data.dart';
 import '../../data/model/user.dart';
 import '../../data/story_data.dart';
-import '../resources/Helpers.dart';
+import '../../logic/Helpers.dart';
 import '../resources/widgets/molecules/avatar.dart';
 import '../resources/widgets/molecules/search_bar.dart';
 import '../resources/widgets/molecules/topbar.dart';
