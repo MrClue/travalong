@@ -13,15 +13,20 @@ class DatabaseService {
       FirebaseFirestore.instance.collection("chats");
 
   // saving the userdata
-  Future savingUserData(AppUser user) async {
+  Future saveUserData(AppUser user) async {
     final json = user.toJson();
     return await userCollection.doc(uid).set(json);
   }
 
+  Future getData() async {
+    QuerySnapshot<Object?> snapshot = await userCollection.get();
+    return snapshot;
+  }
+
   // getting user data
-  Future gettingUserData(String email) async {
+  Future getUserData(String uid) async {
     QuerySnapshot snapshot =
-        await userCollection.where("email", isEqualTo: email).get();
+        await userCollection.where("uid", isEqualTo: uid).get();
     return snapshot;
   }
 
@@ -32,5 +37,14 @@ class DatabaseService {
         .collection("messages")
         .orderBy("time")
         .snapshots();
+  }
+
+  // getting amount of users
+  Future<int> getCount() async {
+    int count = await FirebaseFirestore.instance
+        .collection('collection')
+        .get()
+        .then((value) => value.size);
+    return count;
   }
 }
