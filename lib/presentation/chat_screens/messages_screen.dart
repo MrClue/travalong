@@ -67,7 +67,7 @@ class _MessageScreenState extends State<MessagesScreen> {
                   //),
                   //SliverList
                   ListView(
-                children: users.map(buildUser).toList(),r
+                children: users.map(buildUser).toList(),
                 //),
                 //],
               );
