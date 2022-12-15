@@ -1,7 +1,8 @@
-//DatabaseService database = DatabaseService();
-//var db = DatabaseService().userCollection;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+//DatabaseService database = DatabaseService();
+//var db = DatabaseService().userCollection;
 
 final docRef = FirebaseFirestore.instance
     .collection('users')
