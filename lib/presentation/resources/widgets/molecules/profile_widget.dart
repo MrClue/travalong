@@ -7,18 +7,15 @@ import 'package:travalong/presentation/resources/colors.dart';
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
     Key? key,
-    //required this.user,
   }) : super(key: key);
 
   @override
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
-//var collection = FirebaseFirestore.instance.collection('users');
-FirebaseController userLogicController = FirebaseController();
-
 class _ProfileWidgetState extends State<ProfileWidget> {
-  //String? docId = FirebaseAuth.instance.currentUser?.uid;
+  // * creates instance of firebase_controller class
+  FirebaseController fController = FirebaseController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +62,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Row(
                         children: [
                           FutureBuilder(
-                            future: userLogicController.getDocFieldData('name'),
+                            future: fController.getDocFieldData('name'),
                             builder: (context, snapshot) {
                               return Center(
                                 child: AutoSizeText(
@@ -82,7 +79,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             },
                           ),
                           FutureBuilder(
-                            future: userLogicController.getDocFieldData('age'),
+                            future: fController.getDocFieldData('age'),
                             builder: (context, snapshot) {
                               return Center(
                                 child: AutoSizeText(
@@ -102,7 +99,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ],
                       ),
                       FutureBuilder(
-                        future: userLogicController.getDocFieldData('city'),
+                        future: fController.getDocFieldData('city'),
                         builder: (context, snapshot) {
                           return Center(
                             child: Text(

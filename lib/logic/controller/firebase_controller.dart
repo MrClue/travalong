@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 //DatabaseService database = DatabaseService();
 //var db = DatabaseService().userCollection;
 
-final docRef = FirebaseFirestore.instance
-    .collection('users')
-    .doc(FirebaseController().userid);
+final docRef =
+    FirebaseController().usersCollection.doc(FirebaseController().userID);
 
 class FirebaseController {
   var userDataMap = <String, dynamic>{};
-  var userid = FirebaseAuth.instance.currentUser!.uid;
+  var userID = FirebaseAuth.instance.currentUser!.uid;
+  var usersCollection = FirebaseFirestore.instance.collection('users');
 
   // Get document datafield based on field
   Future<String> getDocFieldData(String field) async {
@@ -19,7 +19,8 @@ class FirebaseController {
       await docRef.get().then(
         (DocumentSnapshot doc) {
           final data = doc.data() as Map<String, dynamic>;
-          userDataMap!.addEntries({field: data[field]}.entries);
+          // userDataMap!.addEntries({field: data[field]}.entries); // * før
+          userDataMap.addEntries({field: data[field]}.entries);
         },
         onError: (e) => print("Error getting document: $e"),
       );
