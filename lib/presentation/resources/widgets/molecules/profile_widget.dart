@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
@@ -62,7 +63,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Row(
                         children: [
                           FutureBuilder(
-                            future: fController.getDocFieldData('name'),
+                            future: fController.getDocFieldData(UserData.name),
                             builder: (context, snapshot) {
                               return Center(
                                 child: AutoSizeText(
@@ -79,7 +80,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             },
                           ),
                           FutureBuilder(
-                            future: fController.getDocFieldData('age'),
+                            future: fController.getDocFieldData(UserData.age),
                             builder: (context, snapshot) {
                               return Center(
                                 child: AutoSizeText(
@@ -99,7 +100,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         ],
                       ),
                       FutureBuilder(
-                        future: fController.getDocFieldData('city'),
+                        future: fController.getDocFieldData(UserData.city),
                         builder: (context, snapshot) {
                           return Center(
                             child: Text(
