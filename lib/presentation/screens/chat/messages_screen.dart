@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:travalong/logic/services/database_service.dart';
 import 'package:travalong/presentation/screens/chat/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/search_screens/test_page.dart';
 
 import '../../../data/messages_data.dart';
 import '../../../data/model/user.dart';
@@ -56,18 +58,18 @@ class _MessageScreenState extends State<MessagesScreen> {
               }
             }
             if (snapshot.hasData) {
-              final users = snapshot.data!;
-              return
-                  //CustomScrollView(
-                  // slivers: [
-                  //const SliverToBoxAdapter(
-                  //child: _Connections(),
-                  //),
-                  //SliverList
-                  ListView(
-                children: users.map(buildUser).toList(),
-                //),
-                //],
+              // final users = snapshot.data!;
+              return CustomScrollView(
+                slivers: [
+                  const SliverToBoxAdapter(
+                    child: _Connections(),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(_delegate),
+                    //   ListView(
+                    // children: users.map(buildUser).toList(),
+                  ),
+                ],
               );
             }
             return const Center(
@@ -288,26 +290,66 @@ class _Connections extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  // ! CONNECTIONS to do
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: 4, // !Number of connections
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        final faker = Faker();
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: 60,
-                            child: _ConnectionCard(
-                              storyData: StoryData(
-                                name: faker.person.firstName(),
-                                url: Helpers.randomPictureUrl(),
-                              ),
+                    child: FutureBuilder<List<QueryDocumentSnapshot>>(
+                        future: db.userCollection
+                            .where("name", isEqualTo: true)
+                            .get()
+                            .then(
+                          (QuerySnapshot result) {
+                            final name = result.docs;
+                            return name;
+                          },
+                          onError: (e) => print("Error completing: $e"),
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            final faker = Faker();
+                            return ListView.builder(
+                              itemCount: 4,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 60,
+                                    child: _ConnectionCard(
+                                      storyData: StoryData(
+                                        name: snapshot.data.toString(),
+                                        url: Helpers.randomPictureUrl(),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: TravalongColors.secondary_10,
                             ),
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        }),
+                    // child: ListView.builder(
+                    //   itemCount: 4, // !Number of connections
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     final faker = Faker();
+                    //     return Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: SizedBox(
+                    //         width: 60,
+                    //         child: _ConnectionCard(
+                    //           storyData: StoryData(
+                    //             name: faker.person.firstName(),
+                    //             url: Helpers.randomPictureUrl(),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   ),
                 ],
               ),
