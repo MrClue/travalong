@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../resources/widgets/molecules/slideup_widget.dart';
+import '../../resources/widgets/molecules/slideup_widget.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});

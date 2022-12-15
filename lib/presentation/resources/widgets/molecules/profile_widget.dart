@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/search_screens/test_page.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -16,16 +14,16 @@ class ProfileWidget extends StatefulWidget {
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
-var collection = FirebaseFirestore.instance.collection('users');
-TestPage userLogicController = TestPage();
+//var collection = FirebaseFirestore.instance.collection('users');
+FirebaseController userLogicController = FirebaseController();
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  String? docId = FirebaseAuth.instance.currentUser?.uid;
+  //String? docId = FirebaseAuth.instance.currentUser?.uid;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width, //double.infinity,
+      width: MediaQuery.of(context).size.width,
       height: 215,
       decoration: BoxDecoration(
         color: TravalongColors.neutral_60,

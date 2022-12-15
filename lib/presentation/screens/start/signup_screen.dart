@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/screens.dart';
-import 'package:travalong/presentation/start_screens/start_screen.dart';
+import 'package:travalong/presentation/screens/screens.dart';
+import 'package:travalong/presentation/screens/start/start_screen.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;

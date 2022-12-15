@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/logic/services/database_service.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
+//import 'package:travalong/logic/services/database_service.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 
@@ -11,7 +12,8 @@ import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 // * STEP 4: Få fat i den opdateret current_users "age" og print i Text() (getter)
 
 class TestPage extends StatelessWidget {
-  var userDataMap = <String, dynamic>{};
+  FirebaseController fController = FirebaseController();
+  //var userDataMap = <String, dynamic>{};
 
   TestPage({super.key});
 
@@ -24,16 +26,16 @@ class TestPage extends StatelessWidget {
         child: Column(
           children: [
             FutureBuilder(
-              future: getDocFieldData('name'),
+              future: fController.getDocFieldData('name'),
               builder: (context, snapshot) {
-                setDocFieldData('gender', 'male');
+                fController.setDocFieldData('gender', 'female');
                 return Center(
                   child: Text(snapshot.data.toString()),
                 );
               },
             ),
             FutureBuilder(
-              future: getDocFieldData('age'),
+              future: fController.getDocFieldData('age'),
               builder: (context, snapshot) {
                 return Center(
                   child: Text(snapshot.data.toString()),
@@ -41,7 +43,7 @@ class TestPage extends StatelessWidget {
               },
             ),
             FutureBuilder(
-              future: getDocFieldData('city'),
+              future: fController.getDocFieldData('city'),
               builder: (context, snapshot) {
                 return Center(
                   child: Text(snapshot.data.toString()),
@@ -51,7 +53,7 @@ class TestPage extends StatelessWidget {
           ],
         ));
   }
-
+  /*
   // Get document datafield based on field
   Future<String> getDocFieldData(String field) async {
     // [START getDocFieldData]
@@ -82,9 +84,10 @@ class TestPage extends StatelessWidget {
     }
     // [END setDocFieldData]
   }
+  */
 }
 
-DatabaseService database = DatabaseService();
-var db = DatabaseService().userCollection;
-var userid = FirebaseAuth.instance.currentUser!.uid;
-final docRef = FirebaseFirestore.instance.collection('users').doc(userid);
+//DatabaseService database = DatabaseService();
+//var db = DatabaseService().userCollection;
+//var userid = FirebaseAuth.instance.currentUser!.uid;
+//final docRef = FirebaseFirestore.instance.collection('users').doc(userid);

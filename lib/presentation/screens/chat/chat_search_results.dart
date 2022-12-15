@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../resources/widgets/molecules/search_bar.dart';
-import '../resources/widgets/molecules/topbar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
 
 class ChatSearchPage extends StatefulWidget{
   const ChatSearchPage({super.key});

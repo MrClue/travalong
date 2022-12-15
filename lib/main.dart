@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/firebase_options.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/screens.dart';
+import 'package:travalong/presentation/screens/screens.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 
 Future main() async {

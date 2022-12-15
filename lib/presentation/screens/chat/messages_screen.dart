@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:travalong/logic/services/database_service.dart';
-import 'package:travalong/presentation/chat_screens/connection_page.dart';
+import 'package:travalong/presentation/screens/chat/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../../data/messages_data.dart';
-import '../../data/model/user.dart';
-import '../../data/story_data.dart';
-import '../../logic/Helpers.dart';
-import '../resources/widgets/molecules/avatar.dart';
-import '../resources/widgets/molecules/search_bar.dart';
-import '../resources/widgets/molecules/topbar.dart';
+import '../../../data/messages_data.dart';
+import '../../../data/model/user.dart';
+import '../../../data/story_data.dart';
+import '../../../logic/Helpers.dart';
+import '../../resources/widgets/molecules/avatar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
 import 'new_chat_page.dart';
 import 'chat_screen.dart';
 

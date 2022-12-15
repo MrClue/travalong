@@ -5,7 +5,7 @@ import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
-import 'package:travalong/presentation/screens.dart';
+import 'package:travalong/presentation/screens/screens.dart';
 
 class SignOutBtnWidget extends StatelessWidget {
   const SignOutBtnWidget({super.key});

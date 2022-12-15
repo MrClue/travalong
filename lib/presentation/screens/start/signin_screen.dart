@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../travalong_navbar.dart';
+import '../../travalong_navbar.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
