@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:travalong/logic/services/database_service.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/screens/chat/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/search_screens/test_page.dart';
 
 import '../../../data/messages_data.dart';
 import '../../../data/model/user.dart';
@@ -26,7 +25,8 @@ class MessagesScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MessageScreenState();
 }
 
-DatabaseService db = DatabaseService();
+FirebaseController fController = FirebaseController();
+
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class _MessageScreenState extends State<MessagesScreen> {
@@ -50,7 +50,7 @@ class _MessageScreenState extends State<MessagesScreen> {
         ),
       ),
       body: StreamBuilder<List<AppUser>>(
-          stream: readUsers(),
+          stream: MessageController().readUsers(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasError) {
@@ -61,11 +61,13 @@ class _MessageScreenState extends State<MessagesScreen> {
               // final users = snapshot.data!;
               return CustomScrollView(
                 slivers: [
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: _Connections(),
                   ),
                   SliverList(
-                    delegate: SliverChildBuilderDelegate(_delegate),
+                    delegate:
+                        SliverChildBuilderDelegate(_delegate, childCount: 4),
+
                     //   ListView(
                     // children: users.map(buildUser).toList(),
                   ),
@@ -81,19 +83,6 @@ class _MessageScreenState extends State<MessagesScreen> {
     );
   }
 
-  // Stream to get list of users in firebase
-  Stream<List<AppUser>> readUsers() =>
-      db.userCollection.snapshots().map((list) => list.docs
-          .map((doc) => AppUser.newfromJSON(doc.data() as Map<String, dynamic>))
-          .toList());
-
-  Widget buildUser(AppUser user) => ListTile(
-        leading: CircleAvatar(child: Text(Helpers.randomPictureUrl())),
-        title: Text(user.name!),
-        subtitle: Text(faker.lorem.sentence()),
-      );
-
-  // ! Not using currently
   Widget _delegate(
     BuildContext context,
     int index,
@@ -110,7 +99,6 @@ class _MessageScreenState extends State<MessagesScreen> {
   }
 }
 
-// ! Not using currently
 class _MessageTile extends StatefulWidget {
   const _MessageTile({
     Key? key,
@@ -231,7 +219,7 @@ class _MessageTileState extends State<_MessageTile> {
 }
 
 class _Connections extends StatelessWidget {
-  const _Connections({Key? key}) : super(key: key);
+  _Connections({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -291,67 +279,46 @@ class _Connections extends StatelessWidget {
                     ),
                   ),
 
-                  // ! CONNECTIONS to do
+                  // ! CONNECTIONS to-do
                   Expanded(
-                    child: FutureBuilder<List<QueryDocumentSnapshot>>(
-                        future: db.userCollection
-                            .where("name", isEqualTo: true)
-                            .get()
-                            .then(
-                          (QuerySnapshot result) {
-                            final name = result.docs;
-                            return name;
-                          },
-                          onError: (e) => print("Error completing: $e"),
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            final faker = Faker();
-                            return ListView.builder(
-                              itemCount: 4,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 60,
-                                    child: _ConnectionCard(
-                                      storyData: StoryData(
-                                        name: snapshot.data.toString(),
-                                        url: Helpers.randomPictureUrl(),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: TravalongColors.secondary_10,
+                    child: ListView.builder(
+                        itemCount: 4,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          final faker = Faker();
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 60,
+                              child: _ConnectionCard(
+                                storyData: StoryData(
+                                    name: faker.person.firstName(),
+                                    url: Helpers.randomPictureUrl()),
+                              ),
                             ),
                           );
                         }),
-                    // child: ListView.builder(
-                    //   itemCount: 4, // !Number of connections
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     final faker = Faker();
-                    //     return Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: SizedBox(
-                    //         width: 60,
-                    //         child: _ConnectionCard(
-                    //           storyData: StoryData(
-                    //             name: faker.person.firstName(),
-                    //             url: Helpers.randomPictureUrl(),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
                   ),
                 ],
+                // child: ListView.builder(
+                //   itemCount: 4, // !Number of connections
+                //   scrollDirection: Axis.horizontal,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     final faker = Faker();
+                //     return Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: SizedBox(
+                //         width: 60,
+                //         child: _ConnectionCard(
+                //           storyData: StoryData(
+                //             name: faker.person.firstName(),
+                //             url: Helpers.randomPictureUrl(),
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
               ),
             ),
           ),
@@ -393,4 +360,18 @@ class _ConnectionCard extends StatelessWidget {
       ],
     );
   }
+}
+
+class MessageController {
+  // Stream to get list of users in firebase
+  Stream<List<AppUser>> readUsers() =>
+      fController.usersCollection.snapshots().map((list) => list.docs
+          .map((doc) => AppUser.newfromJSON(doc.data() as Map<String, dynamic>))
+          .toList());
+
+  Widget buildUser(AppUser user) => ListTile(
+        leading: CircleAvatar(child: Text(Helpers.randomPictureUrl())),
+        title: Text(user.name!),
+        subtitle: Text(faker.lorem.sentence()),
+      );
 }
