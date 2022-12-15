@@ -12,14 +12,14 @@ class FirebaseController {
   var usersCollection = FirebaseFirestore.instance.collection('users');
   var userDataMap = <String, dynamic>{};
 
-  // Get document datafield based on field
+  // * Get document data-field based on field (JSON key)
   Future<String> getDocFieldData(String field) async {
     // [START getDocFieldData]
     try {
       await docRef.get().then(
         (DocumentSnapshot doc) {
           final data = doc.data() as Map<String, dynamic>;
-          // userDataMap!.addEntries({field: data[field]}.entries); // * før
+          // userDataMap!.addEntries({field: data[field]}.entries); // ! shows warning
           userDataMap.addEntries({field: data[field]}.entries);
         },
         onError: (e) => print("Error getting document: $e"),
@@ -32,7 +32,7 @@ class FirebaseController {
     // [END getDocFieldData]
   }
 
-  // Get document datafield based on field
+  // * Set document data-field value (JSON value) based on field (JSON key)
   Future setDocFieldData(String field, dynamic value) async {
     // [START setDocFieldData]
     final data = {field: value};
