@@ -8,6 +8,7 @@ class UserData {
   static String urlAvatar = 'urlAvatar';
   static String city = 'city';
   static String country = 'country';
+  static String gender = 'gender';
   static String age = 'age';
   static String bio = 'bio';
   static String connections = 'connections';
@@ -21,7 +22,7 @@ class UserData {
 
 // * This class provides the values for each key in the JSON format
 class AppUser {
-  String? uid, name, email, urlAvatar, bio, city, country;
+  String? uid, name, email, urlAvatar, bio, city, country, gender;
   int? age, connections, sharedMedia, goalsCompleted;
   Map<String, dynamic>? media, chats, interests, travelgoals;
 
@@ -33,6 +34,7 @@ class AppUser {
     this.bio,
     this.city,
     this.country,
+    this.gender,
     this.age,
     this.connections,
     this.sharedMedia,
@@ -54,6 +56,7 @@ class AppUser {
         UserData.bio: bio,
         UserData.city: city,
         UserData.country: country,
+        UserData.gender: gender,
         UserData.age: age,
         UserData.connections: connections,
         UserData.sharedMedia: sharedMedia,
@@ -73,6 +76,7 @@ class AppUser {
     String? urlAvatar,
     String? city,
     String? country,
+    String? gender,
     int? age,
     String? bio,
     int? connections,
@@ -90,6 +94,7 @@ class AppUser {
         urlAvatar: urlAvatar ?? this.urlAvatar,
         city: city ?? this.city,
         country: country ?? this.country,
+        gender: gender ?? this.gender,
         age: age ?? this.age,
         bio: bio ?? this.bio,
         connections: connections ?? this.connections,
@@ -117,6 +122,7 @@ class AppUser {
         bio: json[UserData.bio] as String,
         city: json[UserData.city] as String,
         country: json[UserData.country] as String,
+        gender: json[UserData.gender] as String,
         age: json[UserData.age] as int,
         connections: json[UserData.connections] as int,
         sharedMedia: json[UserData.sharedMedia] as int,

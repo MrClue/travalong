@@ -32,7 +32,6 @@ class _TestPageState extends State<TestPage> {
   void initState() {
     super.initState();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +44,7 @@ class _TestPageState extends State<TestPage> {
             FutureBuilder(
               future: getDocFieldData('name'),
               builder: (context, snapshot) {
+                setDocFieldData('gender', 'male');
                 return Center(
                   child: Text(snapshot.data.toString()),
                 );
@@ -96,5 +96,4 @@ class _TestPageState extends State<TestPage> {
     }
     // [END setDocFieldData]
   }
-
 }
