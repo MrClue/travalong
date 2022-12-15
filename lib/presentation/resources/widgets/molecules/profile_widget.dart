@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/search_screens/test_page.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -16,6 +17,7 @@ class ProfileWidget extends StatefulWidget {
 }
 
 var collection = FirebaseFirestore.instance.collection('users');
+TestPage userLogicController = TestPage();
 
 class _ProfileWidgetState extends State<ProfileWidget> {
   String? docId = FirebaseAuth.instance.currentUser?.uid;
@@ -64,55 +66,61 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     children: [
                       Row(
                         children: [
-                          // ! get name from Firabase Firestore
-                          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                            stream:
-                                collection.doc(docId.toString()).snapshots(),
-                            builder: (_, snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Error = ${snapshot.error}');
-                              }
-                              if (snapshot.hasData) {
-                                var output = snapshot.data!.data();
-                                var value = output!['name']; // <-- Your value
-                                return AutoSizeText(
+                          FutureBuilder(
+                            future: userLogicController.getDocFieldData('name'),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: AutoSizeText(
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  '$value',
                                   style: GoogleFonts.poppins(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
                                       height: 0),
                                   textAlign: TextAlign.left,
-                                );
-                              }
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                                  snapshot.data.toString() + ' ',
+                                ),
+                              );
                             },
                           ),
-                          /*AutoSizeText(
-                            style: GoogleFonts.poppins(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: TravalongColors.secondary_text_bright,
-                                height: 0),
-                            textAlign: TextAlign.left,
-                            ", 26",
-                            maxLines: 1,
-                          ),*/
+                          FutureBuilder(
+                            future: userLogicController.getDocFieldData('age'),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: AutoSizeText(
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          TravalongColors.secondary_text_bright,
+                                      height: 0),
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  snapshot.data.toString(),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
-                      Text(
-                        // TODO: Fix overflow issues
-                        style: GoogleFonts.poppins(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            color: TravalongColors.secondary_text_bright,
-                            height: 1),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Odense, Denmark",
+                      FutureBuilder(
+                        future: userLogicController.getDocFieldData('city'),
+                        builder: (context, snapshot) {
+                          return Center(
+                            child: Text(
+                              style: GoogleFonts.poppins(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                  color: TravalongColors.secondary_text_bright,
+                                  height: 1),
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              // Missing City
+                              snapshot.data.toString() + ', Denmark',
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

@@ -10,28 +10,10 @@ import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 // * STEP 3: Update current_users "age" i DB (setter)
 // * STEP 4: Få fat i den opdateret current_users "age" og print i Text() (getter)
 
-class TestPage extends StatefulWidget {
+class TestPage extends StatelessWidget {
   var userDataMap = <String, dynamic>{};
 
   TestPage({super.key});
-
-  @override
-  State<TestPage> createState() => _TestPageState();
-}
-
-DatabaseService database = DatabaseService();
-var db = DatabaseService().userCollection;
-var userid = FirebaseAuth.instance.currentUser!.uid;
-final colRef = FirebaseFirestore.instance.collection('users');
-
-class _TestPageState extends State<TestPage> {
-  TestPage userdata = TestPage();
-  final docRef = FirebaseFirestore.instance.collection('users').doc(userid);
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +55,19 @@ class _TestPageState extends State<TestPage> {
   // Get document datafield based on field
   Future<String> getDocFieldData(String field) async {
     // [START getDocFieldData]
-    await docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        userdata.userDataMap!.addEntries({field: data[field]}.entries);
-        print(userdata.userDataMap);
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
-    return userdata.userDataMap[field].toString();
+    try {
+      await docRef.get().then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          userDataMap!.addEntries({field: data[field]}.entries);
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+      print(userDataMap[field]);
+      return userDataMap[field].toString();
+    } catch (e) {
+      return 'Error';
+    }
     // [END getDocFieldData]
   }
 
@@ -97,3 +83,8 @@ class _TestPageState extends State<TestPage> {
     // [END setDocFieldData]
   }
 }
+
+DatabaseService database = DatabaseService();
+var db = DatabaseService().userCollection;
+var userid = FirebaseAuth.instance.currentUser!.uid;
+final docRef = FirebaseFirestore.instance.collection('users').doc(userid);
