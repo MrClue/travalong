@@ -8,9 +8,9 @@ final docRef =
     FirebaseController().usersCollection.doc(FirebaseController().userID);
 
 class FirebaseController {
-  var userDataMap = <String, dynamic>{};
   var userID = FirebaseAuth.instance.currentUser!.uid;
   var usersCollection = FirebaseFirestore.instance.collection('users');
+  var userDataMap = <String, dynamic>{};
 
   // Get document datafield based on field
   Future<String> getDocFieldData(String field) async {
@@ -32,7 +32,7 @@ class FirebaseController {
     // [END getDocFieldData]
   }
 
-// Get document datafield based on field
+  // Get document datafield based on field
   Future setDocFieldData(String field, dynamic value) async {
     // [START setDocFieldData]
     final data = {field: value};
