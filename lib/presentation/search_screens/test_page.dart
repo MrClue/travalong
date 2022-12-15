@@ -11,7 +11,9 @@ import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 // * STEP 4: Få fat i den opdateret current_users "age" og print i Text() (getter)
 
 class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+  var userDataMap = <String, dynamic>{};
+
+  TestPage({super.key});
 
   @override
   State<TestPage> createState() => _TestPageState();
@@ -20,43 +22,79 @@ class TestPage extends StatefulWidget {
 DatabaseService database = DatabaseService();
 var db = DatabaseService().userCollection;
 var userid = FirebaseAuth.instance.currentUser!.uid;
+final colRef = FirebaseFirestore.instance.collection('users');
 
 class _TestPageState extends State<TestPage> {
-  var userCollectionRef = FirebaseFirestore.instance.collection('users');
+  TestPage userdata = TestPage();
+  final docRef = FirebaseFirestore.instance.collection('users').doc(userid);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+  
 
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
-      topbar: const TopBar(
-        title: 'Search',
-      ),
-      child: getUserData(),
-    );
+        topbar: const TopBar(
+          title: 'Search',
+        ),
+        child: Column(
+          children: [
+            FutureBuilder(
+              future: getDocFieldData('name'),
+              builder: (context, snapshot) {
+                return Center(
+                  child: Text(snapshot.data.toString()),
+                );
+              },
+            ),
+            FutureBuilder(
+              future: getDocFieldData('age'),
+              builder: (context, snapshot) {
+                return Center(
+                  child: Text(snapshot.data.toString()),
+                );
+              },
+            ),
+            FutureBuilder(
+              future: getDocFieldData('city'),
+              builder: (context, snapshot) {
+                return Center(
+                  child: Text(snapshot.data.toString()),
+                );
+              },
+            ),
+          ],
+        ));
   }
 
-  StreamBuilder getUserData() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: userCollectionRef.snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error = ${snapshot.error}');
-        }
-        if (snapshot.hasData) {
-          final users = snapshot.data!.docs;
-          List<Text> userWidgets = [];
-          for (var user in users) {
-            final username = user.get('name');
-            final useremail = user.get('email');
-            final userWidget = Text('$username $useremail');
-
-            userWidgets.add(userWidget);
-          }
-          return Column(
-            children: userWidgets,
-          );
-        }
-        return const Center(child: CircularProgressIndicator());
+  // Get document datafield based on field
+  Future<String> getDocFieldData(String field) async {
+    // [START getDocFieldData]
+    await docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        userdata.userDataMap!.addEntries({field: data[field]}.entries);
+        print(userdata.userDataMap);
       },
+      onError: (e) => print("Error getting document: $e"),
     );
+    return userdata.userDataMap[field].toString();
+    // [END getDocFieldData]
   }
+
+// Get document datafield based on field
+  Future setDocFieldData(String field, dynamic value) async {
+    // [START setDocFieldData]
+    final data = {field: value};
+    try {
+      await docRef.set(data, SetOptions(merge: true));
+    } catch (e) {
+      print("Error seting values into field: $e");
+    }
+    // [END setDocFieldData]
+  }
+
 }

@@ -15,7 +15,7 @@ class TravalongNavbar extends StatefulWidget {
 class TravalongNavbarState extends State<TravalongNavbar> {
   int _selectedIndex = 2;
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     TestPage(), // SearchScreen()
     MessagesScreen(),
     ProfilePage(),
