@@ -27,8 +27,8 @@ class AppUser {
 
   AppUser({
     required this.uid,
-    required this.name,
-    required this.email,
+    this.name,
+    this.email,
     this.urlAvatar,
     this.bio,
     this.city,

@@ -37,14 +37,15 @@ class _MessageScreenState extends State<MessagesScreen> {
       appBar: TopBarChat(
         title: 'Chats',
         goToPage: () => showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            ),
-            context: context,
-            builder: (BuildContext context) {
-              return const NewChatWidget();
-            }),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return const NewChatWidget();
+          },
+        ),
       ),
       body: StreamBuilder<List<AppUser>>(
           stream: readUsers(),
