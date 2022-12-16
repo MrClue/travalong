@@ -4,10 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/screens.dart';
-import 'package:travalong/presentation/screens/start/start_screen.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
+//final FirebaseAuth _auth = FirebaseAuth.instance; // ! not used
 final AuthService authService = AuthService();
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -297,8 +296,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (value == true) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) =>
-                const ProfilePage(), // ! changed from StartScreen()
+            builder: (context) => const ProfilePage(),
           ),
         );
       }
