@@ -1,29 +1,27 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/data/model/user.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
     Key? key,
-    //required this.user,
   }) : super(key: key);
 
   @override
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
-var collection = FirebaseFirestore.instance.collection('users');
-
 class _ProfileWidgetState extends State<ProfileWidget> {
-  String? docId = FirebaseAuth.instance.currentUser?.uid;
+  // * creates instance of firebase_controller class
+  FirebaseController fController = FirebaseController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width, //double.infinity,
+      width: MediaQuery.of(context).size.width,
       height: 215,
       decoration: BoxDecoration(
         color: TravalongColors.neutral_60,
@@ -64,55 +62,61 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     children: [
                       Row(
                         children: [
-                          // ! get name from Firabase Firestore
-                          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                            stream:
-                                collection.doc(docId.toString()).snapshots(),
-                            builder: (_, snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Error = ${snapshot.error}');
-                              }
-                              if (snapshot.hasData) {
-                                var output = snapshot.data!.data();
-                                var value = output!['name']; // <-- Your value
-                                return AutoSizeText(
+                          FutureBuilder(
+                            future: fController.getDocFieldData(UserData.name),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: AutoSizeText(
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
-                                  '$value',
                                   style: GoogleFonts.poppins(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
                                       height: 0),
                                   textAlign: TextAlign.left,
-                                );
-                              }
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                                  snapshot.data.toString() + ' ',
+                                ),
+                              );
                             },
                           ),
-                          /*AutoSizeText(
-                            style: GoogleFonts.poppins(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: TravalongColors.secondary_text_bright,
-                                height: 0),
-                            textAlign: TextAlign.left,
-                            ", 26",
-                            maxLines: 1,
-                          ),*/
+                          FutureBuilder(
+                            future: fController.getDocFieldData(UserData.age),
+                            builder: (context, snapshot) {
+                              return Center(
+                                child: AutoSizeText(
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          TravalongColors.secondary_text_bright,
+                                      height: 0),
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  snapshot.data.toString(),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
-                      Text(
-                        // TODO: Fix overflow issues
-                        style: GoogleFonts.poppins(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            color: TravalongColors.secondary_text_bright,
-                            height: 1),
-                        textAlign: TextAlign.left,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        "Odense, Denmark",
+                      FutureBuilder(
+                        future: fController.getDocFieldData(UserData.city),
+                        builder: (context, snapshot) {
+                          return Center(
+                            child: Text(
+                              style: GoogleFonts.poppins(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                  color: TravalongColors.secondary_text_bright,
+                                  height: 1),
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              // Missing City
+                              snapshot.data.toString() + ', Denmark',
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

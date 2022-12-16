@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/chat_screens/messages_screen.dart';
+import 'package:travalong/presentation/screens/chat/messages_screen.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 
-import '../resources/colors.dart';
-import '../resources/widgets/molecules/icon_title_btn_widget.dart';
-import '../resources/widgets/molecules/topbar.dart';
-import '../resources/widgets/molecules/search_bar.dart';
+import '../../resources/colors.dart';
+import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
+import '../../resources/widgets/molecules/topbar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
 
 class NewChatWidget extends StatelessWidget {
   const NewChatWidget({super.key});

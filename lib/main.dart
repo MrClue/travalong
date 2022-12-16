@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/firebase_options.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/screens.dart';
+import 'package:travalong/presentation/screens/screens.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 
 Future main() async {
@@ -51,6 +51,7 @@ class TravalongApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: SafeScaffoldPure(
+          // * Listen for auth state changes (if user is logged in)
           child: StreamBuilder<User?>(
             stream: AuthService().firebaseAuth.authStateChanges(),
             builder: (context, snapshot) {
@@ -58,13 +59,15 @@ class TravalongApp extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData) // * User is signed in
+              {
                 return const TravalongNavbar();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong..."),
                 );
-              } else {
+              } else // * User needs to sign in
+              {
                 return const StartScreen(); //StartScreen();
               }
             },

@@ -1,7 +1,7 @@
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/profile_screens/my_goals_page.dart';
-import 'package:travalong/presentation/profile_screens/my_profile_page.dart';
+import 'package:travalong/presentation/screens/profile/my_goals_page.dart';
+import 'package:travalong/presentation/screens/profile/my_profile_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
@@ -21,36 +21,38 @@ class ProfilePage extends StatelessWidget {
 
     return SafeScaffoldPure(
       //navbar: NavBar(),
-      child: Column(
-        children: [
-          ProfileWidget(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(
-                  height: 30,
-                ),
-                IconTextButton(
-                  faIcon: FontAwesomeIcons.solidUser,
-                  label: "My Profile",
-                  description: "Update your profile information here.",
-                  goToPage: MyProfilePage(),
-                ),
-                SizedBox(height: 8),
-                IconTextButton(
-                  faIcon: FontAwesomeIcons.list,
-                  label: "My Goals",
-                  description: "Set travel goals, and stay on track.",
-                  goToPage: MyGoalsPage(),
-                ),
-                SizedBox(height: 14),
-                MediaWidget(), // todo: not done
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProfileWidget(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  IconTextButton(
+                    faIcon: FontAwesomeIcons.solidUser,
+                    label: "My Profile",
+                    description: "Update your profile information here.",
+                    goToPage: MyProfilePage(),
+                  ),
+                  SizedBox(height: 8),
+                  IconTextButton(
+                    faIcon: FontAwesomeIcons.list,
+                    label: "My Goals",
+                    description: "Set travel goals, and stay on track.",
+                    goToPage: MyGoalsPage(),
+                  ),
+                  SizedBox(height: 14),
+                  MediaWidget(), // todo: not done
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

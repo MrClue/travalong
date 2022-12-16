@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/start_screens/signin_screen.dart';
-import 'package:travalong/presentation/start_screens/signup_screen.dart';
+import 'package:travalong/presentation/screens/start/signin_screen.dart';
+import 'package:travalong/presentation/screens/start/signup_screen.dart';
 
 import '../atoms/subtext.dart';
 import '../atoms/travalong_title.dart';

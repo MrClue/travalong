@@ -4,9 +4,9 @@ import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 
-import '../../data/messages_data.dart';
-import '../resources/widgets/atoms/send_button.dart';
-import '../resources/widgets/molecules/avatar.dart';
+import '../../../data/messages_data.dart';
+import '../../resources/widgets/atoms/send_button.dart';
+import '../../resources/widgets/molecules/avatar.dart';
 
 class ChatScreen extends StatelessWidget {
   static Route route(MessageData data) => MaterialPageRoute(

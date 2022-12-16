@@ -1,19 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:travalong/logic/services/database_service.dart';
-import 'package:travalong/presentation/chat_screens/connection_page.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
+import 'package:travalong/presentation/screens/chat/connection_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../../data/messages_data.dart';
-import '../../data/model/user.dart';
-import '../../data/story_data.dart';
-import '../resources/Helpers.dart';
-import '../resources/widgets/molecules/avatar.dart';
-import '../resources/widgets/molecules/search_bar.dart';
-import '../resources/widgets/molecules/topbar.dart';
+import '../../../data/messages_data.dart';
+import '../../../data/model/user.dart';
+import '../../../data/story_data.dart';
+import '../../../logic/Helpers.dart';
+import '../../resources/widgets/molecules/avatar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
 import 'new_chat_page.dart';
 import 'chat_screen.dart';
 
@@ -24,7 +25,8 @@ class MessagesScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MessageScreenState();
 }
 
-DatabaseService db = DatabaseService();
+FirebaseController fController = FirebaseController();
+
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class _MessageScreenState extends State<MessagesScreen> {
@@ -37,17 +39,18 @@ class _MessageScreenState extends State<MessagesScreen> {
       appBar: TopBarChat(
         title: 'Chats',
         goToPage: () => showModalBottomSheet(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            ),
-            context: context,
-            builder: (BuildContext context) {
-              return const NewChatWidget();
-            }),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
+          context: context,
+          builder: (BuildContext context) {
+            return const NewChatWidget();
+          },
+        ),
       ),
       body: StreamBuilder<List<AppUser>>(
-          stream: readUsers(),
+          stream: MessageController().readUsers(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasError) {
@@ -55,18 +58,20 @@ class _MessageScreenState extends State<MessagesScreen> {
               }
             }
             if (snapshot.hasData) {
-              final users = snapshot.data!;
-              return
-                  //CustomScrollView(
-                  // slivers: [
-                  //const SliverToBoxAdapter(
-                  //child: _Connections(),
-                  //),
-                  //SliverList
-                  ListView(
-                children: users.map(buildUser).toList(),
-                //),
-                //],
+              // final users = snapshot.data!;
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: _Connections(),
+                  ),
+                  SliverList(
+                    delegate:
+                        SliverChildBuilderDelegate(_delegate, childCount: 4),
+
+                    //   ListView(
+                    // children: users.map(buildUser).toList(),
+                  ),
+                ],
               );
             }
             return const Center(
@@ -78,19 +83,6 @@ class _MessageScreenState extends State<MessagesScreen> {
     );
   }
 
-  // Stream to get list of users in firebase
-  Stream<List<AppUser>> readUsers() =>
-      db.userCollection.snapshots().map((list) => list.docs
-          .map((doc) => AppUser.newfromJSON(doc.data() as Map<String, dynamic>))
-          .toList());
-
-  Widget buildUser(AppUser user) => ListTile(
-        leading: CircleAvatar(child: Text(Helpers.randomPictureUrl())),
-        title: Text(user.name!),
-        subtitle: Text(faker.lorem.sentence()),
-      );
-
-  // ! Not using currently
   Widget _delegate(
     BuildContext context,
     int index,
@@ -107,7 +99,6 @@ class _MessageScreenState extends State<MessagesScreen> {
   }
 }
 
-// ! Not using currently
 class _MessageTile extends StatefulWidget {
   const _MessageTile({
     Key? key,
@@ -228,7 +219,7 @@ class _MessageTileState extends State<_MessageTile> {
 }
 
 class _Connections extends StatelessWidget {
-  const _Connections({Key? key}) : super(key: key);
+  _Connections({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -287,28 +278,47 @@ class _Connections extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  // ! CONNECTIONS to-do
                   Expanded(
                     child: ListView.builder(
-                      itemCount: 4, // !Number of connections
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        final faker = Faker();
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: 60,
-                            child: _ConnectionCard(
-                              storyData: StoryData(
-                                name: faker.person.firstName(),
-                                url: Helpers.randomPictureUrl(),
+                        itemCount: 4,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          final faker = Faker();
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: 60,
+                              child: _ConnectionCard(
+                                storyData: StoryData(
+                                    name: faker.person.firstName(),
+                                    url: Helpers.randomPictureUrl()),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        }),
                   ),
                 ],
+                // child: ListView.builder(
+                //   itemCount: 4, // !Number of connections
+                //   scrollDirection: Axis.horizontal,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     final faker = Faker();
+                //     return Padding(
+                //       padding: const EdgeInsets.all(8.0),
+                //       child: SizedBox(
+                //         width: 60,
+                //         child: _ConnectionCard(
+                //           storyData: StoryData(
+                //             name: faker.person.firstName(),
+                //             url: Helpers.randomPictureUrl(),
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
               ),
             ),
           ),
@@ -350,4 +360,18 @@ class _ConnectionCard extends StatelessWidget {
       ],
     );
   }
+}
+
+class MessageController {
+  // Stream to get list of users in firebase
+  Stream<List<AppUser>> readUsers() =>
+      fController.usersCollection.snapshots().map((list) => list.docs
+          .map((doc) => AppUser.newfromJSON(doc.data() as Map<String, dynamic>))
+          .toList());
+
+  Widget buildUser(AppUser user) => ListTile(
+        leading: CircleAvatar(child: Text(Helpers.randomPictureUrl())),
+        title: Text(user.name!),
+        subtitle: Text(faker.lorem.sentence()),
+      );
 }

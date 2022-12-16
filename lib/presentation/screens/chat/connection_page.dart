@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 
-import '../resources/widgets/molecules/search_bar.dart';
-import '../resources/widgets/molecules/topbar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
 
 class ConnectionPage extends StatefulWidget{
   const ConnectionPage({super.key});
