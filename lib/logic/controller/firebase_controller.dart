@@ -24,7 +24,7 @@ class FirebaseController {
         },
         onError: (e) => print("Error getting document: $e"),
       );
-      print(userDataMap[field]);
+      //print(userDataMap[field]);
       return userDataMap[field].toString();
     } catch (e) {
       return 'Error';

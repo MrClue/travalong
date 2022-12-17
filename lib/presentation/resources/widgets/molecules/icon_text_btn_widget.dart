@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class IconTextButton extends StatelessWidget {
+class IconTextButton extends StatefulWidget {
   final IconData faIcon;
   final String label;
   final String description;
@@ -19,12 +19,17 @@ class IconTextButton extends StatelessWidget {
         super(key: key);
 
   @override
+  State<IconTextButton> createState() => _IconTextButtonState();
+}
+
+class _IconTextButtonState extends State<IconTextButton> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (() {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => goToPage),
+          MaterialPageRoute(builder: (context) => widget.goToPage),
         );
       }),
       child: Container(
@@ -50,7 +55,7 @@ class IconTextButton extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 10),
                   width: 35,
                   child: FaIcon(
-                    faIcon,
+                    widget.faIcon,
                     size: 35,
                     color: TravalongColors.secondary_10,
                   ),
@@ -61,12 +66,12 @@ class IconTextButton extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      label,
+                      widget.label,
                       style: GoogleFonts.poppins(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      description,
+                      widget.description,
                       style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

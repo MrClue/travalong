@@ -17,6 +17,29 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget> {
   // * creates instance of firebase_controller class
   FirebaseController fController = FirebaseController();
+  String _name = "";
+  String _age = "";
+  String _userLocation = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    fController.getDocFieldData(UserData.name).then((name) {
+      fController.getDocFieldData(UserData.age).then((age) {
+        fController.getDocFieldData(UserData.city).then((city) {
+          fController.getDocFieldData(UserData.country).then((country) {
+            setState(() {
+              _name = name;
+              _age = age;
+              _userLocation = "$city, $country";
+              //debugPrint("$_name, $_age");
+            });
+          });
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,48 +83,94 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // * name + age
                       Row(
                         children: [
+                          Row(
+                            children: [
+                              AutoSizeText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                    height: 0),
+                                textAlign: TextAlign.left,
+                                _name, // name
+                              ),
+                              AutoSizeText(
+                                style: GoogleFonts.poppins(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                    color:
+                                        TravalongColors.secondary_text_bright,
+                                    height: 0),
+                                textAlign: TextAlign.left,
+                                maxLines: 1,
+                                ", $_age", // age
+                              ),
+                            ],
+                          ),
+                          /*
                           FutureBuilder(
-                            future: fController.getDocFieldData(UserData.name),
-                            builder: (context, snapshot) {
+                            future: Future.wait([
+                              fController.getDocFieldData(UserData.name),
+                              fController.getDocFieldData(UserData.age)
+                            ]),
+                            builder: (context,
+                                AsyncSnapshot<List<dynamic>> snapshots) {
                               return Center(
-                                child: AutoSizeText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w700,
-                                      height: 0),
-                                  textAlign: TextAlign.left,
-                                  snapshot.data.toString() + ' ',
+                                child: Row(
+                                  children: [
+                                    AutoSizeText(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w700,
+                                          height: 0),
+                                      textAlign: TextAlign.left,
+                                      "${snapshots.data?[0]}", // name
+                                    ),
+                                    AutoSizeText(
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w500,
+                                          color: TravalongColors
+                                              .secondary_text_bright,
+                                          height: 0),
+                                      textAlign: TextAlign.left,
+                                      maxLines: 1,
+                                      ", ${snapshots.data?[1]}", // age
+                                    ),
+                                  ],
                                 ),
                               );
                             },
-                          ),
-                          FutureBuilder(
-                            future: fController.getDocFieldData(UserData.age),
-                            builder: (context, snapshot) {
-                              return Center(
-                                child: AutoSizeText(
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w500,
-                                      color:
-                                          TravalongColors.secondary_text_bright,
-                                      height: 0),
-                                  textAlign: TextAlign.left,
-                                  maxLines: 1,
-                                  snapshot.data.toString(),
-                                ),
-                              );
-                            },
-                          ),
+                          ),*/
                         ],
                       ),
-                      FutureBuilder(
-                        future: fController.getDocFieldData(UserData.city),
-                        builder: (context, snapshot) {
+                      // * city + country
+                      Center(
+                        child: Text(
+                          style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: TravalongColors.secondary_text_bright,
+                              height: 1),
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          _userLocation, // city, country
+                        ),
+                      ),
+                      /*FutureBuilder(
+                        future: Future.wait([
+                          fController.getDocFieldData(UserData.city),
+                          fController.getDocFieldData(UserData.country)
+                        ]),
+                        builder:
+                            (context, AsyncSnapshot<List<dynamic>> snapshots) {
                           return Center(
                             child: Text(
                               style: GoogleFonts.poppins(
@@ -112,12 +181,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               textAlign: TextAlign.left,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              // Missing City
-                              snapshot.data.toString() + ', Denmark',
+
+                              "${snapshots.data?[0]}, ${snapshots.data?[1]}", // city, country
                             ),
                           );
                         },
-                      ),
+                      ),*/
                     ],
                   ),
                 )

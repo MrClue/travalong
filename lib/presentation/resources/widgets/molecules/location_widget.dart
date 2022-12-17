@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:travalong/data/model/user.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
@@ -15,6 +17,9 @@ class LocationWidget extends StatefulWidget {
 }
 
 class _LocationWidgetState extends State<LocationWidget> {
+  // * creates instance of firebase_controller class
+  FirebaseController fController = FirebaseController();
+
   String _userLocation = "";
   //late String lat;
   //late String long;
@@ -53,6 +58,27 @@ class _LocationWidgetState extends State<LocationWidget> {
         desiredAccuracy: LocationAccuracy.high);*/
   }*/
 
+  /*@override
+  void initState() {
+    _userLocation =
+        "${fController.getDocFieldData(UserData.city)}, ${fController.getDocFieldData(UserData.country)}";
+    super.initState();
+  }*/
+
+  @override
+  void initState() {
+    super.initState();
+
+    fController.getDocFieldData(UserData.city).then((city) {
+      fController.getDocFieldData(UserData.country).then((country) {
+        setState(() {
+          _userLocation = "$city, $country";
+          //debugPrint(_userLocation);
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,7 +100,7 @@ class _LocationWidgetState extends State<LocationWidget> {
           child: Row(
             children: [
               ThemeText(
-                textString: _userLocation, // TODO: fetch device location
+                textString: _userLocation,
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 textColor: TravalongColors.primary_text_bright,
@@ -126,10 +152,22 @@ class _LocationWidgetState extends State<LocationWidget> {
                   String? country = placemark.country;
 
                   setState(() {
-                    _userLocation = '$city, $country';
-                  });
+                    // update database with _userLocation
+                    fController.setDocFieldData(UserData.city, city);
+                    fController.setDocFieldData(UserData.country, country);
 
-                  // todo: update database with _userLocation
+                    // refresh _userLocation display text
+                    fController.getDocFieldData(UserData.city).then((city) {
+                      fController
+                          .getDocFieldData(UserData.country)
+                          .then((country) {
+                        setState(() {
+                          _userLocation = "$city, $country";
+                          //debugPrint(_userLocation);
+                        });
+                      });
+                    });
+                  });
                 },
                 child: const Icon(Icons.update),
               ),
