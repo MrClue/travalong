@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
@@ -21,7 +22,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   String _age = "";
   String _userLocation = "";
 
-  @override
+  /*@override
   void initState() {
     super.initState();
 
@@ -39,7 +40,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         });
       });
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -83,56 +84,48 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // * name + age
-                      Row(
-                        children: [
-                          Row(
+                      StreamBuilder(
+                        stream: fController.usersCollection.snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData || snapshot.data == null) {
+                            return const Text('Loading...');
+                          }
+                          var userDocument = (snapshot.data as QuerySnapshot)
+                              .docs
+                              .firstWhere((d) => d.id == fController.userID);
+
+                          _name = userDocument.get(UserData.name).toString();
+                          _age = userDocument.get(UserData.age).toString();
+
+                          var city = userDocument.get(UserData.city);
+                          var country = userDocument.get(UserData.country);
+                          _userLocation = "$city, $country";
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              AutoSizeText(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: GoogleFonts.poppins(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w700,
-                                    height: 0),
-                                textAlign: TextAlign.left,
-                                _name, // name
-                              ),
-                              AutoSizeText(
-                                style: GoogleFonts.poppins(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        TravalongColors.secondary_text_bright,
-                                    height: 0),
-                                textAlign: TextAlign.left,
-                                maxLines: 1,
-                                ", $_age", // age
-                              ),
-                            ],
-                          ),
-                          /*
-                          FutureBuilder(
-                            future: Future.wait([
-                              fController.getDocFieldData(UserData.name),
-                              fController.getDocFieldData(UserData.age)
-                            ]),
-                            builder: (context,
-                                AsyncSnapshot<List<dynamic>> snapshots) {
-                              return Center(
-                                child: Row(
-                                  children: [
-                                    AutoSizeText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
+                              // * name + age
+                              Row(
+                                children: [
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 225 - 40, // (- age maxWidth)
+                                    ),
+                                    child: AutoSizeText(
                                       style: GoogleFonts.poppins(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w700,
                                           height: 0),
                                       textAlign: TextAlign.left,
-                                      "${snapshots.data?[0]}", // name
+                                      maxLines: 1,
+                                      "$_name", // name
                                     ),
-                                    AutoSizeText(
+                                  ),
+                                  ConstrainedBox(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 40),
+                                    child: AutoSizeText(
                                       style: GoogleFonts.poppins(
                                           fontSize: 24,
                                           fontWeight: FontWeight.w500,
@@ -141,52 +134,31 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                           height: 0),
                                       textAlign: TextAlign.left,
                                       maxLines: 1,
-                                      ", ${snapshots.data?[1]}", // age
+                                      ", $_age", // age
                                     ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                              // * city + country
+                              ConstrainedBox(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 225),
+                                child: AutoSizeText(
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      color:
+                                          TravalongColors.secondary_text_bright,
+                                      height: 1),
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  _userLocation, // city, country
                                 ),
-                              );
-                            },
-                          ),*/
-                        ],
-                      ),
-                      // * city + country
-                      Center(
-                        child: Text(
-                          style: GoogleFonts.poppins(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                              color: TravalongColors.secondary_text_bright,
-                              height: 1),
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          _userLocation, // city, country
-                        ),
-                      ),
-                      /*FutureBuilder(
-                        future: Future.wait([
-                          fController.getDocFieldData(UserData.city),
-                          fController.getDocFieldData(UserData.country)
-                        ]),
-                        builder:
-                            (context, AsyncSnapshot<List<dynamic>> snapshots) {
-                          return Center(
-                            child: Text(
-                              style: GoogleFonts.poppins(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  color: TravalongColors.secondary_text_bright,
-                                  height: 1),
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-
-                              "${snapshots.data?[0]}, ${snapshots.data?[1]}", // city, country
-                            ),
+                              ),
+                            ],
                           );
                         },
-                      ),*/
+                      ),
                     ],
                   ),
                 )
