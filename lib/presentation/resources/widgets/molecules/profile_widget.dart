@@ -22,26 +22,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   String _age = "";
   String _userLocation = "";
 
-  /*@override
-  void initState() {
-    super.initState();
-
-    fController.getDocFieldData(UserData.name).then((name) {
-      fController.getDocFieldData(UserData.age).then((age) {
-        fController.getDocFieldData(UserData.city).then((city) {
-          fController.getDocFieldData(UserData.country).then((country) {
-            setState(() {
-              _name = name;
-              _age = age;
-              _userLocation = "$city, $country";
-              //debugPrint("$_name, $_age");
-            });
-          });
-        });
-      });
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Container(
