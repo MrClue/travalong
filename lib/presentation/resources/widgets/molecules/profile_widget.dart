@@ -1,10 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -92,29 +92,26 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     constraints: const BoxConstraints(
                                       maxWidth: 225 - 40, // (- age maxWidth)
                                     ),
-                                    child: AutoSizeText(
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700,
-                                          height: 0),
-                                      textAlign: TextAlign.left,
+                                    // 30, w700,
+                                    child: ThemeText(
+                                      textString: "$_name",
                                       maxLines: 1,
-                                      "$_name", // name
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      textColor:
+                                          TravalongColors.primary_text_bright,
                                     ),
                                   ),
                                   ConstrainedBox(
                                     constraints:
                                         const BoxConstraints(maxWidth: 40),
-                                    child: AutoSizeText(
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w500,
-                                          color: TravalongColors
-                                              .secondary_text_bright,
-                                          height: 0),
-                                      textAlign: TextAlign.left,
+                                    child: ThemeText(
+                                      textString: ", $_age",
                                       maxLines: 1,
-                                      ", $_age", // age
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w500,
+                                      textColor:
+                                          TravalongColors.primary_text_bright,
                                     ),
                                   ),
                                 ],
@@ -123,16 +120,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               ConstrainedBox(
                                 constraints:
                                     const BoxConstraints(maxWidth: 225),
-                                child: AutoSizeText(
-                                  style: GoogleFonts.poppins(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                      color:
-                                          TravalongColors.secondary_text_bright,
-                                      height: 1),
-                                  textAlign: TextAlign.left,
+                                child: ThemeText(
+                                  textString: _userLocation, // city, country,
                                   maxLines: 1,
-                                  _userLocation, // city, country
+                                  fontSize: 22,
+                                  height: 1,
+                                  fontWeight: FontWeight.w500,
+                                  textColor:
+                                      TravalongColors.secondary_text_bright,
                                 ),
                               ),
                             ],
