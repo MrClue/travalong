@@ -1,9 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -17,6 +18,9 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget> {
   // * creates instance of firebase_controller class
   FirebaseController fController = FirebaseController();
+  String _name = "";
+  String _age = "";
+  String _userLocation = "";
 
   @override
   Widget build(BuildContext context) {
@@ -60,61 +64,76 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          FutureBuilder(
-                            future: fController.getDocFieldData(UserData.name),
-                            builder: (context, snapshot) {
-                              return Center(
-                                child: AutoSizeText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: GoogleFonts.poppins(
+                      StreamBuilder(
+                        stream: fController.usersCollection
+                            .snapshots()
+                            .takeWhile((event) => event.docs
+                                .any((d) => d.id == fController.userID)),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData || snapshot.data == null) {
+                            return const Text('Loading...');
+                          }
+                          var userDocument = (snapshot.data as QuerySnapshot)
+                              .docs
+                              .firstWhere((d) => d.id == fController.userID);
+
+                          _name = userDocument.get(UserData.name).toString();
+                          _age = userDocument.get(UserData.age).toString();
+
+                          var city = userDocument.get(UserData.city);
+                          var country = userDocument.get(UserData.country);
+                          _userLocation = "$city, $country";
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // * name + age
+                              Row(
+                                children: [
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 225 - 40, // (- age maxWidth)
+                                    ),
+                                    // 30, w700,
+                                    child: ThemeText(
+                                      textString: "$_name",
+                                      maxLines: 1,
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
-                                      height: 0),
-                                  textAlign: TextAlign.left,
-                                  snapshot.data.toString() + ' ',
-                                ),
-                              );
-                            },
-                          ),
-                          FutureBuilder(
-                            future: fController.getDocFieldData(UserData.age),
-                            builder: (context, snapshot) {
-                              return Center(
-                                child: AutoSizeText(
-                                  style: GoogleFonts.poppins(
+                                      textColor:
+                                          TravalongColors.primary_text_bright,
+                                    ),
+                                  ),
+                                  ConstrainedBox(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 40),
+                                    child: ThemeText(
+                                      textString: ", $_age",
+                                      maxLines: 1,
                                       fontSize: 24,
                                       fontWeight: FontWeight.w500,
-                                      color:
-                                          TravalongColors.secondary_text_bright,
-                                      height: 0),
-                                  textAlign: TextAlign.left,
+                                      textColor:
+                                          TravalongColors.primary_text_bright,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // * city + country
+                              ConstrainedBox(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 225),
+                                child: ThemeText(
+                                  textString: _userLocation, // city, country,
                                   maxLines: 1,
-                                  snapshot.data.toString(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      FutureBuilder(
-                        future: fController.getDocFieldData(UserData.city),
-                        builder: (context, snapshot) {
-                          return Center(
-                            child: Text(
-                              style: GoogleFonts.poppins(
                                   fontSize: 22,
+                                  height: 1,
                                   fontWeight: FontWeight.w500,
-                                  color: TravalongColors.secondary_text_bright,
-                                  height: 1),
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              // Missing City
-                              snapshot.data.toString() + ', Denmark',
-                            ),
+                                  textColor:
+                                      TravalongColors.secondary_text_bright,
+                                ),
+                              ),
+                            ],
                           );
                         },
                       ),

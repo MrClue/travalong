@@ -14,6 +14,7 @@ class SignOutBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        /*
         showCupertinoDialog(
           context: context,
           builder: (_) => CupertinoAlertDialog(
@@ -47,6 +48,12 @@ class SignOutBtnWidget extends StatelessWidget {
                 },
               )
             ],
+          ),
+        );*/
+        AuthService().signOut();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const StartScreen(),
           ),
         );
       },

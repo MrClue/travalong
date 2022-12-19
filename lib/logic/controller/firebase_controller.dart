@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:flutter/foundation.dart';
 
 //DatabaseService database = DatabaseService();
 //var db = DatabaseService().userCollection;
@@ -24,7 +25,7 @@ class FirebaseController {
         },
         onError: (e) => print("Error getting document: $e"),
       );
-      print(userDataMap[field]);
+      //debugPrint(userDataMap[field]);
       return userDataMap[field].toString();
     } catch (e) {
       return 'Error';
@@ -34,6 +35,7 @@ class FirebaseController {
 
   // * Set document data-field value (JSON value) based on field (JSON key)
   Future setDocFieldData(String field, dynamic value) async {
+    //debugPrint("setDocfieldData - docRef: " + docRef.toString());
     // [START setDocFieldData]
     final data = {field: value};
     try {

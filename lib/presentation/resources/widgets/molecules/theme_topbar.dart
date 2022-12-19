@@ -13,7 +13,7 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     required this.backArrow,
     required this.enableCustomButton,
-    required this.customButtonWidget,
+    this.customButtonWidget = const Text("btn"),
   }) : super(key: key);
 
   double get topbarHeight => 65; // is method to avoid having it in constructor
@@ -36,15 +36,14 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
       //automaticallyImplyLeading: false, // disables default back arrow
       leading: backArrow,
       title: ThemeText(
-        textString: title, //"My Profile",
+        textString: title,
         fontSize: 24,
         fontWeight: FontWeight.w500,
         textColor: Colors.black,
       ),
       centerTitle: true,
       actions: <Widget>[
-        if (enableCustomButton == true) // ! test
-          customButtonWidget,
+        if (enableCustomButton == true) customButtonWidget,
       ],
     );
   }

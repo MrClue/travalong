@@ -14,9 +14,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final userAuth = FirebaseAuth.instance.currentUser!;
-
-    //const user = UserData.dummyUser;
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
     return SafeScaffoldPure(
@@ -24,7 +21,7 @@ class ProfilePage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ProfileWidget(),
+            const ProfileWidget(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               child: Column(
@@ -89,17 +86,14 @@ class MediaWidget extends StatelessWidget {
           fontWeight: FontWeight.w400,
           textColor: TravalongColors.secondary_text_bright,
         ),
-        InkWell(
-          onDoubleTap: () {},
-          child: FanCarouselImageSlider(
-            imagesLink: sampleImages,
-            isAssets: false,
-            autoPlay: false,
-            sliderHeight: 280, // todo: make non-static
-            imageRadius: 10,
-            indicatorActiveColor: TravalongColors.secondary_10,
-            imageFitMode: BoxFit.cover,
-          ),
+        FanCarouselImageSlider(
+          imagesLink: sampleImages,
+          isAssets: false,
+          autoPlay: false,
+          sliderHeight: 280, // todo: make non-static
+          imageRadius: 10,
+          indicatorActiveColor: TravalongColors.secondary_10,
+          imageFitMode: BoxFit.cover,
         ),
       ],
     );

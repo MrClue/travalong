@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travalong/data/model/user.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
@@ -16,35 +18,35 @@ class AboutFormWidget extends StatefulWidget {
 // * this is the corresponding State class.
 // * this class holds data related to the "About Widget".
 class _AboutFormWidgetState extends State<AboutFormWidget> {
+  FirebaseController fController = FirebaseController();
+
   // Creating a text controller, that is used later to retrieve
   // the current value value of the TextFormField.
-  final myController = TextEditingController();
-
-  // ! Testing something --------------------------------------------
-  String storedUserInput =
-      "Hello World. "; // ! This variable should come from database
-
-  // getter
-  String get getStoredUserInput {
-    return storedUserInput; // TODO: Get from DB
-  }
+  final textController = TextEditingController();
+  String userInput = "";
 
   // setter
   set setStoredUserInput(String text) {
-    storedUserInput = text;
+    userInput = text;
 
-    // TODO: Implement "push to DB"
+    fController.setDocFieldData(UserData.bio, text);
   }
-  // ! --------------------------------------------------------------
 
   @override
   void initState() {
     super.initState();
 
-    myController.text = getStoredUserInput; // initialize with value from DB
+    // * initialize bio-text from database
+    fController.getDocFieldData(UserData.bio).then(
+      (bio) {
+        setState(() {
+          textController.text = bio;
+        });
+      },
+    );
 
     // * Start listening to changes
-    myController.addListener(
+    textController.addListener(
       () {
         _updateText();
       },
@@ -54,7 +56,7 @@ class _AboutFormWidgetState extends State<AboutFormWidget> {
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree.
-    myController.dispose(); // * removes the listener
+    textController.dispose(); // * removes the listener
     super.dispose();
   }
 
@@ -77,7 +79,7 @@ class _AboutFormWidgetState extends State<AboutFormWidget> {
         ),
         TextFormField(
           controller:
-              myController, // * supplying the controller to allow listening for changes
+              textController, // * supplying the controller to allow listening for changes
           maxLength: 250,
           maxLines: 5,
           decoration: InputDecoration(
@@ -121,19 +123,17 @@ class _AboutFormWidgetState extends State<AboutFormWidget> {
 
   // * function to update database based on newest input
   void _updateText() {
-    var currentUserInput = myController.text;
+    var currentUserInput = textController.text;
 
-    // * check if userInput is updated and update database
-    if (getStoredUserInput != currentUserInput) {
-      // ! should print old database value
-      //print("old input: $getStoredUserInput"); // debug
-
-      setStoredUserInput = currentUserInput; // set new value
-
-      // ! should print updated input value
-      //print("new input: $getStoredUserInput"); // debug
-
-      // TODO: update database with new value
-    }
+    fController.getDocFieldData(UserData.bio).then(
+      (bio) {
+        setState(() {
+          // * check if userInput is changed and update database
+          if (bio != currentUserInput) {
+            setStoredUserInput = currentUserInput; // set new value
+          }
+        });
+      },
+    );
   }
 }
