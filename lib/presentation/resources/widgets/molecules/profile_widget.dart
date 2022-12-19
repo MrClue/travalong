@@ -65,7 +65,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StreamBuilder(
-                        stream: fController.usersCollection.snapshots(),
+                        stream: fController.usersCollection
+                            .snapshots()
+                            .takeWhile((event) => event.docs
+                                .any((d) => d.id == fController.userID)),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData || snapshot.data == null) {
                             return const Text('Loading...');
