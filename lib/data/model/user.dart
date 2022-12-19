@@ -24,7 +24,8 @@ class UserData {
 class AppUser {
   String? uid, name, email, urlAvatar, bio, city, country, gender;
   int? age, connections, sharedMedia, goalsCompleted;
-  Map<String, dynamic>? media, chats, interests, travelgoals;
+  Map<String, dynamic>? media, chats;
+  List<String>? interests, travelgoals;
 
   AppUser({
     required this.uid,
@@ -43,8 +44,19 @@ class AppUser {
     this.chats,
     this.interests,
     this.travelgoals,
-    // required this.connection,
-  });
+  }) {
+    // Initialize fields (not set when creating account) to empty values or empty lists
+    bio ??= "";
+    city ??= "";
+    country ??= "";
+    connections ??= 0;
+    sharedMedia ??= 0;
+    goalsCompleted ??= 0;
+    media ??= {};
+    chats ??= {};
+    interests ??= [];
+    travelgoals ??= [];
+  }
 
   // To assist in JSON conversion
   // Map of key value
@@ -84,8 +96,8 @@ class AppUser {
     int? goalsCompleted,
     Map<String, dynamic>? media,
     Map<String, dynamic>? chats,
-    Map<String, dynamic>? interests,
-    Map<String, dynamic>? travelgoals,
+    List<String>? interests,
+    List<String>? travelgoals,
   }) =>
       AppUser(
         uid: uid ?? this.uid,
@@ -129,7 +141,7 @@ class AppUser {
         goalsCompleted: json[UserData.goalsCompleted] as int,
         media: json[UserData.media] as Map<String, dynamic>,
         chats: json[UserData.chats] as Map<String, dynamic>,
-        interests: json[UserData.interests] as Map<String, dynamic>,
-        travelgoals: json[UserData.travelgoals] as Map<String, dynamic>,
+        interests: json[UserData.interests] as List<String>,
+        travelgoals: json[UserData.travelgoals] as List<String>,
       );
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+
+import '../../../data/model/user.dart';
+import '../../resources/widgets/molecules/confirm_button.dart';
+import '../../resources/widgets/molecules/page_text.dart';
 
 class InterestsSubpage extends StatelessWidget {
   const InterestsSubpage({super.key});
@@ -24,13 +26,18 @@ class InterestsSubpage extends StatelessWidget {
           children: [
             Container(
               //color: Colors.black12, // ! for debug
-              child: const PageText(),
+              child: const PageTextTopCenter(
+                textNormal:
+                    'Please select what interests and hobbies suits you the best. ',
+                textBold:
+                    'This will help you find others with common interests.',
+              ),
             ),
             const SizedBox(height: 12),
             //const InterestsWidget(),
             //const Spacer(), // fills the remaining space
             //const ConfirmButton()
-            MyForm(),
+            InterestsSelector(),
           ],
         ),
       ),
@@ -38,7 +45,6 @@ class InterestsSubpage extends StatelessWidget {
   }
 }
 
-// ! testing another selectable
 class SelectableOptions {
   final List<String> options = [
     "Astronomy",
@@ -107,20 +113,55 @@ class SelectableOptions {
   }*/
 }
 
-class MyForm extends StatefulWidget {
+class InterestsSelector extends StatefulWidget {
   @override
-  _MyFormState createState() => _MyFormState();
+  InterestsSelectorState createState() => InterestsSelectorState();
 }
 
-class _MyFormState extends State<MyForm> {
+class InterestsSelectorState extends State<InterestsSelector> {
   final _formKey = GlobalKey<FormState>();
-  final List<String> _selectedValues = [];
+  List<String> _selectedValues = [];
 
   final selectableOptions = SelectableOptions();
   String _searchQuery = ""; // Initialize _searchQuery
 
+  FirebaseController fController = FirebaseController();
+
+  bool _valuesChanged = false; // ! ConfirmButton color checker
+
   void _saveSelectedValues() {
-    // TODO: save _selectedValues to database
+    // save _selectedValues to database
+    fController.setDocFieldData(UserData.interests, _selectedValues);
+    setState(() {
+      _valuesChanged = false; // ! reset button color back to default
+    });
+  }
+
+  void addToSelectedValues(String value) {
+    if (value != "" && value != "[]") {
+      setState(() {
+        // Replace all occurrences of "[" and "]" with an empty string
+        value = value.replaceAll("[", "").replaceAll("]", "");
+        // Split the value string into a list of options
+        List<String> options = value.split(", ");
+        // Add each option to the _selectedValues list
+        options.forEach((option) => _selectedValues.add(option));
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // get _selectedValues from database
+    fController.getDocFieldData(UserData.interests).then((interests) {
+      setState(() {
+        // Replace the first occurrence of "[]" with an empty string
+        interests = interests.replaceFirst("[]", "");
+
+        addToSelectedValues(interests);
+      });
+    });
   }
 
   @override
@@ -140,7 +181,7 @@ class _MyFormState extends State<MyForm> {
             },
           ),
           SizedBox(
-            height: 325, // todo: dont make height static
+            height: MediaQuery.of(context).size.height / 2, // ! maybee change
             child: Scrollbar(
               thumbVisibility: true,
               thickness: 6,
@@ -163,9 +204,11 @@ class _MyFormState extends State<MyForm> {
                               onChanged: (value) {
                                 setState(() {
                                   if (value != null && value) {
-                                    _selectedValues.add(option);
+                                    addToSelectedValues(option);
+                                    _valuesChanged = true;
                                   } else {
                                     _selectedValues.remove(option);
+                                    _valuesChanged = true;
                                   }
                                 });
                               },
@@ -181,88 +224,9 @@ class _MyFormState extends State<MyForm> {
           ConfirmButton(
             formKey: _formKey,
             onSave: _saveSelectedValues,
-            selectedValues: _selectedValues,
+            valuesChanged: _valuesChanged,
+            //selectedValues: _selectedValues,
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class ConfirmButton extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final Function onSave;
-  final List<String> selectedValues; // Add selectedValues constructor argument
-
-  const ConfirmButton({
-    Key? key,
-    required this.formKey,
-    required this.onSave,
-    required this.selectedValues,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final color =
-        selectedValues.isNotEmpty // Determined color based on selectedValues
-            ? TravalongColors.secondary_10
-            : TravalongColors.primary_30;
-    return InkWell(
-      child: Container(
-        alignment: Alignment.center,
-        height: 55,
-        width: 355,
-        decoration: BoxDecoration(
-          color: color, // Use determined color
-          borderRadius: const BorderRadius.all(
-            Radius.circular(50),
-          ),
-          border: Border.all(
-            color: TravalongColors.primary_30_stroke,
-            width: 1.5,
-          ),
-        ),
-        child: const ThemeText(
-          textString: "CONFIRM",
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          textColor: Colors.white,
-        ),
-      ),
-      onTap: () {
-        if (formKey.currentState!.validate()) {
-          // assert not null (!)
-          formKey.currentState?.save(); // null-safe operator (?)
-          onSave(); // call onSave callback
-        }
-      },
-    );
-  }
-}
-
-class PageText extends StatelessWidget {
-  const PageText({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      textAlign: TextAlign.left,
-      text: TextSpan(
-        // Note: Styles for TextSpans must be explicitly defined.
-        // Child text spans will inherit styles from parent
-        style: GoogleFonts.poppins(
-          fontSize: 16.0,
-          color: Colors.black,
-        ),
-        children: const <TextSpan>[
-          TextSpan(
-              text:
-                  'Please select what interests and hobbies suits you the best. '),
-          TextSpan(
-              text: 'This will help you find others with common interests.',
-              style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
