@@ -14,7 +14,7 @@ class _ChatSearchPageState extends State<ChatSearchPage>{
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: TopBar(
         title: "Chats",
       ),

@@ -236,7 +236,7 @@ class _Connections extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(top: 12.0, left: 12, right: 12),
                     child: SearchBar(),
                   ),

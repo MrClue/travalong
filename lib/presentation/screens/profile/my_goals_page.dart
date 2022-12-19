@@ -9,7 +9,7 @@ class MyGoalsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
-      topbar: const ThemeTopBar(
+      topbar: ThemeTopBar(
         title: 'My Goals',
         backArrow: BackArrow(),
         enableCustomButton: false,
