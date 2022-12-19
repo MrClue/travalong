@@ -21,7 +21,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
-      topbar: const ThemeTopBar(
+      topbar: ThemeTopBar(
         title: "My Profile",
         backArrow: BackArrow(),
         enableCustomButton: false,

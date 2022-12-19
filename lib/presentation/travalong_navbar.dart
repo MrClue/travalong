@@ -4,7 +4,7 @@ import 'package:travalong/presentation/screens/profile/profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/search/search_start_screen.dart';
-// import 'package:travalong/presentation/screens/search/test_page.dart';
+import 'package:travalong/presentation/screens/search/test_page.dart';
 
 class TravalongNavbar extends StatefulWidget {
   const TravalongNavbar({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class TravalongNavbarState extends State<TravalongNavbar> {
   int _selectedIndex = 2;
 
   static List<Widget> _widgetOptions = <Widget>[
-    SearchStartScreen(), // TestPage(),
+    SearchStartScreen(),
     MessagesScreen(),
     ProfilePage(),
   ];

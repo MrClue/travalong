@@ -36,7 +36,6 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
         enableCustomButton: false,
       ),
       child: SlidingUpPanel(
-        panelSnapping: true,
         isDraggable: true,
         backdropEnabled: true,
         minHeight: MediaQuery.of(context).size.height / 2 - 50,
@@ -244,22 +243,18 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const IntrinsicWidth(
-            child: ThemeText(
-              textString: 'Im looking for people',
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              textColor: TravalongColors.primary_text_bright,
-            ),
+          ThemeText(
+            textString: 'Im looking for people',
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            textColor: TravalongColors.primary_text_bright,
           ),
           _textOptWidget(),
-          const IntrinsicWidth(
-            child: ThemeText(
-              textString: ' the destination',
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              textColor: TravalongColors.primary_text_bright,
-            ),
+          ThemeText(
+            textString: ' the destination',
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            textColor: TravalongColors.primary_text_bright,
           ),
         ],
       ),
