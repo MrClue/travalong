@@ -8,6 +8,7 @@ class ThemeText extends StatelessWidget {
   final FontWeight fontWeight;
   final Color textColor;
   final int maxLines;
+  final TextOverflow? overflow;
 
   const ThemeText({
     super.key,
@@ -17,6 +18,7 @@ class ThemeText extends StatelessWidget {
     required this.textColor,
     this.maxLines = 999,
     this.height = 0.0,
+    this.overflow,
   });
 
   @override

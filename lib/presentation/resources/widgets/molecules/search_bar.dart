@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/screens/chat/chat_search_results.dart';
 
 class SearchBar extends StatefulWidget {
-  String? title;
+  final String? hintText;
+  Function()? onTapped;
 
   SearchBar({
-    String? this.title,
+    this.hintText,
+    this.onTapped,
     super.key,
   });
 
@@ -15,10 +18,9 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  SearchBar searchBar = SearchBar();
-
   @override
   Widget build(BuildContext context) {
+    bool open = false;
     return Container(
       child: Column(
         children: [
@@ -30,8 +32,11 @@ class _SearchBarState extends State<SearchBar> {
                 Flexible(
                   flex: 1,
                   child: TextField(
-                    textAlignVertical: TextAlignVertical.bottom,
-                    cursorColor: Colors.white,
+                    onTap: (() {
+                      SearchBar().onTapped;
+                    }),
+                    textAlignVertical: TextAlignVertical.top,
+                    cursorColor: Colors.black,
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -45,7 +50,7 @@ class _SearchBarState extends State<SearchBar> {
                         borderSide: const BorderSide(
                             color: TravalongColors.primary_30_stroke),
                       ),
-                      hintText: searchBar.title,
+                      hintText: SearchBar().hintText,
                       hintStyle: GoogleFonts.poppins(
                         color: TravalongColors.secondary_text_bright,
                         fontSize: 12,
