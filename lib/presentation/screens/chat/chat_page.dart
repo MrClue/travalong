@@ -7,24 +7,25 @@ import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String id;
-  final String title;
-  const ChatPage({Key? key, required this.id, required this.title})
-      : super(key: key);
+  final String name;
+  const ChatPage({Key? key, required this.id, required this.name}) : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  var chatRoomId;
-  var titlename;
+  final firestore = FirebaseFirestore.instance;
+  var chatId;
+  var name;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.indigo.shade400,
       appBar: AppBar(
         backgroundColor: Colors.indigo.shade400,
-        title: titlename,
+        title: Text(widget.name),
         elevation: 0,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
@@ -62,16 +63,15 @@ class _ChatPageState extends State<ChatPage> {
             child: Container(
               decoration: Styles.friendsBox(),
               child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('ChatRooms')
-                    .snapshots(),
+                stream:
+                    FirebaseFirestore.instance.collection('chats').snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.docs.isNotEmpty) {
                       List<QueryDocumentSnapshot<Object?>> alldata = snapshot
                           .data!.docs
                           .where((element) =>
-                              element['chatId'].contains(
+                              element['users'].contains(
                                   FirebaseAuth.instance.currentUser!.uid) &&
                               element['users'].contains(
                                   FirebaseAuth.instance.currentUser!.uid))
@@ -79,7 +79,7 @@ class _ChatPageState extends State<ChatPage> {
                       QueryDocumentSnapshot? data =
                           alldata.isNotEmpty ? alldata.first : null;
                       if (data != null) {
-                        chatRoomId = data.id;
+                        chatId = data.id;
                       }
                       return data == null
                           ? Container()
@@ -108,7 +108,7 @@ class _ChatPageState extends State<ChatPage> {
                               });
                     } else {
                       const Center(
-                        child: CircularProgressIndicator(color: Colors.indigo),
+                        child: Text('No chats found'),
                       );
                     }
                   } else {
@@ -124,37 +124,42 @@ class _ChatPageState extends State<ChatPage> {
           Container(
             color: Colors.white,
             child: ChatWidgets.messageField(onSubmit: (controller) {
-              if (chatRoomId != null) {
-                Map<String, dynamic> data = {
-                  'message': controller.text.trim(),
-                  'sort_by': FirebaseAuth.instance.currentUser!.uid,
-                  'datetime': DateTime.now(),
-                };
-                FirebaseFirestore.instance
-                    .collection('chatRooms')
-                    .doc('roomId')
-                    .update({
-                  'last_message_time': DateTime.now(),
-                  'last_message': controller.text,
-                });
-                FirebaseFirestore.instance
-                    .collection('chatRooms')
-                    .doc('roomId')
-                    .collection('messages')
-                    .add(data);
-              } else {
-                Map<String, dynamic> data = {
-                  'message': controller.text.trim(),
-                  'sort_by': FirebaseAuth.instance.currentUser!.uid,
-                  'datetime': DateTime.now(),
-                };
-                FirebaseFirestore.instance.collection('chatRooms').add({
-                  'users': [widget.id, FirebaseAuth.instance.currentUser!.uid],
-                  'last_message': controller.text,
-                  'last_message_time': DateTime.now(),
-                }).then((value) async {
-                  value.collection('messages').add(data);
-                });
+              if (controller.text.toString() != '') {
+                if (chatId != null) {
+                  Map<String, dynamic> data = {
+                    'message': controller.text.trim(),
+                    'sort_by': FirebaseAuth.instance.currentUser!.uid,
+                    'datetime': DateTime.now(),
+                  };
+                  FirebaseFirestore.instance
+                      .collection('chats')
+                      .doc(chatId)
+                      .update({
+                    'last_message_time': DateTime.now(),
+                    'last_message': controller.text,
+                  });
+                  FirebaseFirestore.instance
+                      .collection('chats')
+                      .doc(chatId)
+                      .collection('messages')
+                      .add(data);
+                } else {
+                  Map<String, dynamic> data = {
+                    'message': controller.text.trim(),
+                    'sort_by': FirebaseAuth.instance.currentUser!.uid,
+                    'datetime': DateTime.now(),
+                  };
+                  FirebaseFirestore.instance.collection('chats').add({
+                    'users': [
+                      widget.id,
+                      FirebaseAuth.instance.currentUser!.uid
+                    ],
+                    'last_message': controller.text,
+                    'last_message_time': DateTime.now(),
+                  }).then((value) async {
+                    value.collection('messages').add(data);
+                  });
+                }
               }
               controller.clear();
             }),

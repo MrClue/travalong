@@ -69,7 +69,7 @@ class _AnimatedDialogState extends State<AnimatedDialog> {
                                         builder: (context) {
                                           return const ChatPage(
                                             id: '',
-                                            title: 'title',
+                                            name: 'name',
                                           );
                                         },
                                       ),

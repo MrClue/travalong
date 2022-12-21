@@ -20,8 +20,20 @@ class ChatWidgets {
                   color: Colors.white,
                 )),
           ),
-          title: Text(title),
-          subtitle: subtitle != null ? Text(subtitle) : null,
+          title: Expanded(
+              child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          )),
+          subtitle: subtitle != null
+              ? Expanded(
+                  child: Text(
+                  subtitle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ))
+              : null,
           trailing: Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Text(time),

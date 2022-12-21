@@ -119,17 +119,56 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           height: 80,
                           child: StreamBuilder(
-                              stream: fController.usersCollection.snapshots(),
+                              //! START STREAMBUILDER
+                              stream: firestore.collection('chats').snapshots(),
                               builder: (context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                                List<QueryDocumentSnapshot>? data =
-                                    snapshot.data!.docs.toList();
+                                List data = !snapshot.hasData
+                                    ? []
+                                    : snapshot.data!.docs
+                                        .where((element) => element['users']
+                                            .toString()
+                                            .contains(FirebaseAuth
+                                                .instance.currentUser!.uid))
+                                        .toList();
                                 return ListView.builder(
                                   itemCount: data.length,
-                                  scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, i) {
-                                    return circleProfile(
-                                      name: snapshot.data!.docs[i]['name'],
+                                    List users = data[i]['users'];
+                                    var friend = users.where((element) =>
+                                        element !=
+                                        FirebaseAuth.instance.currentUser!.uid);
+                                    var user = friend.isNotEmpty
+                                        ? friend.first
+                                        : users
+                                            .where((element) =>
+                                                element ==
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid)
+                                            .first;
+                                    return FutureBuilder(
+                                      //! User Collection
+                                      future: fController.usersCollection
+                                          .doc(user)
+                                          .get(),
+                                      builder: (context, AsyncSnapshot snap) {
+                                        //! BUILD USER CIRCLEPROFILES
+                                        return !snap.hasData
+                                            ? Container()
+                                            : circleProfile(
+                                                name: snap.data['name'],
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) {
+                                                    return ChatPage(
+                                                        id: user,
+                                                        name:
+                                                            snap.data['name']);
+                                                  }));
+                                                },
+                                              );
+                                      },
                                     );
                                   },
                                 );
@@ -146,8 +185,8 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 20),
                         ),
                         Expanded(
@@ -155,48 +194,70 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),
                             child: StreamBuilder(
-                                stream: fController.usersCollection.snapshots(),
+                                //! START STREAMBUILDER
+                                stream:
+                                    firestore.collection('chats').snapshots(),
                                 builder: (context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  List<QueryDocumentSnapshot>? data =
-                                      snapshot.data!.docs.toList();
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      itemCount: data.length,
+                                  List data = !snapshot.hasData
+                                      ? []
+                                      : snapshot.data!.docs
+                                          .where((element) => element['users']
+                                              .toString()
+                                              .contains(FirebaseAuth
+                                                  .instance.currentUser!.uid))
+                                          .toList();
+                                  return ListView.builder(
+                                      itemCount: data!.length,
                                       itemBuilder: (context, i) {
-                                        if (snapshot.data!.docs.isNotEmpty) {
-                                          return ChatWidgets.card(
-                                            title: snapshot.data!.docs[i]
-                                                ['name'],
-                                            subtitle: 'Hi, How are you !',
-                                            time: '04:40',
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return ChatPage(
-                                                      id: '',
-                                                      title: 'name',
-                                                    );
-                                                  },
-                                                ),
+                                        List users = data[i]['users'];
+                                        var friend = users.where((element) =>
+                                            element !=
+                                            FirebaseAuth
+                                                .instance.currentUser!.uid);
+                                        var user = friend.isNotEmpty
+                                            ? friend.first
+                                            : users
+                                                .where((element) =>
+                                                    element ==
+                                                    FirebaseAuth.instance
+                                                        .currentUser!.uid)
+                                                .first;
+                                        return FutureBuilder(
+                                            //!User Collection
+                                            future: fController.usersCollection
+                                                .doc(user)
+                                                .get(),
+                                            builder:
+                                                (context, AsyncSnapshot snap) {
+                                              List<QueryDocumentSnapshot>?
+                                                  data =
+                                                  snapshot.data!.docs.toList();
+                                              // ! BUILD USER CARDS
+                                              return ChatWidgets.card(
+                                                title: snap.data['name'],
+                                                subtitle: data![i]
+                                                    ['last_message'],
+                                                time: DateFormat('hh:mm a')
+                                                    .format(data[i][
+                                                            'last_message_time']
+                                                        .toDate()),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return ChatPage(
+                                                          id: user,
+                                                          name:
+                                                              snap.data['name'],
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
                                               );
-                                            },
-                                          );
-                                        } else {
-                                          return const Center(
-                                            child: CircularProgressIndicator(
-                                                color: TravalongColors
-                                                    .secondary_10),
-                                          );
-                                        }
-                                      },
-                                    );
-                                  }
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                        color: TravalongColors.secondary_10),
-                                  );
+                                            });
+                                      });
                                 }),
                           ),
                         ),
@@ -212,13 +273,13 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
     );
   }
 
-  static Widget circleProfile({onTap, String? name}) {
+  static Widget circleProfile({onTap, name}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: InkWell(
         onTap: onTap,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CircleAvatar(
               radius: 25,
@@ -232,13 +293,16 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
             SizedBox(
               width: 50,
               child: Center(
-                child: ThemeText(
-                  textString: name!,
-                  height: 1.5,
-                  fontSize: 12,
-                  textColor: TravalongColors.primary_text_bright,
-                  overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeight.normal,
+                child: Expanded(
+                  child: ThemeText(
+                    textString: name,
+                    height: 1.5,
+                    fontSize: 12,
+                    textColor: TravalongColors.primary_text_bright,
+                    overflow: TextOverflow.clip,
+                    fontWeight: FontWeight.normal,
+                    maxLines: 1,
+                  ),
                 ),
               ),
             ),
