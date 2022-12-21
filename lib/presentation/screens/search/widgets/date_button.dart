@@ -20,6 +20,7 @@ class DateButton extends StatelessWidget {
     return Expanded(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          elevation: 0,
           backgroundColor: TravalongColors.secondary_10,
           textStyle: const TextStyle(fontSize: 12),
           shape: RoundedRectangleBorder(

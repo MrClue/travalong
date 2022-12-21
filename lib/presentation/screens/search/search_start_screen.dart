@@ -168,18 +168,10 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
               color: TravalongColors.primary_text_dark,
             ),
           ),
-          hint: const ThemeText(
-            textString: 'Gender',
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            textColor: TravalongColors.primary_text_dark,
-          ),
-          iconSize: 0,
-          iconEnabledColor: Colors.transparent,
-          iconDisabledColor: Colors.transparent,
+          iconSize: 0, // ! removes icon
           value: dropdownValue,
-          elevation: 16,
-          style: const TextStyle(color: TravalongColors.primary_text_dark),
+          //elevation: 16,
+
           onChanged: (String? value) {
             // This is called when the user selects an item.
             setState(() {
@@ -189,7 +181,12 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
           items: list.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: ThemeText(
+                textString: value,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                textColor: TravalongColors.primary_text_dark,
+              ),
             );
           }).toList(),
         ),
