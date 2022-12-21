@@ -16,7 +16,7 @@ class SearchStartScreen extends StatefulWidget {
 }
 
 const List<String> list = <String>['Male', 'Female', 'Any'];
-const List<String> optList = <String>['currently in', 'going to'];
+const List<String> optList = <String>['currently in', 'going to']; // ! not MVP
 
 class _SearchStartScreenState extends State<SearchStartScreen> {
   DateTimeRange dateRange = DateTimeRange(
@@ -38,36 +38,44 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
       child: SlidingUpPanel(
         isDraggable: true,
         backdropEnabled: true,
-        minHeight: MediaQuery.of(context).size.height / 2 - 50,
+        //minHeight: MediaQuery.of(context).size.height / 2 - 50,
         maxHeight: MediaQuery.of(context).size.height - 250,
-        panel: Center(
+        panel: const Center(
           child: Text("This is the sliding Widget"),
         ),
-        collapsed: Text('This is the collapsed panel'),
+        collapsed: const Text('This is the collapsed panel'),
         body: Container(
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           color: TravalongColors.primary_30,
-          child: Column(
-            children: [
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SearchBar(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 13),
+            child: Column(
+              children: [
+                SearchBar(),
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: ((constraints.maxWidth / 3) * 2) - 2,
+                          child: _searchDateWidget(),
+                        ),
+                        const SizedBox(width: 4),
+                        SizedBox(
+                          width: (constraints.maxWidth / 3) - 2,
+                          child: _searchGenderWidget(),
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _searchDateWidget(),
-                  const SizedBox(width: 4),
-                  _searchGenderWidget(),
-                ],
-              ),
-              const SizedBox(height: 25),
-              _searchTextWidget(),
-              const SizedBox(height: 75),
-              _searchActionBtn(),
-            ],
+                const SizedBox(height: 25),
+                _searchTextWidget(),
+                const SizedBox(height: 75),
+                _searchActionBtn(),
+              ],
+            ),
           ),
         ),
       ),
@@ -80,7 +88,6 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
     final difference = dateRange.duration;
 
     return Container(
-      width: 257,
       height: 45,
       decoration: BoxDecoration(
         color: TravalongColors.neutral_60,
@@ -117,7 +124,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
               ),
             ),
           ),
-          const SizedBox(width: 1),
+          const SizedBox(width: 1), // space between start & end date
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -187,7 +194,6 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
   Widget _searchGenderWidget() {
     return InkWell(
       child: Container(
-        width: 106 + 12,
         height: 45,
         decoration: BoxDecoration(
           color: TravalongColors.secondary_10,
@@ -243,14 +249,14 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ThemeText(
+          const ThemeText(
             textString: 'Im looking for people',
             fontSize: 12,
             fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_bright,
           ),
           _textOptWidget(),
-          ThemeText(
+          const ThemeText(
             textString: ' the destination',
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -311,7 +317,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
       onTap: () {},
       child: Container(
         height: 40,
-        width: 367 + 12,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: TravalongColors.secondary_10,
           borderRadius: BorderRadius.circular(20.0),

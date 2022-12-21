@@ -23,7 +23,7 @@ class _SearchBarState extends State<SearchBar> {
       child: Column(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - 46,
+            width: MediaQuery.of(context).size.width, // - 46,
             height: 30,
             child: Row(
               children: [
