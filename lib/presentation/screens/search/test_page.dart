@@ -17,7 +17,7 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
         topbar: const TopBar(
           title: 'Search',
         ),
@@ -38,7 +38,7 @@ class _TestPageState extends State<TestPage> {
 
                         // * By using "setState()" inside the FutureBuilder, we reload the widget tree,
                         // * allowing us to see the changes by "setDocFieldData()" in real-time
-                        // The widget tree is reloaded because "setState()" notifies the framework, 
+                        // The widget tree is reloaded because "setState()" notifies the framework,
                         // that the state of the app has changed, and forces a reload to reflect these changes.
                         setState(() {
                           if (snapshot.data == 'female') {

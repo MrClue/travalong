@@ -50,7 +50,7 @@ class TravalongApp extends StatelessWidget {
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SafeScaffoldPure(
+        home: SafeScaffold(
           // * Listen for auth state changes (if user is logged in)
           child: StreamBuilder<User?>(
             stream: AuthService().firebaseAuth.authStateChanges(),

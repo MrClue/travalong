@@ -3,13 +3,14 @@ import 'package:travalong/presentation/resources/colors.dart';
 
 // ! Includes: navbar, appbar
 class SafeScaffold extends StatelessWidget {
-  final PreferredSizeWidget topbar;
-  final Widget child, navbar;
+  final PreferredSizeWidget? topbar;
+  final Widget? navbar;
+  final Widget child;
 
   const SafeScaffold({
     super.key,
-    required this.topbar,
-    required this.navbar,
+    this.topbar,
+    this.navbar,
     required this.child,
   });
 
@@ -25,7 +26,7 @@ class SafeScaffold extends StatelessWidget {
     );
   }
 }
-
+/*
 // ! Includes: topbar
 class SafeScaffoldNoNavbar extends StatelessWidget {
   final PreferredSizeWidget topbar;
@@ -81,3 +82,4 @@ class SafeScaffoldPure extends StatelessWidget {
     );
   }
 }
+*/

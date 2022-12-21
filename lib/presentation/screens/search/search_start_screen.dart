@@ -7,6 +7,7 @@ import 'package:travalong/presentation/resources/widgets/molecules/search_bar.da
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:travalong/presentation/screens/search/widgets/date_button.dart';
 
 class SearchStartScreen extends StatefulWidget {
   const SearchStartScreen({super.key});
@@ -20,8 +21,8 @@ const List<String> optList = <String>['currently in', 'going to']; // ! not MVP
 
 class _SearchStartScreenState extends State<SearchStartScreen> {
   DateTimeRange dateRange = DateTimeRange(
-    start: DateTime(2022, 11, 05),
-    end: DateTime(2022, 12, 24),
+    start: DateTime.now(), // Todays date
+    end: DateTime.now().add(const Duration(days: 1)), // Tomorrows date
   );
 
   TextEditingController dateController = TextEditingController();
@@ -30,7 +31,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         title: 'Search Travelers',
         enableCustomButton: false,
@@ -48,33 +49,40 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
           width: MediaQuery.of(context).size.width,
           color: TravalongColors.primary_30,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 13),
-            child: Column(
-              children: [
-                SearchBar(),
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    return Row(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Column(
+                  children: [
+                    SearchBar(), // todo: Lav komplet search widget som tager imod en query
+                    const SizedBox(height: 10),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: ((constraints.maxWidth / 3) * 2) - 2,
+                          width: (((constraints.maxWidth / 3) * 2) - 2) + 15,
                           child: _searchDateWidget(),
                         ),
                         const SizedBox(width: 4),
                         SizedBox(
-                          width: (constraints.maxWidth / 3) - 2,
+                          width: ((constraints.maxWidth / 3) - 2) - 15,
                           child: _searchGenderWidget(),
                         ),
                       ],
-                    );
-                  },
-                ),
-                const SizedBox(height: 25),
-                _searchTextWidget(),
-                const SizedBox(height: 75),
-                _searchActionBtn(),
-              ],
+                    ),
+                    const SizedBox(height: 25),
+                    SizedBox(
+                      width: constraints.maxWidth,
+                      child: _searchTextWidget(),
+                    ),
+                    const SizedBox(height: 70),
+                    SizedBox(
+                      width: constraints.maxWidth,
+                      child: _searchActionBtn(),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -85,7 +93,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
   Widget _searchDateWidget() {
     final start = dateRange.start;
     final end = dateRange.end;
-    final difference = dateRange.duration;
+    //final travelDuration = dateRange.duration.inDays;
 
     return Container(
       height: 45,
@@ -96,63 +104,9 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: TravalongColors.secondary_10,
-                textStyle: const TextStyle(fontSize: 12),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10)),
-                ),
-              ),
-              onPressed: selectDateRange,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.calendar_month_outlined),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(DateFormat('dd/MM/yyyy').format(start)),
-                      Text(DateFormat('EEEE').format(start)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          DateButton(date: start, onPressed: selectDateRange, isStart: true),
           const SizedBox(width: 1), // space between start & end date
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: TravalongColors.secondary_10,
-                textStyle: const TextStyle(fontSize: 12),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                ),
-              ),
-              onPressed: selectDateRange,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.calendar_month_outlined),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(DateFormat('dd/MM/yyyy').format(end)),
-                      Text(DateFormat('EEEE').format(end)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          DateButton(date: end, onPressed: selectDateRange),
         ],
       ),
     );
@@ -220,6 +174,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
             fontWeight: FontWeight.normal,
             textColor: TravalongColors.primary_text_dark,
           ),
+          iconSize: 0,
           iconEnabledColor: Colors.transparent,
           iconDisabledColor: Colors.transparent,
           value: dropdownValue,
@@ -250,15 +205,15 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const ThemeText(
-            textString: 'Im looking for people',
-            fontSize: 12,
+            textString: "I'm searching for people ",
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_bright,
           ),
-          _textOptWidget(),
+          _textOptWidget(), // * dropdown
           const ThemeText(
-            textString: ' the destination',
-            fontSize: 12,
+            textString: ' the destination.',
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_bright,
           ),
@@ -268,46 +223,42 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
   }
 
   Widget _textOptWidget() {
-    return SizedBox(
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton2(
-          // https://pub.dev/packages/dropdown_button2/example
-          alignment: AlignmentDirectional.center,
-          buttonHighlightColor: Colors.transparent,
-          hint: const ThemeText(
-            textString: '- select option -',
-            fontSize: 12,
-            fontWeight: FontWeight.normal,
-            textColor: TravalongColors.secondary_10,
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        // https://pub.dev/packages/dropdown_button2/example
+        alignment: AlignmentDirectional.center,
+        buttonHighlightColor: Colors.transparent,
+        iconSize: 0,
+        iconEnabledColor: Colors.transparent,
+        iconDisabledColor: Colors.transparent,
+        value: optvalue,
+        dropdownElevation: 16,
+        dropdownWidth: 100,
+        dropdownDecoration: const BoxDecoration(
+          color: TravalongColors.primary_30,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
           ),
-          iconEnabledColor: Colors.transparent,
-          iconDisabledColor: Colors.transparent,
-          value: optvalue,
-          dropdownElevation: 16,
-          dropdownWidth: 104,
-          dropdownDecoration: const BoxDecoration(
-            color: TravalongColors.primary_30,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
-          ),
-          style: const TextStyle(
-            color: TravalongColors.secondary_10,
-          ),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-            setState(() {
-              optvalue = value!;
-            });
-          },
-          items: optList.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
         ),
+
+        onChanged: (String? value) {
+          // This is called when the user selects an item.
+          setState(() {
+            optvalue = value!;
+          });
+        },
+        items: optList.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: ThemeText(
+              textString: value,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              textColor: TravalongColors.secondary_10,
+            ),
+          );
+        }).toList(),
       ),
     );
   }
@@ -317,7 +268,6 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
       onTap: () {},
       child: Container(
         height: 40,
-        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: TravalongColors.secondary_10,
           borderRadius: BorderRadius.circular(20.0),
@@ -328,9 +278,9 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
         child: const Align(
           alignment: Alignment.center,
           child: ThemeText(
-            textString: 'Search',
+            textString: 'Search for travelers',
             fontSize: 16,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_dark,
           ),
         ),

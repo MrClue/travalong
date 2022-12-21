@@ -14,7 +14,7 @@ class TravalongNavbar extends StatefulWidget {
 }
 
 class TravalongNavbarState extends State<TravalongNavbar> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0; //2;
 
   static List<Widget> _widgetOptions = <Widget>[
     SearchStartScreen(),
@@ -30,7 +30,7 @@ class TravalongNavbarState extends State<TravalongNavbar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoTopbar(
+    return SafeScaffold(
       navbar: Container(
         decoration: const BoxDecoration(
           border: Border(
