@@ -208,7 +208,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                                   .instance.currentUser!.uid))
                                           .toList();
                                   return ListView.builder(
-                                      itemCount: data!.length,
+                                      itemCount: data.length,
                                       itemBuilder: (context, i) {
                                         List users = data[i]['users'];
                                         var friend = users.where((element) =>
@@ -238,7 +238,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                                   ? loading()
                                                   : ChatWidgets.card(
                                                       title: snap.data['name'],
-                                                      subtitle: data![i]
+                                                      subtitle: data[i]
                                                           ['last_message'],
                                                       time: DateFormat(
                                                               'hh:mm a')
