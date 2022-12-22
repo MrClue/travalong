@@ -26,14 +26,17 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final ScrollController listViewController = ScrollController();
 
+  // * travel start & end dates
   DateTimeRange dateRange = DateTimeRange(
     start: DateTime.now(), // Todays date
     end: DateTime.now().add(const Duration(days: 1)), // Tomorrows date
   );
-
+  //final travelDuration = dateRange.duration.inDays;
   TextEditingController dateController = TextEditingController();
-  String dropdownValue = genderType.first;
-  String optvalue = searchType.first;
+
+  // * dropdown values
+  String selectedGender = genderType.first;
+  String selectedSearchType = searchType.first;
 
   @override
   Widget build(BuildContext context) {
@@ -117,12 +120,8 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-// * WIDGETS TIL UI
+  // * WIDGETS TIL UI
   Widget _searchDateWidget() {
-    final start = dateRange.start;
-    final end = dateRange.end;
-    //final travelDuration = dateRange.duration.inDays;
-
     return Container(
       height: 45,
       decoration: BoxDecoration(
@@ -132,9 +131,10 @@ class _SearchPageState extends State<SearchPage> {
       ),
       child: Row(
         children: [
-          DateButton(date: start, onPressed: selectDateRange, isStart: true),
+          DateButton(
+              date: dateRange.start, onPressed: selectDateRange, isStart: true),
           const SizedBox(width: 1), // space between start & end date
-          DateButton(date: end, onPressed: selectDateRange),
+          DateButton(date: dateRange.end, onPressed: selectDateRange),
         ],
       ),
     );
@@ -197,13 +197,13 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           iconSize: 0, // ! removes icon
-          value: dropdownValue,
+          value: selectedGender,
           //elevation: 16,
 
           onChanged: (String? value) {
             // This is called when the user selects an item.
             setState(() {
-              dropdownValue = value!;
+              selectedGender = value!;
             });
           },
           items: genderType.map<DropdownMenuItem<String>>((String value) {
@@ -254,7 +254,7 @@ class _SearchPageState extends State<SearchPage> {
         alignment: AlignmentDirectional.center,
         buttonHighlightColor: Colors.transparent,
         iconSize: 0, // ! removes icon
-        value: optvalue,
+        value: selectedSearchType,
         dropdownElevation: 16,
         dropdownWidth: 100,
         dropdownDecoration: const BoxDecoration(
@@ -268,7 +268,7 @@ class _SearchPageState extends State<SearchPage> {
         onChanged: (String? value) {
           // This is called when the user selects an item.
           setState(() {
-            optvalue = value!;
+            selectedSearchType = value!;
           });
         },
         items: searchType.map<DropdownMenuItem<String>>((String value) {
