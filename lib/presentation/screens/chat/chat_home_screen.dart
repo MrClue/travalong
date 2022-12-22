@@ -63,7 +63,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                   child: Container(
                     color: TravalongColors.primary_30,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    height: 182,
+                    height: 184,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -119,57 +119,38 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           height: 80,
                           child: StreamBuilder(
-                              //! START STREAMBUILDER
-                              stream: firestore.collection('chats').snapshots(),
+                              // ! START STREAMBUILDER
+                              stream: firestore.collection('users').snapshots(),
                               builder: (context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                                List data = !snapshot.hasData
+                                List userData = !snapshot.hasData
                                     ? []
                                     : snapshot.data!.docs
-                                        .where((element) => element['users']
-                                            .toString()
-                                            .contains(FirebaseAuth
-                                                .instance.currentUser!.uid))
+                                        .where((element) =>
+                                            element['uid'].toString().contains(
+                                                FirebaseAuth.instance
+                                                    .currentUser!.uid) ==
+                                            false)
                                         .toList();
                                 return ListView.builder(
-                                  itemCount: data.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: userData.length,
                                   itemBuilder: (context, i) {
-                                    List users = data[i]['users'];
-                                    var friend = users.where((element) =>
-                                        element !=
-                                        FirebaseAuth.instance.currentUser!.uid);
-                                    var user = friend.isNotEmpty
-                                        ? friend.first
-                                        : users
-                                            .where((element) =>
-                                                element ==
-                                                FirebaseAuth
-                                                    .instance.currentUser!.uid)
-                                            .first;
-                                    return FutureBuilder(
-                                      //! User Collection
-                                      future: fController.usersCollection
-                                          .doc(user)
-                                          .get(),
-                                      builder: (context, AsyncSnapshot snap) {
-                                        //! BUILD USER CIRCLEPROFILES
-                                        return !snap.hasData
-                                            ? loading()
-                                            : circleProfile(
-                                                name: snap.data['name'],
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) {
-                                                    return ChatPage(
-                                                        id: user,
-                                                        name:
-                                                            snap.data['name']);
-                                                  }));
-                                                },
-                                              );
-                                      },
-                                    );
+                                    //! BUILD USER CIRCLEPROFILES
+                                    return !snapshot.hasData
+                                        ? loading()
+                                        : circleProfile(
+                                            name: userData[i]['name'],
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return ChatPage(
+                                                    id: userData[i]['uid'],
+                                                    name: userData[i]['name']);
+                                              }));
+                                            },
+                                          );
                                   },
                                 );
                               }),
@@ -208,6 +189,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                                   .instance.currentUser!.uid))
                                           .toList();
                                   return ListView.builder(
+                                      scrollDirection: Axis.vertical,
                                       itemCount: data.length,
                                       itemBuilder: (context, i) {
                                         List users = data[i]['users'];

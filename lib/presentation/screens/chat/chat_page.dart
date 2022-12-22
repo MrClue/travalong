@@ -2,13 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String id;
   final String name;
-  const ChatPage({Key? key, required this.id, required this.name}) : super(key: key);
+  const ChatPage({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -62,6 +64,7 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: Container(
               decoration: Styles.friendsBox(),
+              // ! Streambuilder to access chats collection and snap chat doc
               child: StreamBuilder(
                 stream:
                     FirebaseFirestore.instance.collection('chats').snapshots(),
@@ -71,8 +74,7 @@ class _ChatPageState extends State<ChatPage> {
                       List<QueryDocumentSnapshot<Object?>> alldata = snapshot
                           .data!.docs
                           .where((element) =>
-                              element['users'].contains(
-                                  FirebaseAuth.instance.currentUser!.uid) &&
+                              element['users'].contains(widget.id) &&
                               element['users'].contains(
                                   FirebaseAuth.instance.currentUser!.uid))
                           .toList();
@@ -84,8 +86,10 @@ class _ChatPageState extends State<ChatPage> {
                       return data == null
                           ? Container()
                           : StreamBuilder(
+                              // ! Second Streambuilder to access messenges collection
                               stream: data.reference
                                   .collection('messages')
+                                  .orderBy('datetime', descending: true)
                                   .snapshots(),
                               builder:
                                   (context, AsyncSnapshot<QuerySnapshot> snap) {
@@ -122,13 +126,13 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           Container(
-            color: Colors.white,
+            color: TravalongColors.neutral_60,
             child: ChatWidgets.messageField(onSubmit: (controller) {
               if (controller.text.toString() != '') {
                 if (chatId != null) {
                   Map<String, dynamic> data = {
                     'message': controller.text.trim(),
-                    'sort_by': FirebaseAuth.instance.currentUser!.uid,
+                    'sent_by': FirebaseAuth.instance.currentUser!.uid,
                     'datetime': DateTime.now(),
                   };
                   FirebaseFirestore.instance
@@ -146,7 +150,7 @@ class _ChatPageState extends State<ChatPage> {
                 } else {
                   Map<String, dynamic> data = {
                     'message': controller.text.trim(),
-                    'sort_by': FirebaseAuth.instance.currentUser!.uid,
+                    'sent_by': FirebaseAuth.instance.currentUser!.uid,
                     'datetime': DateTime.now(),
                   };
                   FirebaseFirestore.instance.collection('chats').add({
