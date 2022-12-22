@@ -109,21 +109,6 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ],
             ),
-            /*child: ListView.builder(
-              reverse: true,
-              // ! random boxes inside dropdown
-              controller: listViewController,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.all(15),
-                  color: Colors.pink[200],
-                  height: 100,
-                  child: Center(
-                    child: Text(index.toString()),
-                  ),
-                );
-              },
-            ),*/
           ),
         ),
         sheetBelow: null,
