@@ -1,25 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/icon_title_btn_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/chat/messages_screen.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:intl/intl.dart';
-import '../../resources/colors.dart';
-import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
 
-class NewChatWidget extends StatefulWidget {
-  NewChatWidget({super.key});
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
+
+class ConnectionsPage extends StatefulWidget {
+  const ConnectionsPage({super.key});
 
   @override
-  State<NewChatWidget> createState() => _NewChatWidgetState();
+  State<StatefulWidget> createState() => _ConnectionsPageState();
 }
 
-class _NewChatWidgetState extends State<NewChatWidget> {
-  final TextEditingController _textEditController = TextEditingController();
-  final firestore = FirebaseFirestore.instance;
-  String _search = "";
+final firestore = FirebaseFirestore.instance;
+
+class _ConnectionsPageState extends State<ConnectionsPage> {
+  TextEditingController _textEditController = TextEditingController();
+  String _search = '';
 
   @override
   void dispose() {
@@ -31,8 +34,8 @@ class _NewChatWidgetState extends State<NewChatWidget> {
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
       topbar: ThemeTopBar(
-        title: "New Chat",
-        backArrow: const CancelArrow(),
+        title: "Connections",
+        backArrow: const BackArrow(),
         enableCustomButton: false,
       ),
       child: Container(
@@ -45,11 +48,6 @@ class _NewChatWidgetState extends State<NewChatWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const IconTitleButton(
-                  faIcon: Icons.people_outlined,
-                  label: "Start a group chat",
-                  goToPage: MessagesScreen(),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
@@ -114,12 +112,18 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                         itemCount: data.length,
                         itemBuilder: ((context, index) {
                           // Timestamp time =
-                          return ChatWidgets.card(
-                              title: data[index]['name'],
-                              // time: DateFormat('EEE hh:mm')
-                              //     .format(time.toDate()),
-                              time: '',
-                              onTap: () {});
+                          return Column(
+                            children: [
+                              ChatWidgets.card(
+                                title: data[index]['name'],
+                                // time: DateFormat('EEE hh:mm')
+                                //     .format(time.toDate()),
+                                time: '',
+                                onTap: () {},
+                              ),
+                              ChatWidgets.chatDivider(),
+                            ],
+                          );
                         }),
                       );
                     },

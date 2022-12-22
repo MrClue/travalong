@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
-import 'package:travalong/presentation/screens/chat/connection_page.dart';
+import 'package:travalong/presentation/screens/chat/connections_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
 import '../../../data/messages_data.dart';
@@ -45,7 +45,7 @@ class _MessageScreenState extends State<MessagesScreen> {
           ),
           context: context,
           builder: (BuildContext context) {
-            return const NewChatWidget();
+            return NewChatWidget();
           },
         ),
       ),
@@ -263,14 +263,14 @@ class _Connections extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        ConnectionPage()),
+                                        ConnectionsPage()),
                               );
                             },
                             label: Text(
                               "View all",
                               style: GoogleFonts.poppins(
                                   color: TravalongColors.secondary_text_dark,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                   fontSize: 10),
                             ),
                           ),

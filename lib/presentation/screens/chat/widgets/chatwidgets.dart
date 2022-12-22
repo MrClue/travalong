@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/chat/animated_dialog.dart';
 
 class ChatWidgets {
+  bool timeEnabled = false;
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -21,11 +23,12 @@ class ChatWidgets {
                 )),
           ),
           title: Expanded(
-              child: Text(
-            title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          )),
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
           subtitle: subtitle != null
               ? Expanded(
                   child: Text(
@@ -40,6 +43,15 @@ class ChatWidgets {
           ),
         ),
       ),
+    );
+  }
+
+  static Widget chatDivider() {
+    return const Divider(
+      color: TravalongColors.primary_30_stroke,
+      indent: 10,
+      endIndent: 10,
+      thickness: 2,
     );
   }
 

@@ -6,7 +6,7 @@ import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/chatwidgets.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
@@ -44,7 +44,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
               ),
               context: context,
               builder: (BuildContext context) {
-                return const NewChatWidget();
+                return NewChatWidget();
               },
             );
           }),
@@ -99,7 +99,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              ConnectionPage()),
+                                              ConnectionsPage()),
                                     );
                                   },
                                   label: Text(
@@ -154,7 +154,7 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                       builder: (context, AsyncSnapshot snap) {
                                         //! BUILD USER CIRCLEPROFILES
                                         return !snap.hasData
-                                            ? Container()
+                                            ? loading()
                                             : circleProfile(
                                                 name: snap.data['name'],
                                                 onTap: () {
@@ -234,28 +234,32 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                                                   data =
                                                   snapshot.data!.docs.toList();
                                               // ! BUILD USER CARDS
-                                              return ChatWidgets.card(
-                                                title: snap.data['name'],
-                                                subtitle: data![i]
-                                                    ['last_message'],
-                                                time: DateFormat('hh:mm a')
-                                                    .format(data[i][
-                                                            'last_message_time']
-                                                        .toDate()),
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) {
-                                                        return ChatPage(
-                                                          id: user,
-                                                          name:
-                                                              snap.data['name'],
+                                              return !snap.hasData
+                                                  ? loading()
+                                                  : ChatWidgets.card(
+                                                      title: snap.data['name'],
+                                                      subtitle: data![i]
+                                                          ['last_message'],
+                                                      time: DateFormat(
+                                                              'hh:mm a')
+                                                          .format(data[i][
+                                                                  'last_message_time']
+                                                              .toDate()),
+                                                      onTap: () {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          MaterialPageRoute(
+                                                            builder: (context) {
+                                                              return ChatPage(
+                                                                id: user,
+                                                                name: snap.data[
+                                                                    'name'],
+                                                              );
+                                                            },
+                                                          ),
                                                         );
                                                       },
-                                                    ),
-                                                  );
-                                                },
-                                              );
+                                                    );
                                             });
                                       });
                                 }),
@@ -309,6 +313,15 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
           ],
         ),
       ),
+    );
+  }
+
+  static Widget loading() {
+    return Container(
+      child: Center(
+          child: CircularProgressIndicator(
+        color: TravalongColors.secondary_10,
+      )),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/chatwidgets.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
 
 class AnimatedDialog extends StatefulWidget {

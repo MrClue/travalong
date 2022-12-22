@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/chatwidgets.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
