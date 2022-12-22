@@ -115,7 +115,12 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         sheetBelow: null,
-        child: Background(), // search results page
+        child: Background(
+          startDate: dateRange.start,
+          endDate: dateRange.end,
+          genderType: selectedGender,
+          searchType: selectedSearchType,
+        ), // search results page
       ),
     );
   }

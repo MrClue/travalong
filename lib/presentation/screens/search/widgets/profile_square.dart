@@ -7,12 +7,14 @@ class ProfileSquare extends StatelessWidget {
   final String name; // users name
   final String image; // users 1st image
   final Widget goToPage;
+  final Function() debug; // ! test
 
   const ProfileSquare({
     Key? key,
     required this.name,
     required this.image,
     required this.goToPage,
+    required this.debug, // ! test
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class ProfileSquare extends StatelessWidget {
       child: InkWell(
         onTap: () {
           debugPrint("You clicked on: $name");
+          debug(); // ! test
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => goToPage),

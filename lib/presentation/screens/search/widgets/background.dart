@@ -6,7 +6,16 @@ import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/screens/search/widgets/results_grid.dart';
 
 class Background extends StatelessWidget {
-  const Background({super.key});
+  final DateTime startDate, endDate;
+  final String genderType, searchType;
+
+  const Background({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+    required this.genderType,
+    required this.searchType,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +29,14 @@ class Background extends StatelessWidget {
             textColor: TravalongColors.primary_text_bright,
           ),
           const SizedBox(height: 18),
-          Expanded(child: ResultsGrid()),
+          Expanded(
+            child: ResultsGrid(
+              startDate: startDate,
+              endDate: endDate,
+              genderType: genderType,
+              searchType: searchType,
+            ),
+          ),
         ],
       ),
     );
