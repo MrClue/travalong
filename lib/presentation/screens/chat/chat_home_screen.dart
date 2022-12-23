@@ -277,16 +277,14 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
             SizedBox(
               width: 50,
               child: Center(
-                child: Expanded(
-                  child: ThemeText(
-                    textString: name,
-                    height: 1.5,
-                    fontSize: 12,
-                    textColor: TravalongColors.primary_text_bright,
-                    overflow: TextOverflow.clip,
-                    fontWeight: FontWeight.normal,
-                    maxLines: 1,
-                  ),
+                child: ThemeText(
+                  textString: name,
+                  height: 1.5,
+                  fontSize: 12,
+                  textColor: TravalongColors.primary_text_bright,
+                  overflow: TextOverflow.clip,
+                  fontWeight: FontWeight.normal,
+                  maxLines: 1,
                 ),
               ),
             ),
