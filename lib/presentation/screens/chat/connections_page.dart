@@ -1,26 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
-import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:intl/intl.dart';
-import '../../resources/colors.dart';
-import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/icon_title_btn_widget.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import '../../resources/widgets/molecules/search_bar.dart';
+import '../../resources/widgets/molecules/topbar.dart';
+import 'package:travalong/presentation/screens/screens.dart';
 
-class NewChatWidget extends StatefulWidget {
-  NewChatWidget({super.key});
+class ConnectionsPage extends StatefulWidget {
+  const ConnectionsPage({super.key});
 
   @override
-  State<NewChatWidget> createState() => _NewChatWidgetState();
+  State<StatefulWidget> createState() => _ConnectionsPageState();
 }
 
-class _NewChatWidgetState extends State<NewChatWidget> {
-  final TextEditingController _textEditController = TextEditingController();
-  final firestore = FirebaseFirestore.instance;
-  String _search = "";
-  bool check = true;
+final firestore = FirebaseFirestore.instance;
+
+class _ConnectionsPageState extends State<ConnectionsPage> {
+  TextEditingController _textEditController = TextEditingController();
+  String _search = '';
 
   @override
   void dispose() {
@@ -32,13 +33,13 @@ class _NewChatWidgetState extends State<NewChatWidget> {
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
       topbar: ThemeTopBar(
-        title: "New Chat",
-        backArrow: const CancelArrow(),
+        title: "Connections",
+        backArrow: const BackArrow(),
         enableCustomButton: false,
       ),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        color: TravalongColors.neutral_60,
+        color: TravalongColors.primary_text_dark,
         child: SizedBox(
           height: 500,
           width: double.infinity,
@@ -46,14 +47,8 @@ class _NewChatWidgetState extends State<NewChatWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const IconTitleButton(
-                  faIcon: Icons.people_outlined,
-                  label: "Start a group chat",
-                  goToPage: ChatHomeScreen(),
-                ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+                  padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     controller: _textEditController,
                     autofocus: false,
@@ -119,11 +114,12 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                           return Column(
                             children: [
                               ChatWidgets.card(
-                                  title: data[index]['name'],
-                                  // time: DateFormat('EEE hh:mm')
-                                  //     .format(time.toDate()),
-                                  time: '',
-                                  onTap: () {}),
+                                title: data[index]['name'],
+                                // time: DateFormat('EEE hh:mm')
+                                //     .format(time.toDate()),
+                                time: '',
+                                onTap: () {},
+                              ),
                               ChatWidgets.chatDivider(),
                             ],
                           );

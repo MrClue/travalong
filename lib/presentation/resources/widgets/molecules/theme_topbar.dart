@@ -4,16 +4,16 @@ import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
 class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final Widget backArrow;
+  Widget? backArrow;
   final bool enableCustomButton;
-  final Widget customButtonWidget;
+  final Widget? customButtonWidget;
 
-  const ThemeTopBar({
+  ThemeTopBar({
     Key? key,
     required this.title,
-    required this.backArrow,
+    this.backArrow,
     required this.enableCustomButton,
-    this.customButtonWidget = const Text("btn"),
+    this.customButtonWidget,
   }) : super(key: key);
 
   double get topbarHeight => 65; // is method to avoid having it in constructor
@@ -29,8 +29,8 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       shape: const Border(
         bottom: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.25),
-          width: 1.5,
+          color: TravalongColors.primary_30_stroke,
+          width: 1.0,
         ),
       ),
       //automaticallyImplyLeading: false, // disables default back arrow
@@ -43,7 +43,7 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       actions: <Widget>[
-        if (enableCustomButton == true) customButtonWidget,
+        if (enableCustomButton == true) customButtonWidget!,
       ],
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/screens/chat/messages_screen.dart';
+import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/profile/profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/screens/search/test_page.dart';
+import 'package:travalong/presentation/screens/search/search_start_screen.dart';
 
 class TravalongNavbar extends StatefulWidget {
   const TravalongNavbar({Key? key}) : super(key: key);
@@ -15,9 +15,9 @@ class TravalongNavbar extends StatefulWidget {
 class TravalongNavbarState extends State<TravalongNavbar> {
   int _selectedIndex = 2;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    TestPage(), // SearchScreen()
-    MessagesScreen(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    SearchStartScreen(),
+    ChatHomeScreen(),
     ProfilePage(),
   ];
 

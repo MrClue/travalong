@@ -14,7 +14,7 @@ class InterestsSubpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
-      topbar: const ThemeTopBar(
+      topbar: ThemeTopBar(
         backArrow: BackArrow(),
         title: "Interests & Hobbies",
         enableCustomButton: false,

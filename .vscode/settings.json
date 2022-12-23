@@ -1,3 +1,10 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "editor.rulers": [
+        {
+            "column": 110,
+            "color": "#84d0ff"
+        }
+    
+    ]
 }
