@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
-import 'package:travalong/presentation/screens/chat/messages_screen.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:intl/intl.dart';
 import '../../resources/colors.dart';
@@ -20,6 +20,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
   final TextEditingController _textEditController = TextEditingController();
   final firestore = FirebaseFirestore.instance;
   String _search = "";
+  bool check = true;
 
   @override
   void dispose() {
@@ -48,7 +49,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                 const IconTitleButton(
                   faIcon: Icons.people_outlined,
                   label: "Start a group chat",
-                  goToPage: MessagesScreen(),
+                  goToPage: ChatHomeScreen(),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

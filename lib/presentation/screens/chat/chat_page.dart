@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:intl/intl.dart';
 
@@ -23,17 +26,13 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.indigo.shade400,
-      appBar: AppBar(
-        backgroundColor: Colors.indigo.shade400,
-        title: Text(widget.name),
-        elevation: 0,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
-        ],
+    return SafeScaffoldNoNavbar(
+      topbar: ThemeTopBar(
+        title: widget.name,
+        enableCustomButton: false,
+        backArrow: const BackArrow(),
       ),
-      body: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -41,24 +40,6 @@ class _ChatPageState extends State<ChatPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Chats',
-                  style: Styles.h1(),
-                ),
-                const Spacer(),
-                Text(
-                  'Last seen: 04:50',
-                  style: Styles.h1().copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white70),
-                ),
-                const Spacer(),
-                const SizedBox(
-                  width: 50,
-                )
-              ],
             ),
           ),
           Expanded(
@@ -101,8 +82,7 @@ class _ChatPageState extends State<ChatPage> {
                                         itemBuilder: (context, i) {
                                           return ChatWidgets.messagesCard(
                                               snap.data!.docs[i]['sent_by'] !=
-                                                  FirebaseAuth.instance
-                                                      .currentUser!.uid,
+                                                  widget.id,
                                               snap.data!.docs[i]['message'],
                                               DateFormat('hh:mm a').format(snap
                                                   .data!.docs[i]['datetime']
@@ -126,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           Container(
-            color: TravalongColors.neutral_60,
+            color: TravalongColors.primary_30_stroke,
             child: ChatWidgets.messageField(onSubmit: (controller) {
               if (controller.text.toString() != '') {
                 if (chatId != null) {

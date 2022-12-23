@@ -39,7 +39,6 @@ class SafeScaffoldNoNavbar extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false, // prevents keyboard overflow
       backgroundColor: TravalongColors.neutral_60,
-
       appBar: topbar,
       body: SafeArea(child: child),
     );

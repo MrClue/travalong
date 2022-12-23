@@ -52,7 +52,7 @@ class _SearchStartScreenState extends State<SearchStartScreen> {
               SizedBox(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SearchBar(),
+                  child: SearchBar.staticSearchBar(),
                 ),
               ),
               Row(

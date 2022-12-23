@@ -14,17 +14,19 @@ import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 import 'package:intl/intl.dart';
 
-class Messenger_home_screen extends StatefulWidget {
-  const Messenger_home_screen({Key? key}) : super(key: key);
+class ChatHomeScreen extends StatefulWidget {
+  const ChatHomeScreen({Key? key}) : super(key: key);
+
   @override
-  State<Messenger_home_screen> createState() => _Messenger_home_screenState();
+  State<ChatHomeScreen> createState() => _ChatHomeScreenState();
 }
 
 final firestore = FirebaseFirestore.instance;
 final currentUid = FirebaseAuth.instance.currentUser!.uid;
 final fController = FirebaseController();
 
-class _Messenger_home_screenState extends State<Messenger_home_screen> {
+class _ChatHomeScreenState extends State<ChatHomeScreen> {
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return SafeScaffoldNoNavbar(
@@ -63,21 +65,16 @@ class _Messenger_home_screenState extends State<Messenger_home_screen> {
                   child: Container(
                     color: TravalongColors.primary_30,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    height: 184,
+                    height: 190,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsets.only(top: 12.0, left: 12, right: 12),
-                          child: SearchBar(
-                            hintText: 'Search',
-                            onTapped: (() {}),
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: SearchBar.staticSearchBar(),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(left: 16, right: 16, top: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
