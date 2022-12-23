@@ -158,91 +158,92 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    decoration: Styles.friendsBox(),
+                    decoration: Styles.chatsBox(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
+                          padding:
+                              EdgeInsets.only(bottom: 20, right: 20, left: 20),
                         ),
                         Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12.0),
-                            child: StreamBuilder(
-                                //! START STREAMBUILDER
-                                stream:
-                                    firestore.collection('chats').snapshots(),
-                                builder: (context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  List data = !snapshot.hasData
-                                      ? []
-                                      : snapshot.data!.docs
-                                          .where((element) => element['users']
-                                              .toString()
-                                              .contains(FirebaseAuth
-                                                  .instance.currentUser!.uid))
-                                          .toList();
-                                  return ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: data.length,
-                                      itemBuilder: (context, i) {
-                                        List users = data[i]['users'];
-                                        var friend = users.where((element) =>
-                                            element !=
-                                            FirebaseAuth
-                                                .instance.currentUser!.uid);
-                                        var user = friend.isNotEmpty
-                                            ? friend.first
-                                            : users
-                                                .where((element) =>
-                                                    element ==
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid)
-                                                .first;
-                                        return FutureBuilder(
-                                            //!User Collection
-                                            future: fController.usersCollection
-                                                .doc(user)
-                                                .get(),
-                                            builder:
-                                                (context, AsyncSnapshot snap) {
-                                              List<QueryDocumentSnapshot>?
-                                                  data =
-                                                  snapshot.data!.docs.toList();
-                                              // ! BUILD USER CARDS
-                                              return !snap.hasData
-                                                  ? loading()
-                                                  : ChatWidgets.card(
-                                                      title: snap.data['name'],
-                                                      subtitle: data[i]
-                                                          ['last_message'],
-                                                      time: DateFormat(
-                                                              'hh:mm a')
-                                                          .format(data[i][
-                                                                  'last_message_time']
-                                                              .toDate()),
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          MaterialPageRoute(
-                                                            builder: (context) {
-                                                              return ChatPage(
-                                                                id: user,
-                                                                name: snap.data[
-                                                                    'name'],
-                                                              );
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                            });
-                                      });
-                                }),
-                          ),
+                          child: StreamBuilder(
+                              //! START STREAMBUILDER
+                              stream: firestore.collection('chats').snapshots(),
+                              builder: (context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                List data = !snapshot.hasData
+                                    ? []
+                                    : snapshot.data!.docs
+                                        .where((element) => element['users']
+                                            .toString()
+                                            .contains(FirebaseAuth
+                                                .instance.currentUser!.uid))
+                                        .toList();
+                                return ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: data.length,
+                                    itemBuilder: (context, i) {
+                                      List users = data[i]['users'];
+                                      var friend = users.where((element) =>
+                                          element !=
+                                          FirebaseAuth
+                                              .instance.currentUser!.uid);
+                                      var user = friend.isNotEmpty
+                                          ? friend.first
+                                          : users
+                                              .where((element) =>
+                                                  element ==
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.uid)
+                                              .first;
+                                      return FutureBuilder(
+                                          //!User Collection
+                                          future: fController.usersCollection
+                                              .doc(user)
+                                              .get(),
+                                          builder:
+                                              (context, AsyncSnapshot snap) {
+                                            List<QueryDocumentSnapshot>? data =
+                                                snapshot.data!.docs.toList();
+                                            // ! BUILD USER CARDS
+                                            return !snap.hasData
+                                                ? loading()
+                                                : Column(
+                                                    children: [
+                                                      ChatWidgets.card(
+                                                        title:
+                                                            snap.data['name'],
+                                                        subtitle: data[i]
+                                                            ['last_message'],
+                                                        time: DateFormat(
+                                                                'hh:mm a')
+                                                            .format(data[i][
+                                                                    'last_message_time']
+                                                                .toDate()),
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .push(
+                                                            MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                                return ChatPage(
+                                                                  id: user,
+                                                                  name: snap
+                                                                          .data[
+                                                                      'name'],
+                                                                );
+                                                              },
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                      ChatWidgets.chatDivider(),
+                                                    ],
+                                                  );
+                                          });
+                                    });
+                              }),
                         ),
                       ],
                     ),

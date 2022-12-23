@@ -206,11 +206,10 @@ class Styles {
         fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white);
   }
 
-  static friendsBox() {
+  static chatsBox() {
     return const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15), topRight: Radius.circular(15)));
+      color: TravalongColors.neutral_60,
+    );
   }
 
   static messagesCardStyle(check) {

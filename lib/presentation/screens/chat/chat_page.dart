@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           Expanded(
             child: Container(
-              decoration: Styles.friendsBox(),
+              decoration: Styles.chatsBox(),
               // ! Streambuilder to access chats collection and snap chat doc
               child: StreamBuilder(
                 stream:
