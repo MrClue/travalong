@@ -18,6 +18,7 @@ class SearchBar {
         decoration: InputDecoration(
           labelText: 'Search ',
           hintText: "Type something",
+          fillColor: TravalongColors.primary_30,
           prefixIcon: const Icon(
             Icons.search,
             color: TravalongColors.secondary_10,

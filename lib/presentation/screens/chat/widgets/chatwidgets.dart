@@ -159,7 +159,7 @@ class ChatWidgets {
   }
 
   static messageField({required onSubmit}) {
-    final con = TextEditingController();
+    var con = TextEditingController();
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
