@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/screens/chat/animated_dialog.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart';
 
 class ChatWidgets {
   bool timeEnabled = false;
+
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -15,10 +16,11 @@ class ChatWidgets {
           leading: const Padding(
             padding: EdgeInsets.all(0.0),
             child: CircleAvatar(
+                radius: 35,
                 backgroundColor: Colors.grey,
                 child: Icon(
                   Icons.person,
-                  size: 30,
+                  size: 60,
                   color: Colors.white,
                 )),
           ),
@@ -55,7 +57,7 @@ class ChatWidgets {
     );
   }
 
-  static Widget circleProfile({onTap}) {
+  static Widget circleProfile({onTap, name}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: InkWell(
@@ -96,35 +98,59 @@ class ChatWidgets {
           if (check) const Spacer(),
           if (!check)
             const CircleAvatar(
+              backgroundColor: Colors.grey,
+              radius: 16,
               child: Icon(
                 Icons.person,
-                size: 13,
+                size: 28,
                 color: Colors.white,
               ),
-              backgroundColor: Colors.grey,
-              radius: 10,
             ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 250),
-            child: Container(
-              margin: const EdgeInsets.all(8),
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                '$message\n\n$time',
-                style: TextStyle(color: check ? Colors.white : Colors.black),
+          Column(
+            crossAxisAlignment:
+                check ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 250),
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(10),
+                  decoration: Styles.messagesCardStyle(check),
+                  child: Text(
+                    '$message',
+                    style: TextStyle(
+                        color: check
+                            ? TravalongColors.primary_text_dark
+                            : TravalongColors.primary_text_bright),
+                  ),
+                ),
               ),
-              decoration: Styles.messagesCardStyle(check),
-            ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 250),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  alignment:
+                      check ? Alignment.bottomRight : Alignment.bottomLeft,
+                  child: Text(
+                    '$time',
+                    style: TextStyle(
+                        color: TravalongColors.primary_text_bright,
+                        fontSize: 9),
+                  ),
+                ),
+              ),
+            ],
           ),
           if (check)
             const CircleAvatar(
+              backgroundColor: Colors.grey,
+              radius: 16,
               child: Icon(
                 Icons.person,
-                size: 13,
+                size: 28,
                 color: Colors.white,
               ),
-              backgroundColor: Colors.grey,
-              radius: 10,
             ),
           if (!check) const Spacer(),
         ],
@@ -135,39 +161,45 @@ class ChatWidgets {
   static messageField({required onSubmit}) {
     final con = TextEditingController();
     return Container(
-      margin: const EdgeInsets.all(5),
-      child: TextField(
-        controller: con,
-        decoration: Styles.messageTextFieldStyle(onSubmit: () {
-          onSubmit(con);
-        }),
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: TravalongColors.neutral_60,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: TravalongColors.primary_30_stroke,
+          width: 2,
+        ),
       ),
-      decoration: Styles.messageFieldCardStyle(),
-    );
-  }
-
-  static searchBar(
-    bool open,
-  ) {
-    return AnimatedDialog(
-      height: open ? 800 : 0,
-      width: open ? 400 : 0,
-    );
-  }
-
-  static searchField({onSubmit}) {
-    final con = TextEditingController();
-    return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: Styles.messageFieldCardStyle(),
-      child: TextField(
-        controller: con,
-        decoration: Styles.searchTextFieldStyle(onSubmit),
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: TextField(
+                controller: con,
+                decoration: Styles.messageTextFieldStyle(onSubmit: () {
+                  onSubmit(con);
+                }),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12, left: 12),
+            child: SendButton(
+              color: TravalongColors.secondary_10,
+              icon: Icons.send_rounded,
+              onPressed: () {
+                onSubmit(con);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
+// ! STYLES
 class Styles {
   static TextStyle h1() {
     return const TextStyle(
@@ -183,24 +215,34 @@ class Styles {
 
   static messagesCardStyle(check) {
     return BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: check ? Colors.indigo.shade300 : Colors.grey.shade300,
+      borderRadius: check
+          ? BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+              bottomLeft: Radius.circular(15))
+          : BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+              bottomRight: Radius.circular(15)),
+      color: check
+          ? TravalongColors.secondary_10
+          : TravalongColors.primary_30_stroke,
     );
   }
 
   static messageFieldCardStyle() {
     return BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.indigo),
-        borderRadius: BorderRadius.circular(10));
+        color: TravalongColors.neutral_60,
+        border: Border.all(color: TravalongColors.secondary_10),
+        borderRadius: BorderRadius.circular(15));
   }
 
   static messageTextFieldStyle({required Function() onSubmit}) {
-    return InputDecoration(
+    return const InputDecoration(
       border: InputBorder.none,
-      hintText: 'Enter Message',
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-      suffixIcon: IconButton(onPressed: onSubmit, icon: const Icon(Icons.send)),
+      focusColor: TravalongColors.secondary_10,
+      hintText: 'Type a message...',
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
     );
   }
 
@@ -211,13 +253,6 @@ class Styles {
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       suffixIcon:
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_rounded)),
-    );
-  }
-
-  static searchBar(bool open) {
-    return AnimatedDialog(
-      height: open ? 800 : 0,
-      width: open ? 400 : 0,
     );
   }
 
