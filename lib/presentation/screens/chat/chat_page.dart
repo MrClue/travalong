@@ -81,8 +81,9 @@ class _ChatPageState extends State<ChatPage> {
                                         reverse: true,
                                         itemBuilder: (context, i) {
                                           return ChatWidgets.messagesCard(
-                                              snap.data!.docs[i]['sent_by'] !=
-                                                  widget.id,
+                                              snap.data!.docs[i]['sent_by'] ==
+                                                  FirebaseAuth.instance
+                                                      .currentUser!.uid,
                                               snap.data!.docs[i]['message'],
                                               DateFormat('hh:mm a').format(snap
                                                   .data!.docs[i]['datetime']
@@ -138,7 +139,7 @@ class _ChatPageState extends State<ChatPage> {
                       widget.id,
                       FirebaseAuth.instance.currentUser!.uid
                     ],
-                    'last_message': controller.text,
+                    'last_message': controller.text.trim(),
                     'last_message_time': DateTime.now(),
                   }).then((value) async {
                     value.collection('messages').add(data);

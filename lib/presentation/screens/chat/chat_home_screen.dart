@@ -197,15 +197,13 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                                   FirebaseAuth.instance
                                                       .currentUser!.uid)
                                               .first;
-                                      return FutureBuilder(
+                                      return StreamBuilder(
                                           //!User Collection
-                                          future: fController.usersCollection
+                                          stream: fController.usersCollection
                                               .doc(user)
-                                              .get(),
+                                              .snapshots(),
                                           builder:
                                               (context, AsyncSnapshot snap) {
-                                            List<QueryDocumentSnapshot>? data =
-                                                snapshot.data!.docs.toList();
                                             // ! BUILD USER CARDS
                                             return !snap.hasData
                                                 ? loading()
