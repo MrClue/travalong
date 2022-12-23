@@ -46,15 +46,13 @@ class SearchBar {
     );
   }
 
-  static Widget searchBar(height, onChange, hintText) {
-    TextEditingController controller = TextEditingController();
+  static Widget searchBar({controller, height, hintText, text, onChanged}) {
     return Column(
       children: [
         SizedBox(
           height: height,
           child: TextField(
             controller: controller,
-            onChanged: onChange,
             textAlignVertical: TextAlignVertical.top,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -75,8 +73,9 @@ class SearchBar {
                 color: TravalongColors.secondary_text_bright,
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                letterSpacing: 2,
+                letterSpacing: 1,
               ),
+              labelText: text,
               prefixIcon: Container(
                 padding: EdgeInsets.all(4),
                 width: 16,
@@ -86,6 +85,7 @@ class SearchBar {
                 ),
               ),
             ),
+            onChanged: onChanged,
           ),
         ),
       ],
