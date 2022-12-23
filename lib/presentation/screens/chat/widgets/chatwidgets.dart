@@ -16,7 +16,7 @@ class ChatWidgets {
           leading: const Padding(
             padding: EdgeInsets.all(0.0),
             child: CircleAvatar(
-                radius: 35,
+                radius: 40,
                 backgroundColor: Colors.grey,
                 child: Icon(
                   Icons.person,

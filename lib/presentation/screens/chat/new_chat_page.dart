@@ -38,7 +38,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
       ),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        color: TravalongColors.primary_text_dark,
+        color: TravalongColors.neutral_60,
         child: SizedBox(
           height: 500,
           width: double.infinity,
@@ -52,7 +52,8 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                   goToPage: ChatHomeScreen(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
                   child: TextField(
                     controller: _textEditController,
                     autofocus: false,
@@ -115,12 +116,17 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                         itemCount: data.length,
                         itemBuilder: ((context, index) {
                           // Timestamp time =
-                          return ChatWidgets.card(
-                              title: data[index]['name'],
-                              // time: DateFormat('EEE hh:mm')
-                              //     .format(time.toDate()),
-                              time: '',
-                              onTap: () {});
+                          return Column(
+                            children: [
+                              ChatWidgets.card(
+                                  title: data[index]['name'],
+                                  // time: DateFormat('EEE hh:mm')
+                                  //     .format(time.toDate()),
+                                  time: '',
+                                  onTap: () {}),
+                              ChatWidgets.chatDivider(),
+                            ],
+                          );
                         }),
                       );
                     },
