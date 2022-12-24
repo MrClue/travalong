@@ -6,7 +6,7 @@ class SearchBar {
   // search bar widget
   //
   // Default values:
-  // Height = 30
+  //double height = 30.0;
 
   static Widget staticSearchBar() {
     TextEditingController textEditController = TextEditingController();
@@ -46,7 +46,13 @@ class SearchBar {
     );
   }
 
-  static Widget searchBar({controller, height, hintText, text, onChanged}) {
+  static Widget searchBar({
+    controller,
+    double height = 30.0,
+    String hintText = "hintText",
+    String text = "",
+    onChanged,
+  }) {
     return Column(
       children: [
         SizedBox(
@@ -77,7 +83,7 @@ class SearchBar {
               ),
               labelText: text,
               prefixIcon: Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 width: 16,
                 child: const Icon(
                   Icons.search_outlined,

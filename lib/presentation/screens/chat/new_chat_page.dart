@@ -58,7 +58,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
                   child: SearchBar.searchBar(
                     controller: textEditController,
-                    height: 50,
+                    height: 50.0,
                     hintText: 'Search user',
                     text: 'Search',
                     onChanged: (value) {
