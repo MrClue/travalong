@@ -25,13 +25,16 @@ class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
   DatabaseService db = DatabaseService();
 
-  //List _users = ["User 1", "User 2"]; // ! get from firebase
   int users = 0; // amount of users
   final String _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
 
   // todo: vi skal query users i firebase baseret på deres ønskede "rejse dato", "gender" og fælles "interests/travel goals"
-  // 1:
+  List _users = []; // ! get from firebase
+  void initUsersList() {
+    // loop firestore og find alle users
+    // derefter tilføjes de til _users listen
+  }
 
   void printStuff() {
     debugPrint("date: ${widget.startDate} - ${widget.endDate}");
