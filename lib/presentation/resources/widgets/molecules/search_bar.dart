@@ -6,7 +6,7 @@ class SearchBar {
   // search bar widget
   //
   // Default values:
-  // Height = 30
+  //double height = 30.0;
 
   static Widget staticSearchBar() {
     TextEditingController textEditController = TextEditingController();
@@ -46,15 +46,19 @@ class SearchBar {
     );
   }
 
-  static Widget searchBar(height, onChange, hintText) {
-    TextEditingController controller = TextEditingController();
+  static Widget searchBar({
+    controller,
+    double height = 30.0,
+    String hintText = "hintText",
+    String text = "",
+    onChanged,
+  }) {
     return Column(
       children: [
         SizedBox(
           height: height,
           child: TextField(
             controller: controller,
-            onChanged: onChange,
             textAlignVertical: TextAlignVertical.top,
             cursorColor: Colors.black,
             decoration: InputDecoration(
@@ -75,10 +79,11 @@ class SearchBar {
                 color: TravalongColors.secondary_text_bright,
                 fontSize: 12,
                 fontWeight: FontWeight.normal,
-                letterSpacing: 2,
+                letterSpacing: 1,
               ),
+              labelText: text,
               prefixIcon: Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 width: 16,
                 child: const Icon(
                   Icons.search_outlined,
@@ -86,6 +91,7 @@ class SearchBar {
                 ),
               ),
             ),
+            onChanged: onChanged,
           ),
         ),
       ],

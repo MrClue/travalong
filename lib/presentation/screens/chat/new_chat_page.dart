@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
@@ -8,6 +9,7 @@ import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:intl/intl.dart';
 import '../../resources/colors.dart';
 import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
+import 'new_group_page.dart';
 
 class NewChatWidget extends StatefulWidget {
   NewChatWidget({super.key});
@@ -17,14 +19,14 @@ class NewChatWidget extends StatefulWidget {
 }
 
 class _NewChatWidgetState extends State<NewChatWidget> {
-  final TextEditingController _textEditController = TextEditingController();
+  final TextEditingController textEditController = TextEditingController();
   final firestore = FirebaseFirestore.instance;
-  String _search = "";
+  String search = "";
   bool check = true;
 
   @override
   void dispose() {
-    _textEditController.dispose();
+    textEditController.dispose();
     super.dispose();
   }
 
@@ -46,48 +48,23 @@ class _NewChatWidgetState extends State<NewChatWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const IconTitleButton(
+                IconTitleButton(
                   faIcon: Icons.people_outlined,
                   label: "Start a group chat",
-                  goToPage: ChatHomeScreen(),
+                  goToPage: NewGroupChat(),
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-                  child: TextField(
-                    controller: _textEditController,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                      labelText: 'Search users',
-                      hintText: "Type in username",
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: TravalongColors.secondary_10,
-                      ),
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(
-                            color: TravalongColors.primary_30_stroke, width: 2),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(
-                            color: TravalongColors.primary_30_stroke,
-                            width: 1.5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        gapPadding: 0.0,
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(
-                            color: TravalongColors.secondary_10, width: 1.5),
-                      ),
-                    ),
+                  child: SearchBar.searchBar(
+                    controller: textEditController,
+                    height: 50.0,
+                    hintText: 'Search user',
+                    text: 'Search',
                     onChanged: (value) {
                       if (!mounted) return;
                       setState(() {
-                        _search = value.toLowerCase();
+                        search = value.toLowerCase();
                       });
                     },
                   ),
@@ -104,13 +81,13 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                                   element['name']
                                       .toString()
                                       .toLowerCase()
-                                      .startsWith(_search)
+                                      .startsWith(search)
                                       .toString()
-                                      .endsWith("$_search\uf8ff") ||
+                                      .endsWith("$search\uf8ff") ||
                                   element['name']
                                       .toString()
                                       .toLowerCase()
-                                      .contains(_search))
+                                      .contains(search))
                               .toList();
                       return ListView.builder(
                         itemCount: data.length,
