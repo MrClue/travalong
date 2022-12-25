@@ -47,17 +47,18 @@ class ResultsGridState extends State<ResultsGrid> {
     debugPrint("users: " + _users.length.toString());
     // remove users that dont match search criteria
 
-    /*for (var i = 0; i < _users.length; i++) {
+    for (var i = 0; i < _users.length; i++) {
       // remove users that dont match gender criteria
       debugPrint(_users[i]['gender']);
 
+      // ! This if statement has 0 "any" matches... ! FIX THIS
       if (widget.genderType != "Any" &&
           _users[i]['gender'].toString() !=
               widget.genderType.toLowerCase().toString()) {
         _users.removeAt(i);
         debugPrint("removed user");
       }
-    }*/
+    }
   }
 
   void printStuff() {
@@ -75,39 +76,40 @@ class ResultsGridState extends State<ResultsGrid> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: db.userCollection.snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        initUsersList(snapshot);
+        stream: db.userCollection.snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          initUsersList(snapshot);
+          if (snapshot.hasData && _users.isNotEmpty) {
+            return GridView.builder(
+                itemCount: _users.length, // ! Using all users from db
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  mainAxisExtent: 250, // ! height of grid items
+                  crossAxisSpacing: 20,
+                ),
+                itemBuilder: (context, i) {
+                  return ProfileSquare(
+                    image: _userImage,
+                    name: _users[i]['name'],
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return ViewProfile(
+                            id: _users[i]['uid'],
+                            name: _users[i]['name'],
+                            age: _users[i]['age'],
+                            city: _users[i]['city'],
+                            country: _users[i]['country'],
+                            bio: _users[i]['bio'],
+                            interests: _users[i]['interests']);
+                      }));
 
-        return GridView.builder(
-            itemCount: _users.length, // ! Using all users from db
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              mainAxisExtent: 250, // ! height of grid items
-              crossAxisSpacing: 20,
-            ),
-            itemBuilder: (context, i) {
-              return ProfileSquare(
-                image: _userImage,
-                name: _users[i]['name'],
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return ViewProfile(
-                        id: _users[i]['uid'],
-                        name: _users[i]['name'],
-                        age: _users[i]['age'],
-                        city: _users[i]['city'],
-                        country: _users[i]['country'],
-                        bio: _users[i]['bio'],
-                        interests: _users[i]['interests']);
-                  }));
-
-                  printStuff(); // ! til debug
-                },
-              );
-            });
-      },
-    );
+                      printStuff(); // ! til debug
+                    },
+                  );
+                });
+          }
+          return Container();
+        });
   }
 }
