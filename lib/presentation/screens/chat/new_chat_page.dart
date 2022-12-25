@@ -27,7 +27,7 @@ class NewChatWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                IconTitleButton(
+                const IconTitleButton(
                   faIcon: Icons.people_outlined,
                   label: "Start a group chat",
                   goToPage: MessagesScreen(),
