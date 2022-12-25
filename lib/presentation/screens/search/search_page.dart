@@ -11,8 +11,8 @@ import '../../resources/widgets/atoms/theme_text.dart';
 import '../../resources/widgets/molecules/search_bar.dart';
 import '../../resources/widgets/molecules/theme_topbar.dart';
 
-const List<String> genderType = <String>['Male', 'Female', 'Any'];
-const List<String> searchType = <String>['currently in', 'going to'];
+final List<String> genderType = <String>['Any', 'Male', 'Female'];
+final List<String> searchType = <String>['currently in', 'going to'];
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

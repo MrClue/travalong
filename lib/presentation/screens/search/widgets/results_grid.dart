@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
+import 'package:travalong/presentation/screens/search/search_page.dart';
 
 import 'package:travalong/presentation/screens/search/view_profile_page.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_square.dart';
@@ -25,11 +26,11 @@ class ResultsGrid extends StatefulWidget {
 class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
   DatabaseService db = DatabaseService();
+  List _users = [];
 
   final String _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
 
-  List _users = []; // list of users from firebase
   // TODO: _users skal være en liste af brugere der matcher søgekriterierne
   void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) {
     _users = !snapshot.hasData
@@ -37,22 +38,23 @@ class ResultsGridState extends State<ResultsGrid> {
         : snapshot.data!.docs
             .where((element) =>
                 element['uid'].toString().contains(fController.userID) ==
-                    false &&
-                element['gender']
+                        false &&
+                    element['gender']
                         .toString()
-                        .contains(widget.genderType.toLowerCase()) ==
-                    true)
+                        .contains(widget.genderType.toLowerCase()) ||
+                widget.genderType.toLowerCase() == 'any' &&
+                    element['uid'].toString().contains(fController.userID) ==
+                        false)
             .toList();
 
     debugPrint("users: " + _users.length.toString());
     // remove users that dont match search criteria
-
     for (var i = 0; i < _users.length; i++) {
       // remove users that dont match gender criteria
       debugPrint(_users[i]['gender']);
+      debugPrint(widget.genderType.toString());
 
-      // ! This if statement has 0 "any" matches... ! FIX THIS
-      if (widget.genderType != "Any" &&
+      if (widget.genderType.toLowerCase() != 'any' &&
           _users[i]['gender'].toString() !=
               widget.genderType.toLowerCase().toString()) {
         _users.removeAt(i);
