@@ -31,13 +31,33 @@ class ResultsGridState extends State<ResultsGrid> {
 
   List _users = []; // list of users from firebase
   // TODO: _users skal være en liste af brugere der matcher søgekriterierne
-  void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) async {
+  void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) {
     _users = !snapshot.hasData
         ? []
         : snapshot.data!.docs
             .where((element) =>
-                element['uid'].toString().contains(fController.userID) == false)
+                element['uid'].toString().contains(fController.userID) ==
+                    false &&
+                element['gender']
+                        .toString()
+                        .contains(widget.genderType.toLowerCase()) ==
+                    true)
             .toList();
+
+    debugPrint("users: " + _users.length.toString());
+    // remove users that dont match search criteria
+
+    /*for (var i = 0; i < _users.length; i++) {
+      // remove users that dont match gender criteria
+      debugPrint(_users[i]['gender']);
+
+      if (widget.genderType != "Any" &&
+          _users[i]['gender'].toString() !=
+              widget.genderType.toLowerCase().toString()) {
+        _users.removeAt(i);
+        debugPrint("removed user");
+      }
+    }*/
   }
 
   void printStuff() {
@@ -49,7 +69,7 @@ class ResultsGridState extends State<ResultsGrid> {
   @override
   void initState() {
     super.initState();
-    printStuff(); // ! test
+    //printStuff(); // ! test
   }
 
   @override
