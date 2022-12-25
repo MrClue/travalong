@@ -48,15 +48,15 @@ class ResultsGridState extends State<ResultsGrid> {
             .toList();
 
     debugPrint("users: " + _users.length.toString());
-    // remove users that dont match search criteria
-    for (var i = 0; i < _users.length; i++) {
+    // remove users that dont match search criteria...
+    // ! For-loop in reverse order to solve issue with copy of users list if the list is empty
+    for (var i = _users.length - 1; i >= 0; i--) {
       // remove users that dont match gender criteria
       debugPrint(_users[i]['gender']);
       debugPrint(widget.genderType.toString());
 
       if (widget.genderType.toLowerCase() != 'any' &&
-          _users[i]['gender'].toString() !=
-              widget.genderType.toLowerCase().toString()) {
+          _users[i]['gender'].toString() != widget.genderType.toLowerCase()) {
         _users.removeAt(i);
         debugPrint("removed user");
       }
