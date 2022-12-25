@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeText extends StatelessWidget {
-  final String textString;
+  final dynamic textString;
   final double fontSize, height;
   final FontWeight fontWeight;
   final Color textColor;

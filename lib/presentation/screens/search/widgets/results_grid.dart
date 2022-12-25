@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
@@ -60,21 +62,47 @@ class ResultsGridState extends State<ResultsGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: /*_users.length*/ users,
-      /*gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),*/
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
-        mainAxisExtent: 250, // ! height of grid items
-        crossAxisSpacing: 20,
-      ),
-      itemBuilder: (context, index) {
-        return ProfileSquare(
-          image: _userImage,
-          name: /*_users[index]*/ "User ${index + 1}",
-          goToPage: ViewProfile(),
-          debug: printStuff,
-        );
+    return StreamBuilder(
+      stream: db.userCollection.snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        List userData = !snapshot.hasData
+            ? []
+            : snapshot.data!.docs
+                .where((element) =>
+                    element['uid']
+                        .toString()
+                        .contains(FirebaseAuth.instance.currentUser!.uid) ==
+                    false)
+                .toList();
+        return GridView.builder(
+            itemCount: userData.length, // ! Using all users from db
+            // itemCount: /*_users.length*/ users,
+            /*gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),*/
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              mainAxisExtent: 250, // ! height of grid items
+              crossAxisSpacing: 20,
+            ),
+            itemBuilder: (context, i) {
+              return ProfileSquare(
+                image: _userImage,
+                name: userData[i]['name'],
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return ViewProfile(
+                        id: userData[i]['uid'],
+                        name: userData[i]['name'],
+                        age: userData[i]['age'],
+                        city: userData[i]['city'],
+                        country: userData[i]['country'],
+                        bio: userData[i]['bio'],
+                        interests: userData[i]['interests']);
+                  }));
+                },
+                debug: printStuff,
+              );
+            });
       },
     );
   }
