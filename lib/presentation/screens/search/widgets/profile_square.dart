@@ -7,14 +7,12 @@ class ProfileSquare extends StatelessWidget {
   final String name; // users name
   final String image; // users 1st image
   final dynamic onPressed;
-  final Function() debug; // ! test
 
   const ProfileSquare({
     Key? key,
     required this.name,
     required this.image,
     required this.onPressed,
-    required this.debug, // ! test
   }) : super(key: key);
 
   @override

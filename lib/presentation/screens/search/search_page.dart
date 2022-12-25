@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
-import 'package:travalong/data/model/user.dart';
-import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 
 import 'package:dropdown_button2/dropdown_button2.dart';

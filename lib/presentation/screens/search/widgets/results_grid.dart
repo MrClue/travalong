@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
@@ -27,15 +26,18 @@ class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
   DatabaseService db = DatabaseService();
 
-  int users = 0; // amount of users
   final String _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
 
-  // todo: vi skal query users i firebase baseret på deres ønskede "rejse dato", "gender" og fælles "interests/travel goals"
-  List _users = []; // ! get from firebase
-  void initUsersList() {
-    // loop firestore og find alle users
-    // derefter tilføjes de til _users listen
+  List _users = []; // list of users from firebase
+  // TODO: _users skal være en liste af brugere der matcher søgekriterierne
+  void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) async {
+    _users = !snapshot.hasData
+        ? []
+        : snapshot.data!.docs
+            .where((element) =>
+                element['uid'].toString().contains(fController.userID) == false)
+            .toList();
   }
 
   void printStuff() {
@@ -47,17 +49,7 @@ class ResultsGridState extends State<ResultsGrid> {
   @override
   void initState() {
     super.initState();
-    getUsers();
     printStuff(); // ! test
-  }
-
-  // ! get amount of users in firebase (int)
-  void getUsers() {
-    db.getCount().then((count) {
-      setState(() {
-        users = count;
-      });
-    });
   }
 
   @override
@@ -65,19 +57,10 @@ class ResultsGridState extends State<ResultsGrid> {
     return StreamBuilder(
       stream: db.userCollection.snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        List userData = !snapshot.hasData
-            ? []
-            : snapshot.data!.docs
-                .where((element) =>
-                    element['uid']
-                        .toString()
-                        .contains(FirebaseAuth.instance.currentUser!.uid) ==
-                    false)
-                .toList();
+        initUsersList(snapshot);
+
         return GridView.builder(
-            itemCount: userData.length, // ! Using all users from db
-            // itemCount: /*_users.length*/ users,
-            /*gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),*/
+            itemCount: _users.length, // ! Using all users from db
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
               mainAxisExtent: 250, // ! height of grid items
@@ -86,21 +69,22 @@ class ResultsGridState extends State<ResultsGrid> {
             itemBuilder: (context, i) {
               return ProfileSquare(
                 image: _userImage,
-                name: userData[i]['name'],
+                name: _users[i]['name'],
                 onPressed: () {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                     return ViewProfile(
-                        id: userData[i]['uid'],
-                        name: userData[i]['name'],
-                        age: userData[i]['age'],
-                        city: userData[i]['city'],
-                        country: userData[i]['country'],
-                        bio: userData[i]['bio'],
-                        interests: userData[i]['interests']);
+                        id: _users[i]['uid'],
+                        name: _users[i]['name'],
+                        age: _users[i]['age'],
+                        city: _users[i]['city'],
+                        country: _users[i]['country'],
+                        bio: _users[i]['bio'],
+                        interests: _users[i]['interests']);
                   }));
+
+                  printStuff(); // ! til debug
                 },
-                debug: printStuff,
               );
             });
       },
