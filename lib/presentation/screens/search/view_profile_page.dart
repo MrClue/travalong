@@ -60,8 +60,8 @@ class _ViewProfileState extends State<ViewProfile> {
                   print(widget.id); // DEBUG TO CHECK CORRECT USER
                   return ViewProfileBox(
                     name: userDocument.get(UserData.name),
-                    age: '25',
-                    bio: 'BIO',
+                    age: userDocument.get(UserData.age),
+                    bio: userDocument.get(UserData.bio),
                     city: 'CITY',
                     country: 'COUNTRY',
                     interests: ['I1', 'I2', 'I3'],

@@ -5,14 +5,14 @@ import '../../../resources/widgets/atoms/theme_text.dart';
 
 class ViewProfileBox extends StatelessWidget {
   final String? id;
-  final String _userImage =
+  final String? _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
-  final String name;
-  final String age;
-  final String city;
-  final String country;
-  final String bio;
-  final List<String> interests;
+  final String? name;
+  final int? age;
+  final String? city;
+  final String? country;
+  final String? bio;
+  final List<String>? interests;
   const ViewProfileBox({
     super.key,
     this.id,
@@ -41,8 +41,8 @@ class ViewProfileBox extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
-                  _userImage,
-                  height: 200,
+                  _userImage!,
+                  width: 355,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -54,25 +54,25 @@ class ViewProfileBox extends StatelessWidget {
                   children: [
                     ThemeText(
                       textString: name,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      textColor: TravalongColors.primary_text_bright,
-                    ),
-                    ThemeText(
-                      textString: ' $age',
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                       textColor: TravalongColors.primary_text_bright,
                     ),
                     ThemeText(
+                      textString: ' $age',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      textColor: TravalongColors.primary_text_bright,
+                    ),
+                    ThemeText(
                       textString: ' $city',
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                       textColor: TravalongColors.primary_text_bright,
                     ),
                     ThemeText(
                       textString: ' $country',
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                       textColor: TravalongColors.primary_text_bright,
                     ),
@@ -82,17 +82,24 @@ class ViewProfileBox extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Container(
+                  height: 135,
+                  width: 355,
+                  decoration: const BoxDecoration(
+                      color: TravalongColors.primary_30,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15.0),
+                      )),
                   child: Column(
                     children: [
                       const ThemeText(
                         textString: 'Bio',
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w700,
                         textColor: TravalongColors.primary_text_bright,
                       ),
                       ThemeText(
                         textString: ' $bio',
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                         textColor: TravalongColors.primary_text_bright,
                       ),
