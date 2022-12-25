@@ -13,24 +13,23 @@ class ViewProfileBox extends StatelessWidget {
   final String country;
   final String bio;
   final List<String> interests;
-  final dynamic onPressed;
-  const ViewProfileBox(
-      {super.key,
-      this.id,
-      required this.name,
-      required this.age,
-      required this.city,
-      required this.country,
-      required this.bio,
-      required this.interests,
-      required this.onPressed});
+  const ViewProfileBox({
+    super.key,
+    this.id,
+    required this.name,
+    required this.age,
+    required this.city,
+    required this.country,
+    required this.bio,
+    required this.interests,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: InkWell(
-        onTap: onPressed,
+        //onTap: onPressed,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
