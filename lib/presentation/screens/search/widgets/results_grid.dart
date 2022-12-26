@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
 import 'package:travalong/presentation/screens/search/search_page.dart';
@@ -37,36 +38,69 @@ class ResultsGridState extends State<ResultsGrid> {
         ? []
         : snapshot.data!.docs
             .where((element) =>
-                element['uid'].toString().contains(fController.userID) ==
-                        false &&
-                    element['gender']
-                        .toString()
-                        .contains(widget.genderType.toLowerCase()) ||
-                widget.genderType.toLowerCase() == 'any' &&
-                    element['uid'].toString().contains(fController.userID) ==
-                        false)
+                element['uid'].toString().contains(fController.userID) == false)
             .toList();
 
-    debugPrint("users: " + _users.length.toString());
-    // remove users that dont match search criteria...
-    // ! For-loop in reverse order to solve issue with copy of users list if the list is empty
-    for (var i = _users.length - 1; i >= 0; i--) {
-      // remove users that dont match gender criteria
-      debugPrint(_users[i]['gender']);
-      debugPrint(widget.genderType.toString());
+    //debugPrint("users: " + _users.length.toString());
+    //debugPrint("selected: " + widget.genderType.toString());
 
+    // * remove users that dont match search criteria
+    List<dynamic> usersCopy = List.from(_users);
+
+    for (var i = 0; i < usersCopy.length; i++) {
+      // remove users that dont match gender criteria
       if (widget.genderType.toLowerCase() != 'any' &&
-          _users[i]['gender'].toString() != widget.genderType.toLowerCase()) {
-        _users.removeAt(i);
-        debugPrint("removed user");
+          usersCopy[i]['gender'].toString() !=
+              widget.genderType.toLowerCase()) {
+        _users.remove(usersCopy[i]);
       }
     }
+
+    // * sort _users by common interests
+    /*
+    String _currentUserInterests = ""; // ! interests of current user
+
+    fController.getDocFieldData(UserData.interests).then((interests) {
+      _currentUserInterests = interests;
+      debugPrint("current users interests: " + _currentUserInterests);
+
+      // then we sort _users by common interests
+      _users.sort((user1, user2) {
+        // Get the interests of user1 and user2
+        List<dynamic> interests1 = user1['interests'];
+        List<dynamic> interests2 = user2['interests'];
+
+        // Calculate the number of shared interests
+        int sharedInterests1 = 0;
+        int sharedInterests2 = 0;
+        for (String interest in interests1) {
+          if (_currentUserInterests.contains(interest)) {
+            sharedInterests1++;
+          }
+        }
+        for (String interest in interests2) {
+          if (_currentUserInterests.contains(interest)) {
+            sharedInterests2++;
+          }
+        }
+
+        // Compare the number of shared interests and return -1, 0, or 1
+        if (sharedInterests1 > sharedInterests2) {
+          return -1;
+        } else if (sharedInterests1 < sharedInterests2) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    });
+    */
   }
 
   void printStuff() {
     debugPrint("date: ${widget.startDate} - ${widget.endDate}");
     debugPrint("gender: ${widget.genderType}");
-    debugPrint("gender: ${widget.searchType}");
+    debugPrint("searching: ${widget.searchType}");
   }
 
   @override
