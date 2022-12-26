@@ -40,12 +40,58 @@ class ViewProfileBox extends StatelessWidget {
             spacing: 10,
             runSpacing: 10,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image.network(
-                  _userImage!,
-                  width: 355,
-                  //fit: BoxFit.cover,
+              // SizedBox(
+              //   width: 355,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(15.0),
+              //     child: Image.network(
+              //       _userImage!,
+              //       width: 355,
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
+              Container(
+                alignment: Alignment.bottomLeft,
+                height: MediaQuery.of(context).size.height - 400.0,
+                width: 355,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                      image: NetworkImage(_userImage!), fit: BoxFit.fill),
+                ),
+                child: Container(
+                  height: 40,
+                  alignment: Alignment.bottomCenter,
+                  decoration: BoxDecoration(
+                    color:
+                        TravalongColors.primary_text_bright.withOpacity(0.20),
+                    borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(15),
+                        bottomRight: Radius.circular(15)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const ThemeText(
+                          textString: '4+ shared interests',
+                          fontSize: 16,
+                          textColor: TravalongColors.primary_text_dark,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        InkWell(
+                          child: const Icon(
+                            Icons.person_add_rounded,
+                            color: TravalongColors.primary_text_dark,
+                            size: 24,
+                          ),
+                          onTap: () {},
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
