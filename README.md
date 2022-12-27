@@ -1,6 +1,6 @@
 # TRAVALONG
 
-A Flutter app for SE Bachelor project.
+A Flutter application developed for our Software Engineering Bachelor project.
 
 ## The Project
 
