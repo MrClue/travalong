@@ -113,8 +113,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                       // List data builds the search results
                       List data = !snapshot.hasData
                           ? []
-                          : snapshot.data!.docs
-                              .where((doc) => doc.id != fController.userID)
+                          : userData
                               .where((element) =>
                                   element['name']
                                       .toString()
