@@ -21,6 +21,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   String _name = "";
   String _age = "";
   String _userLocation = "";
+  String _connections = "";
+  List<String>? conList;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +71,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             .snapshots()
                             .takeWhile((event) => event.docs
                                 .any((d) => d.id == fController.userID)),
-                        builder: (context, snapshot) {
+                        builder: (context, AsyncSnapshot snapshot) {
                           if (!snapshot.hasData || snapshot.data == null) {
                             return const Text('Loading...');
                           }
+
                           var userDocument = (snapshot.data as QuerySnapshot)
                               .docs
                               .firstWhere((d) => d.id == fController.userID);
@@ -97,7 +100,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     ),
                                     // 30, w700,
                                     child: ThemeText(
-                                      textString: "$_name",
+                                      textString: '$_name, ',
                                       maxLines: 1,
                                       fontSize: 30,
                                       fontWeight: FontWeight.w700,
@@ -107,11 +110,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   ),
                                   ConstrainedBox(
                                     constraints:
-                                        const BoxConstraints(maxWidth: 40),
+                                        const BoxConstraints(maxWidth: 50),
                                     child: ThemeText(
-                                      textString: ", $_age",
+                                      textString: '$_age',
                                       maxLines: 1,
-                                      fontSize: 24,
+                                      fontSize: 26,
                                       fontWeight: FontWeight.w500,
                                       textColor:
                                           TravalongColors.primary_text_bright,
@@ -146,65 +149,84 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               height: 25.0,
             ),
             // * bottom row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "5",
-                      style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+            StreamBuilder(
+                stream: fController.usersCollection.snapshots().takeWhile(
+                    (event) =>
+                        event.docs.any((d) => d.id == fController.userID)),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData || snapshot.data == null) {
+                    return const Text('Loading...');
+                  }
+
+                  var userDocument = (snapshot.data as QuerySnapshot)
+                      .docs
+                      .firstWhere((d) => d.id == fController.userID);
+
+                  List<String> conList = List<String>.from(
+                      userDocument.get('connectionsList') as List<dynamic>);
+
+                  _connections = conList.length.toString();
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            _connections,
+                            style: GoogleFonts.poppins(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                                color: TravalongColors.secondary_text_bright),
+                          ),
+                          Text(
+                            "Connections",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: TravalongColors.secondary_text_bright),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      "Connections",
-                      style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "3",
-                      style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+                      Column(
+                        children: [
+                          Text(
+                            "3", //!TO DO
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            "Shared Media",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: TravalongColors.secondary_text_bright),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      "Shared Media",
-                      style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "40%",
-                      style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+                      Column(
+                        children: [
+                          Text(
+                            "40%",
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            "Goals Acheived",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: TravalongColors.secondary_text_bright),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      "Goals Acheived",
-                      style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: TravalongColors.secondary_text_bright),
-                    ),
-                  ],
-                ),
-              ],
-            )
+                    ],
+                  );
+                })
           ],
         ),
       ),

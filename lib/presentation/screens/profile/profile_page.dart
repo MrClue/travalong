@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // https://www.youtube.com/watch?v=CX9_op-OW8g&list=PLCAZyR6zw2pyyjdifS_AFJf6HA4Ud8R4_&index=9
 
-    return SafeScaffoldPure(
+    return SafeScaffold(
       //navbar: NavBar(),
       child: SingleChildScrollView(
         child: Column(

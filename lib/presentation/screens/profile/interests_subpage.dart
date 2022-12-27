@@ -13,7 +13,7 @@ class InterestsSubpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         backArrow: BackArrow(),
         title: "Interests & Hobbies",

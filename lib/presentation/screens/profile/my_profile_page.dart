@@ -20,7 +20,7 @@ class MyProfilePage extends StatefulWidget {
 class _MyProfilePageState extends State<MyProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         title: "My Profile",
         backArrow: BackArrow(),

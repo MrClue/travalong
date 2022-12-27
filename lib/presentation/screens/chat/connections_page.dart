@@ -4,11 +4,7 @@ import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/icon_title_btn_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
-import '../../resources/widgets/molecules/search_bar.dart';
-import '../../resources/widgets/molecules/topbar.dart';
-import 'package:travalong/presentation/screens/screens.dart';
 
 class ConnectionsPage extends StatefulWidget {
   const ConnectionsPage({super.key});
@@ -31,7 +27,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         title: "Connections",
         backArrow: const BackArrow(),

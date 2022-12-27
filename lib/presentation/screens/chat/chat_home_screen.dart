@@ -9,7 +9,6 @@ import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +28,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
   bool check = false;
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         enableCustomButton: true,
         customButtonWidget: IconButton(

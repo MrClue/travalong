@@ -29,7 +29,7 @@ class _newGroupChatState extends State<NewGroupChat> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         title: 'New Group',
         backArrow: const BackArrow(),

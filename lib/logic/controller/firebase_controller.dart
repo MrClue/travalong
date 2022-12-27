@@ -45,4 +45,8 @@ class FirebaseController {
     }
     // [END setDocFieldData]
   }
+
+  getUsers() {
+    return usersCollection.get();
+  }
 }

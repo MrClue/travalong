@@ -5,12 +5,13 @@ import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 // ! Includes: navbar, appbar
 class SafeScaffold extends StatelessWidget {
   final PreferredSizeWidget? topbar;
-  final Widget child, navbar;
+  final Widget? navbar;
+  final Widget child;
 
   const SafeScaffold({
     super.key,
     this.topbar,
-    required this.navbar,
+    this.navbar,
     required this.child,
   });
 
@@ -26,7 +27,7 @@ class SafeScaffold extends StatelessWidget {
     );
   }
 }
-
+/*
 // ! Includes: topbar
 class SafeScaffoldNoNavbar extends StatelessWidget {
   final PreferredSizeWidget? topbar;
@@ -80,3 +81,4 @@ class SafeScaffoldPure extends StatelessWidget {
     );
   }
 }
+*/

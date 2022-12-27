@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travalong/presentation/screens/chat/new_group_page.dart';
 
 class IconTitleButton extends StatelessWidget {
   final IconData faIcon;

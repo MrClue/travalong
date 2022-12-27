@@ -32,7 +32,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeScaffoldNoNavbar(
+    return SafeScaffold(
       topbar: ThemeTopBar(
         title: "New Chat",
         backArrow: const CancelArrow(),
