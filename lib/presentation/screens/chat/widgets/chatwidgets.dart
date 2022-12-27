@@ -6,12 +6,10 @@ class ChatWidgets {
   bool timeEnabled = false;
 
   static Widget loading() {
-    return Container(
-      child: const Center(
-          child: CircularProgressIndicator(
-        color: TravalongColors.secondary_10,
-      )),
-    );
+    return const Center(
+        child: CircularProgressIndicator(
+      color: TravalongColors.secondary_10,
+    ));
   }
 
   static Widget card({title, time, subtitle, onTap}) {
