@@ -1,16 +1,13 @@
-# travalong
+# TRAVALONG
 
-A Flutter app for SE Bachelor project.
+A Flutter application developed for our Software Engineering Bachelor project.
 
-## Getting Started
+## The Project
 
-This project is a starting point for a Flutter application.
+Travalong is a cross platform app currently in development for iOS and Android. It aims to support travellers and facilitate connections with others interested in travel. Some of the key features of the app include:
 
-A few resources to get you started if this is your first Flutter project:
+- Setting up a profile and searching for other travellers based on search criteria such as location, interests, and travel dates
+- Sorting search results based on interests in common, making it easy for users to find compatible travel companions
+- A chat function for users to easily communicate with their connections
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Travalong is a useful tool for solo travellers or those seeking travel companions to enhance their travel experiences.
