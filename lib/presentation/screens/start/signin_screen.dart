@@ -20,18 +20,46 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _signIn() async {
-    final User? user = (await _auth.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    ))
-        .user;
+    try {
+      final User? user = (await _auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      ))
+          .user;
 
-    if (user != null) {
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const TravalongNavbar()),
-      );
+      if (user != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const TravalongNavbar()),
+        );
+      }
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        // Show error message
+        /*ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Invalid email or password"),
+          ),
+        );*/
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const SimpleDialog(
+              title: Text('Error'),
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Incorrect password or email'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Rethrow the exception if it's not a FirebaseAuthException
+        rethrow;
+      }
     }
   }
 

@@ -19,7 +19,7 @@ final firestore = FirebaseFirestore.instance;
 final fController = FirebaseController();
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
-  TextEditingController _textEditController = TextEditingController();
+  final TextEditingController _textEditController = TextEditingController();
   String _search = '';
 
   @override
@@ -31,9 +31,9 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: "Connections",
-        backArrow: const BackArrow(),
+        backArrow: BackArrow(),
         enableCustomButton: false,
       ),
       child: Container(

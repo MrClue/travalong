@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 //import 'package:flutter/foundation.dart';
 
 //DatabaseService database = DatabaseService();
@@ -23,7 +24,7 @@ class FirebaseController {
           // userDataMap!.addEntries({field: data[field]}.entries); // ! shows warning
           userDataMap.addEntries({field: data[field]}.entries);
         },
-        onError: (e) => print("Error getting document: $e"),
+        onError: (e) => debugPrint("Error getting document: $e"),
       );
       //debugPrint(userDataMap[field]);
       return userDataMap[field].toString();
@@ -41,7 +42,7 @@ class FirebaseController {
     try {
       await docRef.set(data, SetOptions(merge: true));
     } catch (e) {
-      print("Error seting values into field: $e");
+      debugPrint("Error seting values into field: $e");
     }
     // [END setDocFieldData]
   }

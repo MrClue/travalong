@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/screens.dart';
-import 'package:travalong/logic/services/auth_service.dart';
 
 //final FirebaseAuth _auth = FirebaseAuth.instance; // ! not used
 final AuthService authService = AuthService();
@@ -261,7 +261,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             }
                             try {
                               signUp();
-                            } on FirebaseAuthException catch (e) {
+                            } on FirebaseAuthException {
                               showCupertinoDialog(
                                 context: context,
                                 builder: (_) => CupertinoAlertDialog(

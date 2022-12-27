@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageField {
-  static final String createdAt = 'createdAt';
+  static const String createdAt = 'createdAt';
 }
 
 class Message {

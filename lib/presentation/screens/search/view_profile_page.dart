@@ -19,7 +19,7 @@ class ViewProfile extends StatefulWidget {
   final String bio;
   final List<dynamic> interests;
   final int sharedInterests;
-  ViewProfile({
+  const ViewProfile({
     super.key,
     required this.id,
     required this.name,
@@ -36,17 +36,17 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-  var id;
-  var name;
-  var connectionsList;
+  //var id;
+  //var name;
+  //var connectionsList;
 
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: "View Profile",
         enableCustomButton: false,
-        backArrow: const BackArrow(),
+        backArrow: BackArrow(),
       ),
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -60,14 +60,14 @@ class _ViewProfileState extends State<ViewProfile> {
                   var userDocument = (snapshot.data as QuerySnapshot)
                       .docs
                       .firstWhere((element) => element.id == widget.id);
-                  print(widget.id); // DEBUG TO CHECK CORRECT USER
+                  debugPrint(widget.id); // DEBUG TO CHECK CORRECT USER
                   return ViewProfileBox(
                     name: userDocument.get(UserData.name),
                     age: userDocument.get(UserData.age),
                     bio: userDocument.get(UserData.bio),
                     city: 'CITY',
                     country: 'COUNTRY',
-                    interests: ['I1', 'I2', 'I3'],
+                    interests: const ['I1', 'I2', 'I3'],
                     sharedInterests: widget.sharedInterests,
                     onTapped: () {
                       // ** Will update the connectionList. Also if UID already exist, then do nothing
@@ -78,10 +78,10 @@ class _ViewProfileState extends State<ViewProfile> {
                             .update({
                           'connectionsList': FieldValue.arrayUnion([widget.id]),
                         }).then(
-                                (value) =>
-                                    print("Connections successfully updated!"),
-                                onError: (e) =>
-                                    print("Error updating connections $e"));
+                                (value) => debugPrint(
+                                    "Connections successfully updated!"),
+                                onError: (e) => debugPrint(
+                                    "Error updating connections $e"));
                       } else {
                         fController.usersCollection
                             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -89,9 +89,9 @@ class _ViewProfileState extends State<ViewProfile> {
                           'connectionsList': FieldValue.arrayUnion([widget.id])
                         }, SetOptions(merge: true)).then(
                                 (value) =>
-                                    print("Connections successfully set!"),
+                                    debugPrint("Connections successfully set!"),
                                 onError: (e) =>
-                                    print("Error setting connections $e"));
+                                    debugPrint("Error setting connections $e"));
                       }
                     },
                   );

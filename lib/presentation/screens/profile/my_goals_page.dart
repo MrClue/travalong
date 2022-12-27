@@ -14,7 +14,7 @@ class MyGoalsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: 'My Goals',
         backArrow: BackArrow(),
         enableCustomButton: false,
@@ -22,8 +22,8 @@ class MyGoalsPage extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.fromLTRB(40, 50, 40, 50),
         child: Column(
-          children: [
-            const PageTextTopCenter(
+          children: const [
+            PageTextTopCenter(
               textNormal:
                   "Set travel goals for yourself, and keep track of your progress. ",
               textBold: "This is only visible to you.",
@@ -45,13 +45,15 @@ class SelectableCountries {
 }
 
 class TravelGoalsSelector extends StatefulWidget {
+  const TravelGoalsSelector({super.key});
+
   @override
   TravelGoalsSelectorState createState() => TravelGoalsSelectorState();
 }
 
 class TravelGoalsSelectorState extends State<TravelGoalsSelector> {
   final _formKey = GlobalKey<FormState>();
-  List<String> _selectedValues = [];
+  final List<String> _selectedValues = [];
 
   final selectableOptions = SelectableCountries();
   String _searchQuery = ""; // Initialize _searchQuery
@@ -76,7 +78,9 @@ class TravelGoalsSelectorState extends State<TravelGoalsSelector> {
         // Split the value string into a list of options
         List<String> options = value.split(", ");
         // Add each option to the _selectedValues list
-        options.forEach((option) => _selectedValues.add(option));
+        for (var option in options) {
+          _selectedValues.add(option);
+        }
       });
     }
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
-
 import 'package:travalong/presentation/screens/search/view_profile_page.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_square.dart';
 

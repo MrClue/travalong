@@ -14,7 +14,7 @@ class InterestsSubpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         backArrow: BackArrow(),
         title: "Interests & Hobbies",
         enableCustomButton: false,
@@ -24,6 +24,7 @@ class InterestsSubpage extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(40, 50, 40, 50),
         child: Column(
           children: [
+            // ignore: avoid_unnecessary_containers
             Container(
               //color: Colors.black12, // ! for debug
               child: const PageTextTopCenter(
@@ -37,7 +38,7 @@ class InterestsSubpage extends StatelessWidget {
             //const InterestsWidget(),
             //const Spacer(), // fills the remaining space
             //const ConfirmButton()
-            InterestsSelector(),
+            const InterestsSelector(),
           ],
         ),
       ),
@@ -114,13 +115,15 @@ class SelectableOptions {
 }
 
 class InterestsSelector extends StatefulWidget {
+  const InterestsSelector({super.key});
+
   @override
   InterestsSelectorState createState() => InterestsSelectorState();
 }
 
 class InterestsSelectorState extends State<InterestsSelector> {
   final _formKey = GlobalKey<FormState>();
-  List<String> _selectedValues = [];
+  final List<String> _selectedValues = [];
 
   final selectableOptions = SelectableOptions();
   String _searchQuery = ""; // Initialize _searchQuery
@@ -145,7 +148,9 @@ class InterestsSelectorState extends State<InterestsSelector> {
         // Split the value string into a list of options
         List<String> options = value.split(", ");
         // Add each option to the _selectedValues list
-        options.forEach((option) => _selectedValues.add(option));
+        for (var option in options) {
+          _selectedValues.add(option);
+        }
       });
     }
   }
