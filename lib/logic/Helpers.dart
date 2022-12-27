@@ -1,7 +1,7 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 abstract class Helpers {
-  static final random = Random();
+  static final random = math.Random();
 
   static String randomPictureUrl() {
     final randomInt = random.nextInt(1000);
@@ -9,7 +9,6 @@ abstract class Helpers {
   }
 
   static DateTime randomDate() {
-    final random = Random();
     final currentDate = DateTime.now();
     return currentDate.subtract(Duration(seconds: random.nextInt(200000)));
   }

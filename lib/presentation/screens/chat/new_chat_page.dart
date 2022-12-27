@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
-import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
-import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:intl/intl.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
+
 import '../../resources/colors.dart';
 import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
 import 'new_group_page.dart';
 
 class NewChatWidget extends StatefulWidget {
-  NewChatWidget({super.key});
+  const NewChatWidget({super.key});
 
   @override
   State<NewChatWidget> createState() => _NewChatWidgetState();
@@ -33,9 +32,9 @@ class _NewChatWidgetState extends State<NewChatWidget> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: "New Chat",
-        backArrow: const CancelArrow(),
+        backArrow: CancelArrow(),
         enableCustomButton: false,
       ),
       child: Container(
@@ -48,7 +47,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                IconTitleButton(
+                const IconTitleButton(
                   faIcon: Icons.people_outlined,
                   label: "Start a group chat",
                   goToPage: NewGroupChat(),

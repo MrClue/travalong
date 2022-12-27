@@ -1,8 +1,7 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:travalong/presentation/screens/search/widgets/background.dart';
 import 'package:travalong/presentation/screens/search/widgets/date_button.dart';
 
@@ -39,7 +38,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: 'Search Travelers',
         enableCustomButton: false,
       ),
@@ -58,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
             positionFactor: 0.55,
           ),
         ],
-        grabbing: GrabbingWidget(),
+        grabbing: const GrabbingWidget(),
         grabbingHeight: 50,
         sheetAbove: SnappingSheetContent(
           draggable: true,
@@ -317,6 +316,8 @@ class _SearchPageState extends State<SearchPage> {
 
 // ! det er den widget man kan gribe fat i
 class GrabbingWidget extends StatelessWidget {
+  const GrabbingWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

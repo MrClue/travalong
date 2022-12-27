@@ -4,11 +4,11 @@ import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
 class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  Widget? backArrow;
+  final Widget? backArrow;
   final bool enableCustomButton;
   final Widget? customButtonWidget;
 
-  ThemeTopBar({
+  const ThemeTopBar({
     Key? key,
     required this.title,
     this.backArrow,

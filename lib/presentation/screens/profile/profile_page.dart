@@ -1,13 +1,13 @@
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/screens/profile/my_goals_page.dart';
-import 'package:travalong/presentation/screens/profile/my_profile_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
+import 'package:travalong/presentation/screens/profile/my_goals_page.dart';
+import 'package:travalong/presentation/screens/profile/my_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

@@ -34,7 +34,7 @@ class TopBarWithAction extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.0,
       actions: <Widget>[
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.edit_outlined,
             color: TravalongColors.secondary_10,
           ),
@@ -95,7 +95,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
 
 class TopBarChat extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final goToPage;
+  final Function() goToPage; // ! test if this works
   final Widget? leading;
 
   const TopBarChat({

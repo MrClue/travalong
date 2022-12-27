@@ -112,7 +112,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     constraints:
                                         const BoxConstraints(maxWidth: 50),
                                     child: ThemeText(
-                                      textString: '$_age',
+                                      textString: _age,
                                       maxLines: 1,
                                       fontSize: 26,
                                       fontWeight: FontWeight.w500,

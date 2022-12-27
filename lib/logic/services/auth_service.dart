@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:travalong/data/model/user.dart';
+
 import 'database_service.dart';
 
 class AuthService {
@@ -20,15 +21,14 @@ class AuthService {
         uid: authUser.uid,
       );
 
-      if (authUser != null) {
-        // call our database service to update the user data.
-        await DatabaseService(uid: authUser.uid).saveUserData(user);
-        return true;
-      } else if (authUser == null) {
-        return false;
-      }
+      // call our database service to update the user data.
+      await DatabaseService(uid: authUser.uid).saveUserData(user);
+
+      return true;
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code);
+    } catch (e) {
+      return false;
     }
   }
 
