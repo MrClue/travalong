@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
-import 'package:travalong/logic/services/database_service.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
@@ -20,15 +18,18 @@ class ViewProfile extends StatefulWidget {
   final String country;
   final String bio;
   final List<dynamic> interests;
-  ViewProfile(
-      {super.key,
-      required this.id,
-      required this.name,
-      required this.age,
-      required this.city,
-      required this.country,
-      required this.bio,
-      required this.interests});
+  final int sharedInterests;
+  ViewProfile({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.age,
+    required this.city,
+    required this.country,
+    required this.bio,
+    required this.interests,
+    required this.sharedInterests,
+  });
 
   @override
   State<ViewProfile> createState() => _ViewProfileState();
@@ -67,6 +68,7 @@ class _ViewProfileState extends State<ViewProfile> {
                     city: 'CITY',
                     country: 'COUNTRY',
                     interests: ['I1', 'I2', 'I3'],
+                    sharedInterests: widget.sharedInterests,
                     onTapped: () {
                       // ** Will update the connectionList. Also if UID already exist, then do nothing
                       if ((userDocument.data() as Map<String, dynamic>)

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/colors.dart';
@@ -16,6 +14,7 @@ class ViewProfileBox extends StatelessWidget {
   final String? bio;
   final List<String>? interests;
   final dynamic onTapped;
+  final int? sharedInterests;
   const ViewProfileBox({
     super.key,
     this.id,
@@ -26,6 +25,7 @@ class ViewProfileBox extends StatelessWidget {
     required this.bio,
     required this.interests,
     required this.onTapped,
+    required this.sharedInterests,
   });
 
   @override
@@ -79,8 +79,8 @@ class ViewProfileBox extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const ThemeText(
-                          textString: '4+ shared interests',
+                        ThemeText(
+                          textString: '$sharedInterests shared interests',
                           fontSize: 16,
                           textColor: TravalongColors.primary_text_dark,
                           fontWeight: FontWeight.w600,

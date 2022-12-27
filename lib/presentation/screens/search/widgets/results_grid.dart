@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/services/database_service.dart';
-import 'package:travalong/presentation/screens/search/search_page.dart';
 
 import 'package:travalong/presentation/screens/search/view_profile_page.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_square.dart';
@@ -27,12 +26,15 @@ class ResultsGrid extends StatefulWidget {
 class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
   DatabaseService db = DatabaseService();
-  List _users = [];
 
   final String _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
 
-  // TODO: _users skal være en liste af brugere der matcher søgekriterierne
+  // TODO: skal matche søgekriterierne
+  List _users = [];
+  List currentUserInterests = [];
+  Map<dynamic, int> copyAnotherMap = {}; // ! test
+
   void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) {
     _users = !snapshot.hasData
         ? []
@@ -45,7 +47,7 @@ class ResultsGridState extends State<ResultsGrid> {
     //debugPrint("selected: " + widget.genderType.toString());
 
     // * remove users that dont match search criteria
-    List<dynamic> usersCopy = List.from(_users);
+    List<dynamic> usersCopy = List.from(_users); // copy _users to fix index bug
 
     for (var i = 0; i < usersCopy.length; i++) {
       // remove users that dont match gender criteria
@@ -57,44 +59,49 @@ class ResultsGridState extends State<ResultsGrid> {
     }
 
     // * sort _users by common interests
-    /*
-    String _currentUserInterests = ""; // ! interests of current user
 
-    fController.getDocFieldData(UserData.interests).then((interests) {
-      _currentUserInterests = interests;
-      debugPrint("current users interests: " + _currentUserInterests);
+    Map<dynamic, int> sharedInterestsMap =
+        {}; // <uid, number of shared interests>
 
-      // then we sort _users by common interests
-      _users.sort((user1, user2) {
-        // Get the interests of user1 and user2
-        List<dynamic> interests1 = user1['interests'];
-        List<dynamic> interests2 = user2['interests'];
+    List sortedUsers = [];
 
-        // Calculate the number of shared interests
-        int sharedInterests1 = 0;
-        int sharedInterests2 = 0;
-        for (String interest in interests1) {
-          if (_currentUserInterests.contains(interest)) {
-            sharedInterests1++;
-          }
+    for (var i = 0; i < _users.length; i++) {
+      // make sure interests is a list
+      if (_users[i]['interests'] == null) {
+        _users[i]['interests'] = [];
+      }
+
+      List interests1 = _users[i]['interests'];
+      debugPrint("User ${_users[i]['name']} interests: $interests1");
+
+      // Calculate the number of shared interests
+      int sharedInterests = 0;
+
+      for (String interest in interests1) {
+        if (currentUserInterests.contains(interest)) {
+          sharedInterests++;
         }
-        for (String interest in interests2) {
-          if (_currentUserInterests.contains(interest)) {
-            sharedInterests2++;
-          }
-        }
+      }
+      debugPrint(_users[i]['name'] + " shared interests: $sharedInterests");
 
-        // Compare the number of shared interests and return -1, 0, or 1
-        if (sharedInterests1 > sharedInterests2) {
-          return -1;
-        } else if (sharedInterests1 < sharedInterests2) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    });
-    */
+      sharedInterestsMap[_users[i] /*['uid']*/] = sharedInterests;
+    }
+    // * sort sharedInterestsMap by value (sharedInterests)
+    sharedInterestsMap = Map.fromEntries(sharedInterestsMap.entries.toList()
+      ..sort((e1, e2) => e2.value.compareTo(e1.value)));
+
+    debugPrint("sharedInterestsMap: $sharedInterestsMap");
+
+    // Convert the map to a list containing the keys (sorted users)
+    sortedUsers = sharedInterestsMap.keys.toList();
+    debugPrint("sortedUsers list: $sortedUsers");
+
+    if (sortedUsers.isNotEmpty) {
+      _users = sortedUsers; // * returns correct output
+    }
+
+    // ! test
+    copyAnotherMap = Map.from(sharedInterestsMap);
   }
 
   void printStuff() {
@@ -107,6 +114,15 @@ class ResultsGridState extends State<ResultsGrid> {
   void initState() {
     super.initState();
     //printStuff(); // ! test
+    fController.getDocFieldData(UserData.interests).then((interests) {
+      // Extract the interests string between the square brackets
+      String stringValue = interests.substring(1, interests.length - 1);
+      //debugPrint("stringValue: $stringValue");
+      setState(() {
+        currentUserInterests = stringValue.split(', ');
+        debugPrint("current users interests: $currentUserInterests");
+      });
+    });
   }
 
   @override
@@ -131,13 +147,15 @@ class ResultsGridState extends State<ResultsGrid> {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return ViewProfile(
-                            id: _users[i]['uid'],
-                            name: _users[i]['name'],
-                            age: _users[i]['age'],
-                            city: _users[i]['city'],
-                            country: _users[i]['country'],
-                            bio: _users[i]['bio'],
-                            interests: _users[i]['interests']);
+                          id: _users[i]['uid'],
+                          name: _users[i]['name'],
+                          age: _users[i]['age'],
+                          city: _users[i]['city'],
+                          country: _users[i]['country'],
+                          bio: _users[i]['bio'],
+                          interests: _users[i]['interests'],
+                          sharedInterests: copyAnotherMap.values.toList()[i],
+                        );
                       }));
 
                       printStuff(); // ! til debug
