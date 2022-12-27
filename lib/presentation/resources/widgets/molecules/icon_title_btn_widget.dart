@@ -20,9 +20,12 @@ class IconTitleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       // ! ÆNDRE TIL AT ROUTE TIL RIGTIG SIDE
-      onTap: (() {
-        Navigator.pop(context);
-      }),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => goToPage),
+        );
+      },
       child: Container(
         width: MediaQuery.of(context).size.width - 40,
         height: 65,

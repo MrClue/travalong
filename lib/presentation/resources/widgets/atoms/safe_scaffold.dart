@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 
 // ! Includes: navbar, appbar
 class SafeScaffold extends StatelessWidget {
@@ -29,18 +30,16 @@ class SafeScaffold extends StatelessWidget {
 /*
 // ! Includes: topbar
 class SafeScaffoldNoNavbar extends StatelessWidget {
-  final PreferredSizeWidget topbar;
+  final PreferredSizeWidget? topbar;
   final Widget child;
 
-  const SafeScaffoldNoNavbar(
-      {super.key, required this.topbar, required this.child});
+  const SafeScaffoldNoNavbar({super.key, this.topbar, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false, // prevents keyboard overflow
       backgroundColor: TravalongColors.neutral_60,
-
       appBar: topbar,
       body: SafeArea(child: child),
     );

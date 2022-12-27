@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeText extends StatelessWidget {
-  final dynamic textString;
-  final double fontSize, height;
+  final String textString;
+  final double? fontSize, height;
   final FontWeight fontWeight;
   final Color textColor;
-  final int maxLines;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   const ThemeText({
     super.key,
@@ -15,8 +16,9 @@ class ThemeText extends StatelessWidget {
     required this.fontSize,
     required this.fontWeight,
     required this.textColor,
-    this.maxLines = 999,
-    this.height = 0.0,
+    this.maxLines,
+    this.height,
+    this.overflow,
   });
 
   @override

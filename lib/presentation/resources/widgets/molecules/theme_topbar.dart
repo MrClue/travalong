@@ -6,14 +6,14 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   Widget? backArrow;
   final bool enableCustomButton;
-  final Widget customButtonWidget;
+  final Widget? customButtonWidget;
 
   ThemeTopBar({
     Key? key,
     required this.title,
     this.backArrow,
     required this.enableCustomButton,
-    this.customButtonWidget = const Text("btn"),
+    this.customButtonWidget,
   }) : super(key: key);
 
   double get topbarHeight => 65; // is method to avoid having it in constructor
@@ -43,7 +43,7 @@ class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       actions: <Widget>[
-        if (enableCustomButton == true) customButtonWidget,
+        if (enableCustomButton == true) customButtonWidget!,
       ],
     );
   }

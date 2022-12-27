@@ -7,11 +7,11 @@ class ViewProfileBox extends StatelessWidget {
   final String? id;
   final String? _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
-  final String? name;
+  final String name;
   final int? age;
   final String? city;
   final String? country;
-  final String? bio;
+  final String bio;
   final List<String>? interests;
   final dynamic onTapped;
   final int? sharedInterests;

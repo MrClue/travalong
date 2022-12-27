@@ -53,4 +53,12 @@ class DatabaseService {
         .then((value) => value.size);
     return count;
   }
+
+  // search user by name
+  searchByName(String searchField) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .where('userName', isEqualTo: searchField)
+        .get();
+  }
 }

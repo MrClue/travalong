@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/screens/chat/messages_screen.dart';
+import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/profile/profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
@@ -17,7 +17,7 @@ class TravalongNavbarState extends State<TravalongNavbar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const SearchPage(),
-    const MessagesScreen(),
+    const ChatHomeScreen(),
     const ProfilePage(),
   ];
 

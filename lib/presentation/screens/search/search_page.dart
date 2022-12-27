@@ -76,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                         (BuildContext context, BoxConstraints constraints) {
                       return Column(
                         children: [
-                          SearchBar(), // todo: Lav om på design
+                          SearchBar.staticSearchBar(), // todo: Lav om på design
                           const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
