@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../../resources/colors.dart';
@@ -13,6 +15,7 @@ class ViewProfileBox extends StatelessWidget {
   final String? country;
   final String? bio;
   final List<String>? interests;
+  final dynamic onTapped;
   const ViewProfileBox({
     super.key,
     this.id,
@@ -22,6 +25,7 @@ class ViewProfileBox extends StatelessWidget {
     required this.country,
     required this.bio,
     required this.interests,
+    required this.onTapped,
   });
 
   @override
@@ -82,12 +86,12 @@ class ViewProfileBox extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                         InkWell(
+                          onTap: onTapped,
                           child: const Icon(
                             Icons.person_add_rounded,
                             color: TravalongColors.primary_text_dark,
                             size: 24,
                           ),
-                          onTap: () {},
                         )
                       ],
                     ),
