@@ -8,13 +8,13 @@ import 'package:travalong/presentation/resources/widgets/molecules/search_bar.da
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 
 class NewGroupChat extends StatefulWidget {
-  NewGroupChat({super.key});
+  const NewGroupChat({super.key});
 
   @override
-  State<NewGroupChat> createState() => _newGroupChatState();
+  State<NewGroupChat> createState() => NewGroupChatState();
 }
 
-class _newGroupChatState extends State<NewGroupChat> {
+class NewGroupChatState extends State<NewGroupChat> {
   final TextEditingController searchController = TextEditingController();
   final TextEditingController groupNameController = TextEditingController();
   final firestore = FirebaseFirestore.instance;
@@ -36,7 +36,7 @@ class _newGroupChatState extends State<NewGroupChat> {
         enableCustomButton: true,
         customButtonWidget: IconButton(
           onPressed: check ? () {} : () {}, // If check then onPressed is on
-          icon: Icon(Icons.add, size: 25),
+          icon: const Icon(Icons.add, size: 25),
           color: check
               ? TravalongColors.secondary_10
               : TravalongColors.secondary_text_dark,

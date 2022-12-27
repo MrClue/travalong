@@ -5,7 +5,7 @@ import '../../../resources/widgets/atoms/theme_text.dart';
 
 class ViewProfileBox extends StatelessWidget {
   final String? id;
-  final String? _userImage =
+  final String _userImage =
       "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
   final String name;
   final int? age;
@@ -62,7 +62,7 @@ class ViewProfileBox extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
-                      image: NetworkImage(_userImage!), fit: BoxFit.fill),
+                      image: NetworkImage(_userImage), fit: BoxFit.fill),
                 ),
                 child: Container(
                   height: 40,
@@ -162,7 +162,7 @@ class ViewProfileBox extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: ThemeText(
-                          textString: '$bio',
+                          textString: bio,
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           textColor: TravalongColors.primary_text_bright,

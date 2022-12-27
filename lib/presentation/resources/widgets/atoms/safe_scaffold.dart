@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/topbar.dart';
 
 // ! Includes: navbar, appbar
 class SafeScaffold extends StatelessWidget {

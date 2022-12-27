@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
-import 'package:travalong/presentation/screens/profile/profile_page.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
+import 'package:travalong/presentation/screens/profile/profile_page.dart';
 import 'package:travalong/presentation/screens/search/search_page.dart';
 
 class TravalongNavbar extends StatefulWidget {

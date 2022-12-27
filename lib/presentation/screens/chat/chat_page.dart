@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
-import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String id;
@@ -20,8 +20,8 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final firestore = FirebaseFirestore.instance;
-  var chatId;
-  var name;
+  var chatId = "";
+  //var name;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class _ChatPageState extends State<ChatPage> {
             color: TravalongColors.primary_30_stroke,
             child: ChatWidgets.messageField(onSubmit: (controller) {
               if (controller.text.toString() != '') {
-                if (chatId != null) {
+                if (chatId.isNotEmpty) {
                   Map<String, dynamic> data = {
                     'message': controller.text.trim(),
                     'sent_by': FirebaseAuth.instance.currentUser!.uid,

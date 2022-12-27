@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 
 class ConnectionsPage extends StatefulWidget {
   const ConnectionsPage({super.key});
@@ -16,7 +16,7 @@ class ConnectionsPage extends StatefulWidget {
 final firestore = FirebaseFirestore.instance;
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
-  TextEditingController _textEditController = TextEditingController();
+  final TextEditingController _textEditController = TextEditingController();
   String _search = '';
 
   @override
@@ -28,9 +28,9 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
-      topbar: ThemeTopBar(
+      topbar: const ThemeTopBar(
         title: "Connections",
-        backArrow: const BackArrow(),
+        backArrow: BackArrow(),
         enableCustomButton: false,
       ),
       child: Container(

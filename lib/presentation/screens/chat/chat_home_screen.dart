@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
-import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
+import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/screens/screens.dart';
-import 'package:intl/intl.dart';
 
 class ChatHomeScreen extends StatefulWidget {
   const ChatHomeScreen({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
               ),
               context: context,
               builder: (BuildContext context) {
-                return NewChatWidget();
+                return const NewChatWidget();
               },
             );
           }),
@@ -69,7 +69,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: SearchBar.staticSearchBar(),
                         ),
                         Padding(
@@ -95,7 +95,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              ConnectionsPage()),
+                                              const ConnectionsPage()),
                                     );
                                   },
                                   label: Text(
@@ -292,11 +292,9 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
   }
 
   static Widget loading() {
-    return Container(
-      child: Center(
-          child: CircularProgressIndicator(
-        color: TravalongColors.secondary_10,
-      )),
-    );
+    return const Center(
+        child: CircularProgressIndicator(
+      color: TravalongColors.secondary_10,
+    ));
   }
 }
