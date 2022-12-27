@@ -21,7 +21,6 @@ class ChatHomeScreen extends StatefulWidget {
 }
 
 final firestore = FirebaseFirestore.instance;
-final currentUid = FirebaseAuth.instance.currentUser!.uid;
 final fController = FirebaseController();
 
 class _ChatHomeScreenState extends State<ChatHomeScreen> {
@@ -86,8 +85,8 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 22,
-                                width: 63,
+                                height: 25,
+                                width: 65,
                                 child: FloatingActionButton.extended(
                                   backgroundColor: TravalongColors.secondary_10,
                                   onPressed: () {
@@ -103,7 +102,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                     style: GoogleFonts.poppins(
                                         color:
                                             TravalongColors.secondary_text_dark,
-                                        fontWeight: FontWeight.normal,
+                                        fontWeight: FontWeight.bold,
                                         fontSize: 10),
                                   ),
                                 ),
@@ -119,36 +118,57 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                               stream: firestore.collection('users').snapshots(),
                               builder: (context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                                List userData = !snapshot.hasData
-                                    ? []
-                                    : snapshot.data!.docs
-                                        .where((element) =>
-                                            element['uid'].toString().contains(
-                                                FirebaseAuth.instance
-                                                    .currentUser!.uid) ==
-                                            false)
-                                        .toList();
-                                return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: userData.length,
-                                  itemBuilder: (context, i) {
-                                    //! BUILD USER CIRCLEPROFILES
-                                    return !snapshot.hasData
-                                        ? loading()
-                                        : circleProfile(
-                                            name: userData[i]['name'],
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) {
-                                                return ChatPage(
-                                                    id: userData[i]['uid'],
-                                                    name: userData[i]['name']);
-                                              }));
-                                            },
-                                          );
-                                  },
-                                );
+                                if (!snapshot.hasData) {
+                                  return loading();
+                                }
+
+                                // create userDoc
+                                var userDocument =
+                                    (snapshot.data as QuerySnapshot)
+                                        .docs
+                                        .firstWhere(
+                                            (d) => d.id == fController.userID);
+
+                                // Create a List connectionList
+                                List<String> connectionList = List<String>.from(
+                                    userDocument
+                                        .get('connectionsList')
+                                        .where(
+                                            (uid) => uid != fController.userID)
+                                        .toList());
+
+                                // Use connectionList and refer to user in db
+                                List userData = snapshot.data!.docs
+                                    .where(
+                                        (doc) => doc.id != fController.userID)
+                                    .map((doc) => doc.data())
+                                    .toList();
+
+                                return !snapshot.hasData
+                                    ? loading()
+                                    : ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: userData.length,
+                                        itemBuilder: (context, i) {
+                                          //! BUILD USER CIRCLEPROFILES
+                                          return !snapshot.hasData
+                                              ? loading()
+                                              : circleProfile(
+                                                  name: userData[i]['name'],
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) {
+                                                      return ChatPage(
+                                                          id: userData[i]
+                                                              ['uid'],
+                                                          name: userData[i]
+                                                              ['name']);
+                                                    }));
+                                                  },
+                                                );
+                                        },
+                                      );
                               }),
                         ),
                       ],

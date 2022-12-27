@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
@@ -150,6 +151,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             ),
             // * bottom row
             StreamBuilder(
+                // ! Streambuilder
                 stream: fController.usersCollection.snapshots().takeWhile(
                     (event) =>
                         event.docs.any((d) => d.id == fController.userID)),
@@ -166,6 +168,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       userDocument.get('connectionsList') as List<dynamic>);
 
                   _connections = conList.length.toString();
+
+                  // updates users collections count
+                  if (snapshot.hasData) {
+                    fController.usersCollection
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .set({'connections': _connections},
+                            SetOptions(merge: true));
+                  }
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

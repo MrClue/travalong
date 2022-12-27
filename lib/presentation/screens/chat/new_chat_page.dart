@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
+import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
@@ -21,7 +22,7 @@ class NewChatWidget extends StatefulWidget {
 class _NewChatWidgetState extends State<NewChatWidget> {
   final TextEditingController textEditController = TextEditingController();
   final firestore = FirebaseFirestore.instance;
-  String search = "";
+  String _search = "";
   bool check = true;
 
   @override
@@ -64,7 +65,7 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                     onChanged: (value) {
                       if (!mounted) return;
                       setState(() {
-                        search = value.toLowerCase();
+                        _search = value.toLowerCase();
                       });
                     },
                   ),
@@ -74,33 +75,60 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                     //! StreamBuilder
                     stream: firestore.collection('users').snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      // Create userDoc snapshot for currentUid
+                      var userDocument = (snapshot.data as QuerySnapshot)
+                          .docs
+                          .firstWhere((d) => d.id == fController.userID);
+
+                      // Create a List connectionList
+                      List<String> connectionList = List<String>.from(
+                          userDocument
+                              .get('connectionsList')
+                              .where((uid) => uid != fController.userID)
+                              .toList());
+
+                      // Use connectionList and refer to user in db
+                      List userData = snapshot.data!.docs
+                          .where((doc) => doc.id != fController.userID)
+                          .map((doc) => doc.data())
+                          .toList();
+
+                      // List data builds the search results
                       List data = !snapshot.hasData
                           ? []
                           : snapshot.data!.docs
+                              .where((doc) => doc.id != fController.userID)
                               .where((element) =>
                                   element['name']
                                       .toString()
                                       .toLowerCase()
-                                      .startsWith(search)
+                                      .startsWith(_search)
                                       .toString()
-                                      .endsWith("$search\uf8ff") ||
+                                      .endsWith("$_search\uf8ff") ||
                                   element['name']
                                       .toString()
                                       .toLowerCase()
-                                      .contains(search))
+                                      .contains(_search))
                               .toList();
                       return ListView.builder(
                         itemCount: data.length,
-                        itemBuilder: ((context, index) {
+                        itemBuilder: ((context, i) {
                           // Timestamp time =
                           return Column(
                             children: [
                               ChatWidgets.card(
-                                  title: data[index]['name'],
+                                  title: data[i]['name'],
                                   // time: DateFormat('EEE hh:mm')
                                   //     .format(time.toDate()),
                                   time: '',
-                                  onTap: () {}),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return ChatPage(
+                                          id: userData[i]['uid'],
+                                          name: userData[i]['name']);
+                                    }));
+                                  }),
                               ChatWidgets.chatDivider(),
                             ],
                           );
