@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
+import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 
 class ConnectionsPage extends StatefulWidget {
   const ConnectionsPage({super.key});
@@ -14,6 +16,7 @@ class ConnectionsPage extends StatefulWidget {
 }
 
 final firestore = FirebaseFirestore.instance;
+final fController = FirebaseController();
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
   final TextEditingController _textEditController = TextEditingController();
@@ -37,7 +40,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         color: TravalongColors.primary_text_dark,
         child: SizedBox(
-          height: 500,
+          height: MediaQuery.of(context).size.height - 100,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -88,9 +91,29 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                     //! StreamBuilder
                     stream: firestore.collection('users').snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return ChatWidgets.loading();
+                      }
+
+                      // create userDoc
+                      var userDocument = (snapshot.data as QuerySnapshot)
+                          .docs
+                          .firstWhere((d) => d.id == fController.userID);
+
+                      // Create a List connectionList
+                      List<String> connectionList = List<String>.from(
+                          userDocument.get('connectionsList') as List<dynamic>);
+
+                      // Create a list of user data that includes only the documents with uid values that are present in the connectionList
+                      List userData = snapshot.data!.docs
+                          .where((doc) => connectionList.contains(doc.id))
+                          .map((doc) => doc.data())
+                          .toList();
+
+                      // List data builds the search results
                       List data = !snapshot.hasData
                           ? []
-                          : snapshot.data!.docs
+                          : userData
                               .where((element) =>
                                   element['name']
                                       .toString()
@@ -103,18 +126,26 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                                       .toLowerCase()
                                       .contains(_search))
                               .toList();
+
                       return ListView.builder(
                         itemCount: data.length,
-                        itemBuilder: ((context, index) {
+                        itemBuilder: ((context, i) {
                           // Timestamp time =
                           return Column(
                             children: [
                               ChatWidgets.card(
-                                title: data[index]['name'],
+                                title: data[i]['name'],
                                 // time: DateFormat('EEE hh:mm')
                                 //     .format(time.toDate()),
                                 time: '',
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                    return ChatPage(
+                                        id: userData[i]['uid'],
+                                        name: userData[i]['name']);
+                                  }));
+                                },
                               ),
                               ChatWidgets.chatDivider(),
                             ],

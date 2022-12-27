@@ -5,6 +5,13 @@ import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart'
 class ChatWidgets {
   bool timeEnabled = false;
 
+  static Widget loading() {
+    return const Center(
+        child: CircularProgressIndicator(
+      color: TravalongColors.secondary_10,
+    ));
+  }
+
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
