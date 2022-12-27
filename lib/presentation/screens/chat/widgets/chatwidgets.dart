@@ -5,6 +5,15 @@ import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart'
 class ChatWidgets {
   bool timeEnabled = false;
 
+  static Widget loading() {
+    return Container(
+      child: const Center(
+          child: CircularProgressIndicator(
+        color: TravalongColors.secondary_10,
+      )),
+    );
+  }
+
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -134,7 +143,7 @@ class ChatWidgets {
                       check ? Alignment.bottomRight : Alignment.bottomLeft,
                   child: Text(
                     '$time',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: TravalongColors.primary_text_bright,
                         fontSize: 9),
                   ),
@@ -161,7 +170,7 @@ class ChatWidgets {
   static messageField({required onSubmit}) {
     var con = TextEditingController();
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: TravalongColors.neutral_60,
         borderRadius: BorderRadius.circular(20),
@@ -215,11 +224,11 @@ class Styles {
   static messagesCardStyle(check) {
     return BoxDecoration(
       borderRadius: check
-          ? BorderRadius.only(
+          ? const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
               bottomLeft: Radius.circular(15))
-          : BorderRadius.only(
+          : const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
               bottomRight: Radius.circular(15)),

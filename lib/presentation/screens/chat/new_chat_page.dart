@@ -75,23 +75,29 @@ class _NewChatWidgetState extends State<NewChatWidget> {
                     //! StreamBuilder
                     stream: firestore.collection('users').snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                      // Create userDoc snapshot for currentUid
-                      var userDocument = (snapshot.data as QuerySnapshot)
-                          .docs
-                          .firstWhere((d) => d.id == fController.userID);
+                      if (!snapshot.hasData) {
+                                  return ChatWidgets.loading();
+                                }
 
-                      // Create a List connectionList
-                      List<String> connectionList = List<String>.from(
-                          userDocument
-                              .get('connectionsList')
-                              .where((uid) => uid != fController.userID)
-                              .toList());
+                                // create userDoc
+                                var userDocument =
+                                    (snapshot.data as QuerySnapshot)
+                                        .docs
+                                        .firstWhere(
+                                            (d) => d.id == fController.userID);
 
-                      // Use connectionList and refer to user in db
-                      List userData = snapshot.data!.docs
-                          .where((doc) => doc.id != fController.userID)
-                          .map((doc) => doc.data())
-                          .toList();
+                                // Create a List connectionList
+                                List<String> connectionList = List<String>.from(
+                                    userDocument.get('connectionsList')
+                                        as List<dynamic>);
+
+                                // Create a list of user data that includes only the documents with uid values that are present in the connectionList
+                                List userData = snapshot.data!.docs
+                                    .where((doc) =>
+                                        connectionList.contains(doc.id))
+                                    .map((doc) => doc.data())
+                                    .toList();
+
 
                       // List data builds the search results
                       List data = !snapshot.hasData

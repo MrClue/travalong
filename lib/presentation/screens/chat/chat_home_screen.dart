@@ -119,7 +119,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                               builder: (context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
-                                  return loading();
+                                  return ChatWidgets.loading();
                                 }
 
                                 // create userDoc
@@ -131,28 +131,25 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
 
                                 // Create a List connectionList
                                 List<String> connectionList = List<String>.from(
-                                    userDocument
-                                        .get('connectionsList')
-                                        .where(
-                                            (uid) => uid != fController.userID)
-                                        .toList());
+                                    userDocument.get('connectionsList')
+                                        as List<dynamic>);
 
-                                // Use connectionList and refer to user in db
+                                // Create a list of user data that includes only the documents with uid values that are present in the connectionList
                                 List userData = snapshot.data!.docs
-                                    .where(
-                                        (doc) => doc.id != fController.userID)
+                                    .where((doc) =>
+                                        connectionList.contains(doc.id))
                                     .map((doc) => doc.data())
                                     .toList();
 
                                 return !snapshot.hasData
-                                    ? loading()
+                                    ? ChatWidgets.loading()
                                     : ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         itemCount: userData.length,
                                         itemBuilder: (context, i) {
                                           //! BUILD USER CIRCLEPROFILES
                                           return !snapshot.hasData
-                                              ? loading()
+                                              ? ChatWidgets.loading()
                                               : circleProfile(
                                                   name: userData[i]['name'],
                                                   onTap: () {
@@ -225,7 +222,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                               (context, AsyncSnapshot snap) {
                                             // ! BUILD USER CARDS
                                             return !snap.hasData
-                                                ? loading()
+                                                ? ChatWidgets.loading()
                                                 : Column(
                                                     children: [
                                                       ChatWidgets.card(
@@ -308,15 +305,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  static Widget loading() {
-    return Container(
-      child: Center(
-          child: CircularProgressIndicator(
-        color: TravalongColors.secondary_10,
-      )),
     );
   }
 }
