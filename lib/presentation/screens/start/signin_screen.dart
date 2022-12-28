@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
               title: Text('Error'),
               children: [
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(25.0),
                   child: Text('Incorrect password or email'),
                 ),
               ],

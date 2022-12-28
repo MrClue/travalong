@@ -65,18 +65,22 @@ class ResultsGridState extends State<ResultsGrid> {
     List sortedUsers = [];
 
     for (var i = 0; i < _users.length; i++) {
-      // make sure interests is a list
-      if (_users[i]['interests'] == null) {
-        _users[i]['interests'] = [];
+      // make sure interests & travel goals is a list
+      if (_users[i][UserData.interests] == null) {
+        _users[i][UserData.interests] = [];
+      }
+      if (_users[i][UserData.travelgoals] == null) {
+        _users[i][UserData.travelgoals] = [];
       }
 
-      List interests1 = _users[i]['interests'];
-      debugPrint("User ${_users[i]['name']} interests: $interests1");
+      List interestsAndGoals =
+          _users[i][UserData.interests] + _users[i][UserData.travelgoals];
+      debugPrint("User ${_users[i]['name']} interests: $interestsAndGoals");
 
       // Calculate the number of shared interests
       int sharedInterests = 0;
 
-      for (String interest in interests1) {
+      for (String interest in interestsAndGoals) {
         if (currentUserInterests.contains(interest)) {
           sharedInterests++;
         }
@@ -114,12 +118,17 @@ class ResultsGridState extends State<ResultsGrid> {
     super.initState();
     //printStuff(); // ! test
     fController.getDocFieldData(UserData.interests).then((interests) {
-      // Extract the interests string between the square brackets
-      String stringValue = interests.substring(1, interests.length - 1);
-      //debugPrint("stringValue: $stringValue");
-      setState(() {
-        currentUserInterests = stringValue.split(', ');
-        debugPrint("current users interests: $currentUserInterests");
+      fController.getDocFieldData(UserData.travelgoals).then((goals) {
+        // Extract the interests string between the square brackets
+        String interestsString = interests.substring(1, interests.length - 1);
+        String goalsString = goals.substring(1, goals.length - 1);
+
+        String stringItems = "$interestsString, $goalsString";
+        //debugPrint("stringValue: $stringValue");
+        setState(() {
+          currentUserInterests = stringItems.split(', ');
+          debugPrint("current users interests: $currentUserInterests");
+        });
       });
     });
   }
@@ -142,6 +151,7 @@ class ResultsGridState extends State<ResultsGrid> {
                   return ProfileSquare(
                     image: _userImage,
                     name: _users[i]['name'],
+                    sharedInterests: copyAnotherMap.values.toList()[i],
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
