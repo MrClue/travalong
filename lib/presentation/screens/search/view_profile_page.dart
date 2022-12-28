@@ -19,6 +19,7 @@ class ViewProfile extends StatefulWidget {
   final String bio;
   final List<dynamic> interests;
   final int sharedInterests;
+
   const ViewProfile({
     super.key,
     required this.id,
@@ -65,12 +66,13 @@ class _ViewProfileState extends State<ViewProfile> {
                       .firstWhere(
                           (element) => element.id == fController.userID);
                   debugPrint(widget.id); // DEBUG TO CHECK CORRECT USER
+
                   return ViewProfileBox(
                     name: userDocument.get(UserData.name),
                     age: userDocument.get(UserData.age),
                     bio: userDocument.get(UserData.bio),
-                    city: 'CITY',
-                    country: 'COUNTRY',
+                    city: userDocument.get(UserData.city),
+                    country: userDocument.get(UserData.country),
                     interests: const ['I1', 'I2', 'I3'],
                     sharedInterests: widget.sharedInterests,
                     onTapped: () {

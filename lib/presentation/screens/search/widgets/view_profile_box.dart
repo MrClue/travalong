@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/screens/search/widgets/profile_image.dart';
 
 import '../../../resources/colors.dart';
 import '../../../resources/widgets/atoms/theme_text.dart';
@@ -14,7 +15,7 @@ class ViewProfileBox extends StatelessWidget {
   final String bio;
   final List<String>? interests;
   final dynamic onTapped;
-  final int? sharedInterests;
+  final int sharedInterests;
   const ViewProfileBox({
     super.key,
     this.id,
@@ -44,63 +45,18 @@ class ViewProfileBox extends StatelessWidget {
             spacing: 10,
             runSpacing: 10,
             children: [
-              // SizedBox(
-              //   width: 355,
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.circular(15.0),
-              //     child: Image.network(
-              //       _userImage!,
-              //       width: 355,
-              //       fit: BoxFit.cover,
-              //     ),
-              //   ),
-              // ),
-              Container(
-                alignment: Alignment.bottomLeft,
-                height: MediaQuery.of(context).size.height - 400.0,
-                width: 355,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                      image: NetworkImage(_userImage), fit: BoxFit.fill),
-                ),
-                child: Container(
-                  height: 40,
-                  alignment: Alignment.bottomCenter,
-                  decoration: BoxDecoration(
-                    color:
-                        TravalongColors.primary_text_bright.withOpacity(0.20),
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ThemeText(
-                          textString: '$sharedInterests shared interests',
-                          fontSize: 16,
-                          textColor: TravalongColors.primary_text_dark,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        InkWell(
-                          onTap: onTapped,
-                          child: const Icon(
-                            Icons.person_add_rounded,
-                            color: TravalongColors.primary_text_dark,
-                            size: 24,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+              // * Profile image
+              ProfileImagePreview(
+                image: _userImage,
+                sharedInterests: sharedInterests,
+                height: MediaQuery.of(context).size.height * 0.5,
+                hasButton: true,
+                onTapped: onTapped,
               ),
+              // * Name, age, city, country
               SizedBox(
-                width: 355,
-                height: 26,
+                width: MediaQuery.of(context).size.width - 50, //355
+                height: 25,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -139,72 +95,79 @@ class ViewProfileBox extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                height: 135,
-                width: 355,
-                decoration: const BoxDecoration(
-                    color: TravalongColors.primary_30,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15.0),
-                    )),
-                child: Column(
-                  children: [
-                    const Align(
-                      alignment: Alignment.topLeft,
-                      child: ThemeText(
+              // * Bio
+              Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width - 50, //355
+                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    decoration: BoxDecoration(
+                      color: TravalongColors.primary_30,
+                      border: Border.all(
+                        color: TravalongColors.primary_30_stroke,
+                        width: 1.5,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: ThemeText(
+                                textString: bio,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                textColor: TravalongColors.primary_text_bright,
+                              ),
+                            ),
+                          ),
+                          const Align(
+                            alignment: Alignment.center,
+                            child: ThemeText(
+                              textString: 'You both like...',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              textColor: TravalongColors.primary_text_bright,
+                            ),
+                          ),
+                          const Expanded(
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: ThemeText(
+                                textString: '-- Similar interest here --',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                textColor: TravalongColors.primary_text_bright,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 5,
+                    left: 25,
+                    right: 0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: const ThemeText(
                         textString: 'Bio',
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.w700,
                         textColor: TravalongColors.primary_text_bright,
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: ThemeText(
-                          textString: bio,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          textColor: TravalongColors.primary_text_bright,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                height: 55,
-                width: 355,
-                decoration: const BoxDecoration(
-                    color: TravalongColors.primary_30,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15.0),
-                    )),
-                child: Column(
-                  children: const [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: ThemeText(
-                        textString: 'You both like..',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        textColor: TravalongColors.primary_text_bright,
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: ThemeText(
-                          textString: '-- Similar interest here --',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          textColor: TravalongColors.primary_text_bright,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ),

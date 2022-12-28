@@ -65,6 +65,7 @@ class _SearchPageState extends State<SearchPage> {
           child: Container(
             color: TravalongColors.primary_30, // ! background color
             child: ListView(
+              physics: const NeverScrollableScrollPhysics(), // disable scroll
               controller: listViewController,
               children: [
                 Padding(
@@ -75,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                         (BuildContext context, BoxConstraints constraints) {
                       return Column(
                         children: [
-                          SearchBar.staticSearchBar(), // todo: Lav om på design
+                          SearchBar.staticSearchBar(),
                           const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
                             width: constraints.maxWidth,
                             child: _searchTextWidget(),
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 40),
                           SizedBox(
                             width: constraints.maxWidth,
                             child: _searchActionBtn(),

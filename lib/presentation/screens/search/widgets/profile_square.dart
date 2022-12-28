@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travalong/presentation/screens/search/widgets/profile_image.dart';
 
 import '../../../resources/colors.dart';
 import '../../../resources/widgets/atoms/theme_text.dart';
@@ -7,12 +8,14 @@ class ProfileSquare extends StatelessWidget {
   final String name; // users name
   final String image; // users 1st image
   final dynamic onPressed;
+  final int sharedInterests;
 
   const ProfileSquare({
     Key? key,
     required this.name,
     required this.image,
     required this.onPressed,
+    required this.sharedInterests,
   }) : super(key: key);
 
   @override
@@ -21,15 +24,6 @@ class ProfileSquare extends StatelessWidget {
       padding: const EdgeInsets.all(0.0),
       child: InkWell(
         onTap: onPressed,
-
-        //() {
-        // debugPrint("You clicked on: $name");
-        // debug(); // ! test
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => goToPage),
-        // );
-        // },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -37,14 +31,8 @@ class ProfileSquare extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  image,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              ProfileImagePreview(
+                  image: image, sharedInterests: sharedInterests),
               Expanded(
                 child: Flex(
                   direction: Axis.vertical,

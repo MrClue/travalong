@@ -9,6 +9,8 @@ import 'package:travalong/presentation/resources/widgets/molecules/sign_out_btn_
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/profile/interests_subpage.dart';
 
+import 'my_goals_page.dart';
+
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({super.key});
 
@@ -40,6 +42,13 @@ class _MyProfilePageState extends State<MyProfilePage> {
               label: "Interests & Hobbies",
               description: "Select your interests and hobbies.",
               goToPage: InterestsSubpage(),
+            ),
+            SizedBox(height: 8),
+            IconTextButton(
+              faIcon: FontAwesomeIcons.list,
+              label: "My Goals",
+              description: "Set travel goals, and stay on track.",
+              goToPage: MyGoalsPage(),
             ),
             Spacer(), // fills remaining space
             SignOutBtnWidget(),

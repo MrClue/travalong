@@ -6,7 +6,6 @@ import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dar
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/profile_widget.dart';
-import 'package:travalong/presentation/screens/profile/my_goals_page.dart';
 import 'package:travalong/presentation/screens/profile/my_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -36,14 +35,14 @@ class ProfilePage extends StatelessWidget {
                     description: "Update your profile information here.",
                     goToPage: MyProfilePage(),
                   ),
-                  SizedBox(height: 8),
-                  IconTextButton(
+                  SizedBox(height: 14),
+                  /*IconTextButton(
                     faIcon: FontAwesomeIcons.list,
                     label: "My Goals",
                     description: "Set travel goals, and stay on track.",
                     goToPage: MyGoalsPage(),
-                  ),
-                  SizedBox(height: 14),
+                  ),*/
+                  //SizedBox(height: 14),
                   MediaWidget(), // todo: not done
                 ],
               ),
@@ -90,7 +89,7 @@ class MediaWidget extends StatelessWidget {
           imagesLink: sampleImages,
           isAssets: false,
           autoPlay: false,
-          sliderHeight: 280, // todo: make non-static
+          sliderHeight: MediaQuery.of(context).size.height * 0.38,
           imageRadius: 10,
           indicatorActiveColor: TravalongColors.secondary_10,
           imageFitMode: BoxFit.cover,
