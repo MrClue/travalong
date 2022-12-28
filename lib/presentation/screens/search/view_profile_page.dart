@@ -60,6 +60,10 @@ class _ViewProfileState extends State<ViewProfile> {
                   var userDocument = (snapshot.data as QuerySnapshot)
                       .docs
                       .firstWhere((element) => element.id == widget.id);
+                  var otherUserDocument = (snapshot.data as QuerySnapshot)
+                      .docs
+                      .firstWhere(
+                          (element) => element.id == fController.userID);
                   debugPrint(widget.id); // DEBUG TO CHECK CORRECT USER
                   return ViewProfileBox(
                     name: userDocument.get(UserData.name),
@@ -71,6 +75,7 @@ class _ViewProfileState extends State<ViewProfile> {
                     sharedInterests: widget.sharedInterests,
                     onTapped: () {
                       // ** Will update the connectionList. Also if UID already exist, then do nothing
+                      // ! Add connection in current users list
                       if ((userDocument.data() as Map<String, dynamic>)
                           .containsKey('connectionsList')) {
                         fController.usersCollection
@@ -79,19 +84,40 @@ class _ViewProfileState extends State<ViewProfile> {
                           'connectionsList': FieldValue.arrayUnion([widget.id]),
                         }).then(
                                 (value) => debugPrint(
-                                    "Connections successfully updated!"),
+                                    "User connection successfully updated!"),
                                 onError: (e) => debugPrint(
-                                    "Error updating connections $e"));
+                                    "Error updating user connections $e"));
                       } else {
+                        // ! Add connection in current users list
                         fController.usersCollection
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .set({
-                          'connectionsList': FieldValue.arrayUnion([widget.id])
+                          'connectionsList': FieldValue.arrayUnion([widget.id]),
                         }, SetOptions(merge: true)).then(
-                                (value) =>
-                                    debugPrint("Connections successfully set!"),
-                                onError: (e) =>
-                                    debugPrint("Error setting connections $e"));
+                                (value) => debugPrint(
+                                    "New user connections successfully set!"),
+                                onError: (e) => debugPrint("Error if else $e"));
+                      }
+                      // ! Add connection in other users list
+                      if ((otherUserDocument.data() as Map<String, dynamic>)
+                          .containsKey('connectionsList')) {
+                        fController.usersCollection.doc(widget.id).update({
+                          'connectionsList': FieldValue.arrayUnion(
+                              [FirebaseAuth.instance.currentUser!.uid]),
+                        }).then(
+                            (value) => debugPrint(
+                                "Other user connection successfully updated!"),
+                            onError: (e) => debugPrint(
+                                "Error updating other user connections $e"));
+                      } else {
+                        // ! Add connection in other users list
+                        fController.usersCollection.doc(widget.id).set({
+                          'connectionsList': FieldValue.arrayUnion(
+                              [FirebaseAuth.instance.currentUser!.uid]),
+                        }, SetOptions(merge: true)).then(
+                            (value) => debugPrint(
+                                "Other new user connections successfully set!"),
+                            onError: (e) => debugPrint("Error if else $e"));
                       }
                     },
                   );

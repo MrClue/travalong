@@ -18,6 +18,7 @@ class UserData {
   static String chats = 'chats';
   static String interests = 'interests';
   static String travelgoals = 'travelgoals';
+  static String connectionsList = 'connectionsList';
 }
 
 // * This class provides the values for each key in the JSON format
@@ -25,7 +26,7 @@ class AppUser {
   String? uid, name, email, urlAvatar, bio, city, country, gender;
   int? age, connections, sharedMedia, goalsCompleted;
   Map<String, dynamic>? media, chats;
-  List<String>? interests, travelgoals;
+  List<String>? connectionsList, interests, travelgoals;
 
   AppUser({
     required this.uid,
@@ -44,6 +45,7 @@ class AppUser {
     this.chats,
     this.interests,
     this.travelgoals,
+    this.connectionsList,
   }) {
     // Initialize fields (not set when creating account) to empty values or empty lists
     bio ??= "";
@@ -56,6 +58,7 @@ class AppUser {
     chats ??= {};
     interests ??= [];
     travelgoals ??= [];
+    connectionsList ??= [];
   }
 
   // To assist in JSON conversion
@@ -77,6 +80,7 @@ class AppUser {
         UserData.chats: chats,
         UserData.interests: interests,
         UserData.travelgoals: travelgoals,
+        UserData.connectionsList: connectionsList,
       };
 
   // * This method can be used on a current AppUser to return a new instance of the AppUser,
@@ -98,6 +102,7 @@ class AppUser {
     Map<String, dynamic>? chats,
     List<String>? interests,
     List<String>? travelgoals,
+    List<String>? connectionsList,
   }) =>
       AppUser(
         uid: uid ?? this.uid,
@@ -116,6 +121,7 @@ class AppUser {
         chats: chats ?? this.chats,
         interests: interests ?? this.interests,
         travelgoals: travelgoals ?? this.travelgoals,
+        connectionsList: connectionsList ?? this.connectionsList,
       );
 
   static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
@@ -143,5 +149,6 @@ class AppUser {
         chats: json[UserData.chats] as Map<String, dynamic>,
         interests: json[UserData.interests] as List<String>,
         travelgoals: json[UserData.travelgoals] as List<String>,
+        connectionsList: json[UserData.connectionsList] as List<String>,
       );
 }
