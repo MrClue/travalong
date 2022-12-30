@@ -36,15 +36,6 @@ class DatabaseService {
     return userCollection.doc(uid).snapshots();
   }
 
-  // get the chats
-  Future getChats(String groupId) async {
-    return chatCollection
-        .doc(groupId)
-        .collection("messages")
-        .orderBy("time")
-        .snapshots();
-  }
-
   // getting amount of users
   Future<int> getCount() async {
     int count = await FirebaseFirestore.instance
@@ -52,13 +43,5 @@ class DatabaseService {
         .get()
         .then((value) => value.size);
     return count;
-  }
-
-  // search user by name
-  searchByName(String searchField) {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .where('userName', isEqualTo: searchField)
-        .get();
   }
 }
