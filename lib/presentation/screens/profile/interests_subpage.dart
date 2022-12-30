@@ -186,7 +186,7 @@ class InterestsSelectorState extends State<InterestsSelector> {
             },
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 2, // ! maybee change
+            height: MediaQuery.of(context).size.height / 2.5, // ! maybee change
             child: Scrollbar(
               thumbVisibility: true,
               thickness: 6,
@@ -225,6 +225,9 @@ class InterestsSelectorState extends State<InterestsSelector> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(
+            height: 26,
           ),
           ConfirmButton(
             formKey: _formKey,

@@ -35,7 +35,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
             AboutFormWidget(),
             SizedBox(height: 16), // figma: 26 -> but looks weird
             LocationWidget(),
-            SizedBox(height: 26),
+            SizedBox(height: 30),
             //InterestsHobbiesWidget(goToPage: InterestsSubpage()),
             IconTextButton(
               faIcon: FontAwesomeIcons.list,
@@ -43,7 +43,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
               description: "Select your interests and hobbies.",
               goToPage: InterestsSubpage(),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 30),
             IconTextButton(
               faIcon: FontAwesomeIcons.list,
               label: "My Goals",
