@@ -8,5 +8,4 @@ export 'profile/my_profile_page.dart';
 // * profile screens
 export 'profile/profile_page.dart';
 export 'start/signin_screen.dart';
-export 'start/signup_screen.dart';
 export 'start/start_screen.dart';

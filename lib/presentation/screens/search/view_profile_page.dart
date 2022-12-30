@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
+import 'package:travalong/logic/controller/connections_controller.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/search/widgets/view_profile_box.dart';
 
 FirebaseController fController = FirebaseController();
+ConnectionsController conController = ConnectionsController();
 
 class ViewProfile extends StatefulWidget {
   final String id;
@@ -37,10 +38,6 @@ class ViewProfile extends StatefulWidget {
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-  //var id;
-  //var name;
-  //var connectionsList;
-
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
@@ -77,49 +74,21 @@ class _ViewProfileState extends State<ViewProfile> {
                     sharedInterests: widget.sharedInterests,
                     onTapped: () {
                       // ** Will update the connectionList. Also if UID already exist, then do nothing
-                      // ! Add connection in current users list
                       if ((userDocument.data() as Map<String, dynamic>)
                           .containsKey('connectionsList')) {
-                        fController.usersCollection
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .update({
-                          'connectionsList': FieldValue.arrayUnion([widget.id]),
-                        }).then(
-                                (value) => debugPrint(
-                                    "User connection successfully updated!"),
-                                onError: (e) => debugPrint(
-                                    "Error updating user connections $e"));
+                        // Updates users current connections
+                        conController.updateUserConnections(widget.id);
                       } else {
-                        // ! Add connection in current users list
-                        fController.usersCollection
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({
-                          'connectionsList': FieldValue.arrayUnion([widget.id]),
-                        }, SetOptions(merge: true)).then(
-                                (value) => debugPrint(
-                                    "New user connections successfully set!"),
-                                onError: (e) => debugPrint("Error if else $e"));
+                        // Sets users connectionList
+                        conController.setUserConnections(widget.id);
                       }
-                      // ! Add connection in other users list
                       if ((otherUserDocument.data() as Map<String, dynamic>)
                           .containsKey('connectionsList')) {
-                        fController.usersCollection.doc(widget.id).update({
-                          'connectionsList': FieldValue.arrayUnion(
-                              [FirebaseAuth.instance.currentUser!.uid]),
-                        }).then(
-                            (value) => debugPrint(
-                                "Other user connection successfully updated!"),
-                            onError: (e) => debugPrint(
-                                "Error updating other user connections $e"));
+                        // Updates other-users current connections
+                        conController.updateOtherUserConnections(widget.id);
                       } else {
-                        // ! Add connection in other users list
-                        fController.usersCollection.doc(widget.id).set({
-                          'connectionsList': FieldValue.arrayUnion(
-                              [FirebaseAuth.instance.currentUser!.uid]),
-                        }, SetOptions(merge: true)).then(
-                            (value) => debugPrint(
-                                "Other new user connections successfully set!"),
-                            onError: (e) => debugPrint("Error if else $e"));
+                        // Sets other-users connectionList
+                        conController.setOtherUserConnections(widget.id);
                       }
                     },
                   );

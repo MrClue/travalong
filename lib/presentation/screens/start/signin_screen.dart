@@ -1,12 +1,10 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../../travalong_navbar.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
+final AuthService authService = AuthService();
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -18,50 +16,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void _signIn() async {
-    try {
-      final User? user = (await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      ))
-          .user;
-
-      if (user != null) {
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TravalongNavbar()),
-        );
-      }
-    } catch (e) {
-      if (e is FirebaseAuthException) {
-        // Show error message
-        /*ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Invalid email or password"),
-          ),
-        );*/
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const SimpleDialog(
-              title: Text('Error'),
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(25.0),
-                  child: Text('Incorrect password or email'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // Rethrow the exception if it's not a FirebaseAuthException
-        rethrow;
-      }
-    }
-  }
 
   @override
   void dispose() {
@@ -217,7 +171,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   }
 
                   try {
-                    _signIn();
+                    authService.signIn(
+                        context, _emailController, _passwordController);
                   } catch (e) {
                     return;
                   }

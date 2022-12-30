@@ -13,42 +13,6 @@ class SignOutBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        /*
-        showCupertinoDialog(
-          context: context,
-          builder: (_) => CupertinoAlertDialog(
-            title: const Text('Sign out'),
-            content: const Text('Are you sure you want to sign out?'),
-            actions: [
-              TextButton(
-                child: const ThemeText(
-                  textString: "No",
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  textColor: Colors.black,
-                ),
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pop('dialog'),
-              ),
-              TextButton(
-                child: const ThemeText(
-                  textString: "Sign out",
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  textColor: Colors.red,
-                ),
-                onPressed: () {
-                  AuthService().signOut();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const StartScreen(),
-                    ),
-                  );
-                },
-              )
-            ],
-          ),
-        );*/
         AuthService().signOut();
         Navigator.of(context).push(
           MaterialPageRoute(

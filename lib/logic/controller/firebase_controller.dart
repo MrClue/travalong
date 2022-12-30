@@ -16,7 +16,6 @@ class FirebaseController {
 
   // * Get document data-field based on field (JSON key)
   Future<String> getDocFieldData(String field) async {
-    // [START getDocFieldData]
     try {
       await docRef.get().then(
         (DocumentSnapshot doc) {
@@ -31,20 +30,17 @@ class FirebaseController {
     } catch (e) {
       return 'Error';
     }
-    // [END getDocFieldData]
   }
 
   // * Set document data-field value (JSON value) based on field (JSON key)
   Future setDocFieldData(String field, dynamic value) async {
     //debugPrint("setDocfieldData - docRef: " + docRef.toString());
-    // [START setDocFieldData]
     final data = {field: value};
     try {
       await docRef.set(data, SetOptions(merge: true));
     } catch (e) {
       debugPrint("Error seting values into field: $e");
     }
-    // [END setDocFieldData]
   }
 
   getUsers() {

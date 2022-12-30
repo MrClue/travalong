@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:travalong/logic/controller/chat_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
@@ -18,10 +19,11 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
+final ChatService chatService = ChatService();
+
 class _ChatPageState extends State<ChatPage> {
   final firestore = FirebaseFirestore.instance;
-  var chatId = "";
-  //var name;
+  var chatId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -110,39 +112,9 @@ class _ChatPageState extends State<ChatPage> {
             child: ChatWidgets.messageField(onSubmit: (controller) {
               if (controller.text.toString() != '') {
                 if (chatId.isNotEmpty) {
-                  Map<String, dynamic> data = {
-                    'message': controller.text.trim(),
-                    'sent_by': FirebaseAuth.instance.currentUser!.uid,
-                    'datetime': DateTime.now(),
-                  };
-                  FirebaseFirestore.instance
-                      .collection('chats')
-                      .doc(chatId)
-                      .update({
-                    'last_message_time': DateTime.now(),
-                    'last_message': controller.text,
-                  });
-                  FirebaseFirestore.instance
-                      .collection('chats')
-                      .doc(chatId)
-                      .collection('messages')
-                      .add(data);
+                  chatService.updateChat(controller, chatId);
                 } else {
-                  Map<String, dynamic> data = {
-                    'message': controller.text.trim(),
-                    'sent_by': FirebaseAuth.instance.currentUser!.uid,
-                    'datetime': DateTime.now(),
-                  };
-                  FirebaseFirestore.instance.collection('chats').add({
-                    'users': [
-                      widget.id,
-                      FirebaseAuth.instance.currentUser!.uid
-                    ],
-                    'last_message': controller.text.trim(),
-                    'last_message_time': DateTime.now(),
-                  }).then((value) async {
-                    value.collection('messages').add(data);
-                  });
+                  chatService.createNewChat(controller, widget.id);
                 }
               }
               controller.clear();
