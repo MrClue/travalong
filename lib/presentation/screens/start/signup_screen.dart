@@ -6,7 +6,6 @@ import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 
-//final FirebaseAuth _auth = FirebaseAuth.instance; // ! not used
 final AuthService authService = AuthService();
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -260,7 +259,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return;
                             }
                             try {
-                              signUp();
+                              _isLoading = true;
+                              await authService
+                                  .registerUser(
+                                      _nameController.text,
+                                      _emailController.text,
+                                      _passwordController.text)
+                                  .then((value) {
+                                if (value == true) {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TravalongNavbar(),
+                                    ),
+                                  );
+                                }
+                              });
                             } on FirebaseAuthException {
                               showCupertinoDialog(
                                 context: context,
@@ -285,22 +299,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           );
-  }
-
-  signUp() async {
-    _isLoading = true;
-    await authService
-        .registerUser(_nameController.text, _emailController.text,
-            _passwordController.text)
-        .then((value) {
-      if (value == true) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const ProfilePage(),
-          ),
-        );
-      }
-    });
   }
 
   @override

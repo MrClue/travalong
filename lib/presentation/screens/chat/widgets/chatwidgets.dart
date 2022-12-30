@@ -1,9 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart';
+import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
 class ChatWidgets {
   bool timeEnabled = false;
+
+  static Widget circleProfile({onTap, name}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CircleAvatar(
+              radius: 25,
+              backgroundColor: Colors.grey,
+              child: Icon(
+                Icons.person,
+                size: 40,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              width: 50,
+              child: Center(
+                child: ThemeText(
+                  textString: name,
+                  height: 1.5,
+                  fontSize: 12,
+                  textColor: TravalongColors.primary_text_bright,
+                  overflow: TextOverflow.clip,
+                  fontWeight: FontWeight.normal,
+                  maxLines: 1,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   static Widget loading() {
     return const Center(
@@ -61,38 +99,6 @@ class ChatWidgets {
       indent: 10,
       endIndent: 10,
       thickness: 2,
-    );
-  }
-
-  static Widget circleProfile({onTap, name}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(
-                width: 50,
-                child: Center(
-                    child: Text(
-                  'John',
-                  style:
-                      TextStyle(height: 1.5, fontSize: 12, color: Colors.black),
-                  overflow: TextOverflow.ellipsis,
-                )))
-          ],
-        ),
-      ),
     );
   }
 

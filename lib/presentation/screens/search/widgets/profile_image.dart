@@ -91,7 +91,7 @@ class _ProfileImagePreviewState extends State<ProfileImagePreview> {
                           child: Icon(
                             isConnected == false
                                 ? Icons.person_add_rounded
-                                : Icons.person_rounded,
+                                : Icons.check_outlined,
                             color: isConnected == false
                                 ? TravalongColors.primary_text_dark
                                 : TravalongColors.secondary_10,

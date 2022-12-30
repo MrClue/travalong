@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
 import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
@@ -150,7 +149,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                           //! BUILD USER CIRCLEPROFILES
                                           return !snapshot.hasData
                                               ? ChatWidgets.loading()
-                                              : circleProfile(
+                                              : ChatWidgets.circleProfile(
                                                   name: userData[i]['name'],
                                                   onTap: () {
                                                     Navigator.of(context).push(
@@ -264,43 +263,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                   ),
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  static Widget circleProfile({onTap, name}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-              child: Center(
-                child: ThemeText(
-                  textString: name,
-                  height: 1.5,
-                  fontSize: 12,
-                  textColor: TravalongColors.primary_text_bright,
-                  overflow: TextOverflow.clip,
-                  fontWeight: FontWeight.normal,
-                  maxLines: 1,
-                ),
-              ),
             ),
           ],
         ),
