@@ -1,12 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 
-import 'database_service.dart';
-
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // saving the userdata
+  Future saveUserData(AppUser user) async {
+    final json = user.toJson();
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .set(json);
+  }
 
   // ! Register user
   Future registerUser(String name, String email, String password) async {
@@ -24,7 +32,8 @@ class AuthService {
       );
 
       // call our database service to update the user data.
-      await DatabaseService(uid: authUser.uid).saveUserData(user);
+      await saveUserData(user);
+      //DatabaseService(uid: authUser.uid).saveUserData(user);
 
       return true;
     } on FirebaseAuthException catch (e) {
