@@ -31,6 +31,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _age;
   final List<String> genderList = ['male', 'female'];
 
+  final RegExp dateRegex = RegExp(r'^\d{2}-\d{2}-\d{4}$');
+
   var maskFormatter = MaskTextInputFormatter(
       mask: '##-##-####',
       filter: {"#": RegExp(r'[0-9]')},
@@ -128,11 +130,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               autofocus: false,
                               borderRadius: BorderRadius.circular(15),
                               value: _selectedGender,
-                              validator: (value) {
-                                value == null || value.isEmpty
-                                    ? 'Please select a gender'
-                                    : null;
-                              },
+                              validator: (value) => value == null ||
+                                      value.isEmpty ||
+                                      value.contains('') ||
+                                      value != 'male' ||
+                                      value != 'female'
+                                  ? 'Please select a gender'
+                                  : null,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: TravalongColors.primary_30,
@@ -205,10 +209,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               autofocus: false,
                               autocorrect: false,
                               enableSuggestions: false,
-                              autovalidateMode: AutovalidateMode.disabled,
-                              validator: (value) {
-                                value == null ? 'Date not valid' : null;
-                              },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (date) =>
+                                  date != '' && !dateRegex.hasMatch(date!) ||
+                                          DateFormat('dd-MM-yyyy')
+                                                  .parseStrict(date!)
+                                                  .year >
+                                              (DateTime.now().year - 18) ||
+                                          DateFormat('dd-MM-yyyy')
+                                                  .parseStrict(date!)
+                                                  .year <
+                                              (DateTime.now().year - 100)
+                                      ? 'Date not valid'
+                                      : null,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: TravalongColors.primary_30,
@@ -236,13 +250,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
                                 setState(() {
-                                  final RegExp dateRegex =
-                                      RegExp(r'^\d{2}-\d{2}-\d{4}$');
                                   if (dateRegex.hasMatch(value)) {
-                                    _birthDate =
-                                        DateFormat('dd-MM-yyyy').parse(value);
+                                    _birthDate = DateFormat('dd-MM-yyyy')
+                                        .parseStrict(value);
                                   } else {
-                                    // Handle the invalid date
+                                    'Invalid date';
                                   }
                                   // Calculate age
                                   DateTime currentDate = DateTime.now();
@@ -251,8 +263,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           .inDays ~/
                                       365;
 
-                                  debugPrint(_birthDate.toString());
-                                  debugPrint(_age.toString());
+                                  // debugPrint(_birthDate.toString());
+                                  // debugPrint(_age.toString());
                                 });
                               },
                             ),
@@ -395,7 +407,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                               if (email.isEmpty ||
                                   password.isEmpty ||
-                                  age < 100 ||
+                                  age == null ||
+                                  age > 100 ||
+                                  age < 18 ||
                                   gender.isEmpty ||
                                   name.isEmpty ||
                                   passwordCheck != password) {
