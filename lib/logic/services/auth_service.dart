@@ -9,7 +9,8 @@ class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // ! Register user
-  Future registerUser(String name, String email, String password) async {
+  Future registerUser(String name, String gender, int age, String email,
+      String password) async {
     try {
       // User is FirebaseAuth user account that is used to sign in
       User authUser = (await firebaseAuth.createUserWithEmailAndPassword(
@@ -19,6 +20,8 @@ class AuthService {
       // AppUser refers to the user in the app. The current user and its data.
       AppUser user = AppUser(
         name: name,
+        age: age,
+        gender: gender,
         email: email,
         uid: authUser.uid,
       );

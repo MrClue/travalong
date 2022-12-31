@@ -127,6 +127,8 @@ class AppUser {
   static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
         uid: json[UserData.uid] as String,
         name: json[UserData.name] as String,
+        age: json[UserData.age] as int,
+        gender: json[UserData.gender] as String,
         email: json[UserData.email] as String,
       );
 
