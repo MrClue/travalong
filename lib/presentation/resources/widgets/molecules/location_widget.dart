@@ -58,7 +58,7 @@ class _LocationWidgetState extends State<LocationWidget> {
             ThemeContainer(
               height: 40,
               customWidth: true,
-              width: 335,
+              width: MediaQuery.of(context).size.width * 0.75,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: ThemeText(

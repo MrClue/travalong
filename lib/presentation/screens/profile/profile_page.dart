@@ -78,7 +78,7 @@ class MediaWidget extends StatelessWidget {
           imagesLink: sampleImages,
           isAssets: false,
           autoPlay: false,
-          sliderHeight: MediaQuery.of(context).size.height * 0.38,
+          sliderHeight: MediaQuery.of(context).size.height * 0.33,
           imageRadius: 10,
           indicatorActiveColor: TravalongColors.secondary_10,
           imageFitMode: BoxFit.cover,

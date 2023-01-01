@@ -74,7 +74,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.all(8.0),
                           child: SearchBar.staticSearchBar(),
                         ),
                         Padding(

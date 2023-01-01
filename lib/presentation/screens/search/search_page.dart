@@ -54,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
           SnappingPosition.factor(
             snappingCurve: Curves.elasticOut,
             snappingDuration: Duration(milliseconds: 1750),
-            positionFactor: 0.55,
+            positionFactor: 0.45,
           ),
         ],
         grabbing: const GrabbingWidget(),
@@ -69,8 +69,8 @@ class _SearchPageState extends State<SearchPage> {
               controller: listViewController,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8 /*14*/, vertical: 10),
                   child: LayoutBuilder(
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
@@ -82,13 +82,12 @@ class _SearchPageState extends State<SearchPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width:
-                                    (((constraints.maxWidth / 3) * 2) - 2) + 15,
+                                width: ((constraints.maxWidth * 0.66) - 1) + 15,
                                 child: _searchDateWidget(),
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 2),
                               SizedBox(
-                                width: ((constraints.maxWidth / 3) - 2) - 15,
+                                width: ((constraints.maxWidth * 0.33) - 1) - 15,
                                 child: _searchGenderWidget(),
                               ),
                             ],
@@ -234,14 +233,14 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           const ThemeText(
             textString: "I'm searching for people ",
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_bright,
           ),
           _textOptWidget(), // * dropdown
           const ThemeText(
             textString: ' the destination.',
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
             textColor: TravalongColors.primary_text_bright,
           ),
@@ -280,7 +279,7 @@ class _SearchPageState extends State<SearchPage> {
             child: ThemeText(
               textString: value,
               fontWeight: FontWeight.bold,
-              fontSize: 14,
+              fontSize: 13,
               textColor: TravalongColors.secondary_10,
             ),
           );
