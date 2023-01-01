@@ -43,10 +43,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
               description: "Select your interests and hobbies.",
               goToPage: InterestsSubpage(),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 8),
             IconTextButton(
               faIcon: FontAwesomeIcons.list,
-              label: "My Goals",
+              label: "Travel Goals",
               description: "Set travel goals, and stay on track.",
               goToPage: MyGoalsPage(),
             ),

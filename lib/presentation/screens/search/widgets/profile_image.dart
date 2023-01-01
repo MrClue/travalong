@@ -40,6 +40,7 @@ class _ProfileImagePreviewState extends State<ProfileImagePreview> {
           child: Image.network(
             widget.image,
             height: widget.height,
+            width: double.infinity, // full width
             fit: BoxFit.cover,
           ),
         ),

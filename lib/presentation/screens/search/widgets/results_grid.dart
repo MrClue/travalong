@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
+import 'package:travalong/presentation/screens/screens.dart';
 import 'package:travalong/presentation/screens/search/view_profile_page.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_square.dart';
 
@@ -24,8 +25,7 @@ class ResultsGrid extends StatefulWidget {
 class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
 
-  final String _userImage =
-      "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
+  final String _userImage = MediaWidget.sampleImages.first;
 
   // TODO: skal matche søgekriterierne
   List _users = [];
@@ -162,6 +162,7 @@ class ResultsGridState extends State<ResultsGrid> {
                           bio: _users[i]['bio'],
                           interests: _users[i]['interests'],
                           sharedInterests: copyAnotherMap.values.toList()[i],
+                          userImage: _userImage,
                         );
                       }));
 

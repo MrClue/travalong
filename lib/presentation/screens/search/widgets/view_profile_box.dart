@@ -6,8 +6,7 @@ import '../../../resources/widgets/atoms/theme_text.dart';
 
 class ViewProfileBox extends StatelessWidget {
   final String? id;
-  final String _userImage =
-      "https://image-cdn.essentiallysports.com/wp-content/uploads/ishowspeed-740x600.jpg";
+  final String userImage;
   final String name;
   final int? age;
   final String? city;
@@ -16,6 +15,7 @@ class ViewProfileBox extends StatelessWidget {
   final List<String>? interests;
   final dynamic onTapped;
   final int sharedInterests;
+
   const ViewProfileBox({
     super.key,
     this.id,
@@ -27,6 +27,7 @@ class ViewProfileBox extends StatelessWidget {
     required this.interests,
     required this.onTapped,
     required this.sharedInterests,
+    required this.userImage,
   });
 
   @override
@@ -47,7 +48,7 @@ class ViewProfileBox extends StatelessWidget {
             children: [
               // * Profile image
               ProfileImagePreview(
-                image: _userImage,
+                image: userImage,
                 sharedInterests: sharedInterests,
                 height: MediaQuery.of(context).size.height * 0.5,
                 hasButton: true,

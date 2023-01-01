@@ -20,6 +20,7 @@ class ViewProfile extends StatefulWidget {
   final String bio;
   final List<dynamic> interests;
   final int sharedInterests;
+  final String userImage;
 
   const ViewProfile({
     super.key,
@@ -31,6 +32,7 @@ class ViewProfile extends StatefulWidget {
     required this.bio,
     required this.interests,
     required this.sharedInterests,
+    required this.userImage,
   });
 
   @override
@@ -72,6 +74,7 @@ class _ViewProfileState extends State<ViewProfile> {
                     country: userDocument.get(UserData.country),
                     interests: const ['I1', 'I2', 'I3'],
                     sharedInterests: widget.sharedInterests,
+                    userImage: widget.userImage.toString(),
                     onTapped: () {
                       // ** Will update the connectionList. Also if UID already exist, then do nothing
                       if ((userDocument.data() as Map<String, dynamic>)
