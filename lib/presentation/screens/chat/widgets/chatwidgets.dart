@@ -3,6 +3,8 @@ import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
 
+import '../../profile/profile_page.dart';
+
 class ChatWidgets {
   bool timeEnabled = false;
 
@@ -14,14 +16,10 @@ class ChatWidgets {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 25,
               backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.white,
-              ),
+              backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
             ),
             SizedBox(
               width: 50,
@@ -58,16 +56,13 @@ class ChatWidgets {
         child: ListTile(
           onTap: onTap,
           contentPadding: const EdgeInsets.all(5),
-          leading: const Padding(
-            padding: EdgeInsets.all(0.0),
+          leading: Padding(
+            padding: const EdgeInsets.all(0.0),
             child: CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.grey,
-                child: Icon(
-                  Icons.person,
-                  size: 60,
-                  color: Colors.white,
-                )),
+              radius: 40,
+              backgroundColor: Colors.grey,
+              backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
+            ),
           ),
           title: Expanded(
             child: Text(
@@ -110,14 +105,10 @@ class ChatWidgets {
         children: [
           if (check) const Spacer(),
           if (!check)
-            const CircleAvatar(
+            CircleAvatar(
               backgroundColor: Colors.grey,
               radius: 16,
-              child: Icon(
-                Icons.person,
-                size: 28,
-                color: Colors.white,
-              ),
+              backgroundImage: NetworkImage(MediaWidget.sampleImages[2]),
             ),
           Column(
             crossAxisAlignment:
@@ -156,14 +147,10 @@ class ChatWidgets {
             ],
           ),
           if (check)
-            const CircleAvatar(
+            CircleAvatar(
               backgroundColor: Colors.grey,
               radius: 16,
-              child: Icon(
-                Icons.person,
-                size: 28,
-                color: Colors.white,
-              ),
+              backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
             ),
           if (!check) const Spacer(),
         ],

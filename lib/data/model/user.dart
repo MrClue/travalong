@@ -1,7 +1,7 @@
 // ! This is User and its data, followed by a toJSON conversion
 
 // * This class handles the JSON key-value pairs with the UserData being the key
-// det er basically bare en liste af document fields i firebase dokumentet
+// basically bare en liste af document fields i firebase dokumentet
 class UserData {
   static String uid = 'uid';
   static String name = 'name';

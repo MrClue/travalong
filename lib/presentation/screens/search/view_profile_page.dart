@@ -53,40 +53,47 @@ class _ViewProfileState extends State<ViewProfile> {
         child: Center(
           child: StreamBuilder(
               stream: fController.usersCollection.snapshots().takeWhile(
-                  (event) =>
-                      event.docs.any((element) => element.id == widget.id)),
+                    (event) =>
+                        event.docs.any((element) => element.id == widget.id),
+                  ),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  var userDocument = (snapshot.data as QuerySnapshot)
-                      .docs
-                      .firstWhere((element) => element.id == widget.id);
-                  var otherUserDocument = (snapshot.data as QuerySnapshot)
+                  var currentUserDoc = (snapshot.data as QuerySnapshot)
                       .docs
                       .firstWhere(
                           (element) => element.id == fController.userID);
-                  debugPrint(widget.id); // DEBUG TO CHECK CORRECT USER
+
+                  var otherUserDoc = (snapshot.data as QuerySnapshot)
+                      .docs
+                      .firstWhere((element) => element.id == widget.id);
+
+                  debugPrint(widget.id); // selected users uid (other user)
 
                   return ViewProfileBox(
-                    name: userDocument.get(UserData.name),
-                    age: userDocument.get(UserData.age),
-                    bio: userDocument.get(UserData.bio),
-                    city: userDocument.get(UserData.city),
-                    country: userDocument.get(UserData.country),
+                    name: otherUserDoc.get(UserData.name),
+                    age: otherUserDoc.get(UserData.age),
+                    bio: otherUserDoc.get(UserData.bio),
+                    city: otherUserDoc.get(UserData.city),
+                    country: otherUserDoc.get(UserData.country),
                     interests: const ['I1', 'I2', 'I3'],
                     sharedInterests: widget.sharedInterests,
                     userImage: widget.userImage.toString(),
                     onTapped: () {
-                      // ** Will update the connectionList. Also if UID already exist, then do nothing
-                      if ((userDocument.data() as Map<String, dynamic>)
-                          .containsKey('connectionsList')) {
+                      // * Updates connectionList. If UID already exist, then do nothing
+
+                      // for current user
+                      if ((currentUserDoc.data() as Map<String, dynamic>)
+                          .containsKey(UserData.connectionsList)) {
                         // Updates users current connections
                         conController.updateUserConnections(widget.id);
                       } else {
                         // Sets users connectionList
                         conController.setUserConnections(widget.id);
                       }
-                      if ((otherUserDocument.data() as Map<String, dynamic>)
-                          .containsKey('connectionsList')) {
+
+                      // for other user
+                      if ((otherUserDoc.data() as Map<String, dynamic>)
+                          .containsKey(UserData.connectionsList)) {
                         // Updates other-users current connections
                         conController.updateOtherUserConnections(widget.id);
                       } else {
