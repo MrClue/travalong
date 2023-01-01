@@ -10,39 +10,36 @@ class SearchBar {
 
   static Widget staticSearchBar() {
     TextEditingController textEditController = TextEditingController();
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        controller: textEditController,
-        autofocus: false,
-        decoration: InputDecoration(
-          labelText: 'Search ',
-          hintText: "Type something",
-          fillColor: TravalongColors.primary_30,
-          prefixIcon: const Icon(
-            Icons.search,
-            color: TravalongColors.secondary_10,
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-                color: TravalongColors.primary_30_stroke, width: 2),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-                color: TravalongColors.primary_30_stroke, width: 1.5),
-          ),
-          focusedBorder: OutlineInputBorder(
-            gapPadding: 0.0,
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-                color: TravalongColors.secondary_10, width: 1.5),
-          ),
+    return TextField(
+      controller: textEditController,
+      autofocus: false,
+      decoration: InputDecoration(
+        labelText: 'Search ',
+        hintText: "Type something",
+        fillColor: TravalongColors.primary_30,
+        prefixIcon: const Icon(
+          Icons.search,
+          color: TravalongColors.secondary_10,
         ),
-        //onChanged: onChanged,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+              color: TravalongColors.primary_30_stroke, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+              color: TravalongColors.primary_30_stroke, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          gapPadding: 0.0,
+          borderRadius: BorderRadius.circular(20),
+          borderSide:
+              const BorderSide(color: TravalongColors.secondary_10, width: 1.5),
+        ),
       ),
+      //onChanged: onChanged,
     );
   }
 

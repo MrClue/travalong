@@ -48,63 +48,65 @@ class _ViewProfileState extends State<ViewProfile> {
         enableCustomButton: false,
         backArrow: BackArrow(),
       ),
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        child: Center(
-          child: StreamBuilder(
-              stream: fController.usersCollection.snapshots().takeWhile(
-                    (event) =>
-                        event.docs.any((element) => element.id == widget.id),
-                  ),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var currentUserDoc = (snapshot.data as QuerySnapshot)
-                      .docs
-                      .firstWhere(
-                          (element) => element.id == fController.userID);
+      child: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          child: Center(
+            child: StreamBuilder(
+                stream: fController.usersCollection.snapshots().takeWhile(
+                      (event) =>
+                          event.docs.any((element) => element.id == widget.id),
+                    ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var currentUserDoc = (snapshot.data as QuerySnapshot)
+                        .docs
+                        .firstWhere(
+                            (element) => element.id == fController.userID);
 
-                  var otherUserDoc = (snapshot.data as QuerySnapshot)
-                      .docs
-                      .firstWhere((element) => element.id == widget.id);
+                    var otherUserDoc = (snapshot.data as QuerySnapshot)
+                        .docs
+                        .firstWhere((element) => element.id == widget.id);
 
-                  debugPrint(widget.id); // selected users uid (other user)
+                    debugPrint(widget.id); // selected users uid (other user)
 
-                  return ViewProfileBox(
-                    name: otherUserDoc.get(UserData.name),
-                    age: otherUserDoc.get(UserData.age),
-                    bio: otherUserDoc.get(UserData.bio),
-                    city: otherUserDoc.get(UserData.city),
-                    country: otherUserDoc.get(UserData.country),
-                    interests: const ['I1', 'I2', 'I3'],
-                    sharedInterests: widget.sharedInterests,
-                    userImage: widget.userImage.toString(),
-                    onTapped: () {
-                      // * Updates connectionList. If UID already exist, then do nothing
+                    return ViewProfileBox(
+                      name: otherUserDoc.get(UserData.name),
+                      age: otherUserDoc.get(UserData.age),
+                      bio: otherUserDoc.get(UserData.bio),
+                      city: otherUserDoc.get(UserData.city),
+                      country: otherUserDoc.get(UserData.country),
+                      interests: const ['I1', 'I2', 'I3'],
+                      sharedInterests: widget.sharedInterests,
+                      userImage: widget.userImage.toString(),
+                      onTapped: () {
+                        // * Updates connectionList. If UID already exist, then do nothing
 
-                      // for current user
-                      if ((currentUserDoc.data() as Map<String, dynamic>)
-                          .containsKey(UserData.connectionsList)) {
-                        // Updates users current connections
-                        conController.updateUserConnections(widget.id);
-                      } else {
-                        // Sets users connectionList
-                        conController.setUserConnections(widget.id);
-                      }
+                        // for current user
+                        if ((currentUserDoc.data() as Map<String, dynamic>)
+                            .containsKey(UserData.connectionsList)) {
+                          // Updates users current connections
+                          conController.updateUserConnections(widget.id);
+                        } else {
+                          // Sets users connectionList
+                          conController.setUserConnections(widget.id);
+                        }
 
-                      // for other user
-                      if ((otherUserDoc.data() as Map<String, dynamic>)
-                          .containsKey(UserData.connectionsList)) {
-                        // Updates other-users current connections
-                        conController.updateOtherUserConnections(widget.id);
-                      } else {
-                        // Sets other-users connectionList
-                        conController.setOtherUserConnections(widget.id);
-                      }
-                    },
-                  );
-                }
-                return Container();
-              }),
+                        // for other user
+                        if ((otherUserDoc.data() as Map<String, dynamic>)
+                            .containsKey(UserData.connectionsList)) {
+                          // Updates other-users current connections
+                          conController.updateOtherUserConnections(widget.id);
+                        } else {
+                          // Sets other-users connectionList
+                          conController.setOtherUserConnections(widget.id);
+                        }
+                      },
+                    );
+                  }
+                  return Container();
+                }),
+          ),
         ),
       ),
     );

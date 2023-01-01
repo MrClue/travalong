@@ -18,7 +18,6 @@ class InterestsSubpage extends StatelessWidget {
         backArrow: BackArrow(),
         title: "Interests & Hobbies",
         enableCustomButton: false,
-        customButtonWidget: Text(""),
       ),
       child: Container(
         margin: const EdgeInsets.fromLTRB(40, 50, 40, 50),
@@ -186,7 +185,7 @@ class InterestsSelectorState extends State<InterestsSelector> {
             },
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 2.5, // ! maybee change
+            height: MediaQuery.of(context).size.height * 0.40,
             child: Scrollbar(
               thumbVisibility: true,
               thickness: 6,

@@ -44,7 +44,7 @@ class DateButton extends StatelessWidget {
               children: [
                 ThemeText(
                   textString: DateFormat('dd MMM yyyy').format(date),
-                  fontSize: 13, // ! overflow at 14
+                  fontSize: 12, // ! overflow at 14
                   fontWeight: FontWeight.bold,
                   textColor: TravalongColors.primary_text_dark,
                 ),

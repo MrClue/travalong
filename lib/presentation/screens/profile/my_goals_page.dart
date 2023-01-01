@@ -28,6 +28,7 @@ class MyGoalsPage extends StatelessWidget {
                   "Set travel goals for yourself, and keep track of your progress. ",
               textBold: "This is only visible to you.",
             ), // ! text skal ændres
+            SizedBox(height: 12),
             TravelGoalsSelector(),
           ],
         ),
@@ -116,7 +117,7 @@ class TravelGoalsSelectorState extends State<TravelGoalsSelector> {
             },
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 2, // ! maybee change
+            height: MediaQuery.of(context).size.height * 0.40,
             child: Scrollbar(
               thumbVisibility: true,
               thickness: 6,
@@ -155,6 +156,9 @@ class TravelGoalsSelectorState extends State<TravelGoalsSelector> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(
+            height: 26,
           ),
           ConfirmButton(
             formKey: _formKey,
