@@ -28,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isLoading = false;
   String? _selectedGender;
   DateTime? _birthDate;
-  var _age;
+  int? _age;
   final List<String> genderList = ['male', 'female'];
 
   final RegExp dateRegex = RegExp(r'^\d{2}-\d{2}-\d{4}$');
@@ -214,7 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   .year >
                                               (DateTime.now().year - 18) ||
                                           DateFormat('dd-MM-yyyy')
-                                                  .parseStrict(date!)
+                                                  .parseStrict(date)
                                                   .year <
                                               (DateTime.now().year - 100)
                                       ? 'Date not valid'
@@ -434,7 +434,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     .registerUser(
                                         _nameController.text,
                                         _selectedGender.toString(),
-                                        _age,
+                                        _age!,
                                         _emailController.text,
                                         _passwordController.text)
                                     .then((value) {
