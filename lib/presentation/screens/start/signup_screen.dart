@@ -130,13 +130,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               autofocus: false,
                               borderRadius: BorderRadius.circular(15),
                               value: _selectedGender,
-                              validator: (value) => value == null ||
-                                      value.isEmpty ||
-                                      value.contains('') ||
-                                      value != 'male' ||
-                                      value != 'female'
-                                  ? 'Please select a gender'
-                                  : null,
+                              validator: (value) =>
+                                  value == null || value.isEmpty
+                                      ? 'Please select a gender'
+                                      : null,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: TravalongColors.primary_30,
@@ -195,7 +192,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               onChanged: (String? value) {
                                 setState(() {
                                   _selectedGender = value!;
-                                  debugPrint(_selectedGender);
                                 });
                               },
                             ),
@@ -250,21 +246,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               keyboardType: TextInputType.number,
                               onChanged: (value) {
                                 setState(() {
-                                  if (dateRegex.hasMatch(value)) {
-                                    _birthDate = DateFormat('dd-MM-yyyy')
-                                        .parseStrict(value);
-                                  } else {
-                                    'Invalid date';
+                                  try {
+                                    if (dateRegex.hasMatch(value)) {
+                                      _birthDate = DateFormat('dd-MM-yyyy')
+                                          .parseStrict(value);
+                                    } else {
+                                      'Invalid date';
+                                    }
+                                    // Calculate age
+                                    DateTime currentDate = DateTime.now();
+                                    _age = currentDate
+                                            .difference(_birthDate!)
+                                            .inDays ~/
+                                        365;
+                                  } catch (e) {
+                                    return;
                                   }
-                                  // Calculate age
-                                  DateTime currentDate = DateTime.now();
-                                  _age = currentDate
-                                          .difference(_birthDate!)
-                                          .inDays ~/
-                                      365;
-
-                                  // debugPrint(_birthDate.toString());
-                                  // debugPrint(_age.toString());
                                 });
                               },
                             ),
@@ -399,7 +396,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             onPressed: () async {
                               final name = _nameController.text;
                               final age = _age;
-                              final gender = _selectedGender.toString();
+                              final gender = _selectedGender;
                               final email = _emailController.text;
                               final password = _passwordController.text;
                               final passwordCheck =
@@ -410,7 +407,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   age == null ||
                                   age > 100 ||
                                   age < 18 ||
-                                  gender.isEmpty ||
+                                  gender == null ||
                                   name.isEmpty ||
                                   passwordCheck != password) {
                                 showCupertinoDialog(
@@ -418,7 +415,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   builder: (_) => CupertinoAlertDialog(
                                     title: const Text('Sign up failed'),
                                     content: const Text(
-                                        'Please enter correct details in order to sign up'),
+                                        'Please fill in correct details in order to sign up'),
                                     actions: [
                                       TextButton(
                                         child: const Text('OK'),
