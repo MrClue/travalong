@@ -1,6 +1,7 @@
 // ! This is User and its data, followed by a toJSON conversion
 
 // * This class handles the JSON key-value pairs with the UserData being the key
+// det er basically bare en liste af document fields i firebase dokumentet
 class UserData {
   static String uid = 'uid';
   static String name = 'name';
@@ -85,70 +86,70 @@ class AppUser {
 
   // * This method can be used on a current AppUser to return a new instance of the AppUser,
   // * with updated values for each of the properties listed below.
-  AppUser updateField({
-    String? uid,
-    String? name,
-    String? email,
-    String? urlAvatar,
-    String? city,
-    String? country,
-    String? gender,
-    int? age,
-    String? bio,
-    int? connections,
-    int? sharedMedia,
-    int? goalsCompleted,
-    Map<String, dynamic>? media,
-    Map<String, dynamic>? chats,
-    List<String>? interests,
-    List<String>? travelgoals,
-    List<String>? connectionsList,
-  }) =>
-      AppUser(
-        uid: uid ?? this.uid,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        urlAvatar: urlAvatar ?? this.urlAvatar,
-        city: city ?? this.city,
-        country: country ?? this.country,
-        gender: gender ?? this.gender,
-        age: age ?? this.age,
-        bio: bio ?? this.bio,
-        connections: connections ?? this.connections,
-        sharedMedia: sharedMedia ?? this.sharedMedia,
-        goalsCompleted: goalsCompleted ?? this.goalsCompleted,
-        media: media ?? this.media,
-        chats: chats ?? this.chats,
-        interests: interests ?? this.interests,
-        travelgoals: travelgoals ?? this.travelgoals,
-        connectionsList: connectionsList ?? this.connectionsList,
-      );
+  // AppUser updateField({
+  //   String? uid,
+  //   String? name,
+  //   String? email,
+  //   String? urlAvatar,
+  //   String? city,
+  //   String? country,
+  //   String? gender,
+  //   int? age,
+  //   String? bio,
+  //   int? connections,
+  //   int? sharedMedia,
+  //   int? goalsCompleted,
+  //   Map<String, dynamic>? media,
+  //   Map<String, dynamic>? chats,
+  //   List<String>? interests,
+  //   List<String>? travelgoals,
+  //   List<String>? connectionsList,
+  // }) =>
+  //     AppUser(
+  //       uid: uid ?? this.uid,
+  //       name: name ?? this.name,
+  //       email: email ?? this.email,
+  //       urlAvatar: urlAvatar ?? this.urlAvatar,
+  //       city: city ?? this.city,
+  //       country: country ?? this.country,
+  //       gender: gender ?? this.gender,
+  //       age: age ?? this.age,
+  //       bio: bio ?? this.bio,
+  //       connections: connections ?? this.connections,
+  //       sharedMedia: sharedMedia ?? this.sharedMedia,
+  //       goalsCompleted: goalsCompleted ?? this.goalsCompleted,
+  //       media: media ?? this.media,
+  //       chats: chats ?? this.chats,
+  //       interests: interests ?? this.interests,
+  //       travelgoals: travelgoals ?? this.travelgoals,
+  //       connectionsList: connectionsList ?? this.connectionsList,
+  //     );
 
-  static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
-        uid: json[UserData.uid] as String,
-        name: json[UserData.name] as String,
-        email: json[UserData.email] as String,
-      );
+  // static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
+  //       uid: json[UserData.uid] as String,
+  //       name: json[UserData.name] as String,
+  //       email: json[UserData.email] as String,
+  //     );
 
   // * This method can be used to get the AppUser data from the Firebase DB (stored in JSON format),
   // * and convert it to an object instance of AppUser
-  static AppUser fromJSON(Map<String, dynamic> json) => AppUser(
-        uid: json[UserData.uid] as String,
-        name: json[UserData.name] as String,
-        email: json[UserData.email] as String,
-        urlAvatar: json[UserData.urlAvatar] as String,
-        bio: json[UserData.bio] as String,
-        city: json[UserData.city] as String,
-        country: json[UserData.country] as String,
-        gender: json[UserData.gender] as String,
-        age: json[UserData.age] as int,
-        connections: json[UserData.connections] as int,
-        sharedMedia: json[UserData.sharedMedia] as int,
-        goalsCompleted: json[UserData.goalsCompleted] as int,
-        media: json[UserData.media] as Map<String, dynamic>,
-        chats: json[UserData.chats] as Map<String, dynamic>,
-        interests: json[UserData.interests] as List<String>,
-        travelgoals: json[UserData.travelgoals] as List<String>,
-        connectionsList: json[UserData.connectionsList] as List<String>,
-      );
+  // static AppUser fromJSON(Map<String, dynamic> json) => AppUser(
+  //       uid: json[UserData.uid] as String,
+  //       name: json[UserData.name] as String,
+  //       email: json[UserData.email] as String,
+  //       urlAvatar: json[UserData.urlAvatar] as String,
+  //       bio: json[UserData.bio] as String,
+  //       city: json[UserData.city] as String,
+  //       country: json[UserData.country] as String,
+  //       gender: json[UserData.gender] as String,
+  //       age: json[UserData.age] as int,
+  //       connections: json[UserData.connections] as int,
+  //       sharedMedia: json[UserData.sharedMedia] as int,
+  //       goalsCompleted: json[UserData.goalsCompleted] as int,
+  //       media: json[UserData.media] as Map<String, dynamic>,
+  //       chats: json[UserData.chats] as Map<String, dynamic>,
+  //       interests: json[UserData.interests] as List<String>,
+  //       travelgoals: json[UserData.travelgoals] as List<String>,
+  //       connectionsList: json[UserData.connectionsList] as List<String>,
+  //     );
 }
