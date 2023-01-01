@@ -63,7 +63,7 @@ class SlideUpWidget extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return SizedBox(
-                              height: 750,
+                              height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               child: const SignUpScreen());
                         }),

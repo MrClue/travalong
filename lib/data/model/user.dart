@@ -125,11 +125,13 @@ class AppUser {
   //       connectionsList: connectionsList ?? this.connectionsList,
   //     );
 
-  // static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
-  //       uid: json[UserData.uid] as String,
-  //       name: json[UserData.name] as String,
-  //       email: json[UserData.email] as String,
-  //     );
+  static AppUser newfromJSON(Map<String, dynamic> json) => AppUser(
+        uid: json[UserData.uid] as String,
+        name: json[UserData.name] as String,
+        age: json[UserData.age] as int,
+        gender: json[UserData.gender] as String,
+        email: json[UserData.email] as String,
+      );
 
   // * This method can be used to get the AppUser data from the Firebase DB (stored in JSON format),
   // * and convert it to an object instance of AppUser
