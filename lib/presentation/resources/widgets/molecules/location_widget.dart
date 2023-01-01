@@ -3,6 +3,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
+import 'package:travalong/logic/services/location_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
@@ -21,49 +22,6 @@ class _LocationWidgetState extends State<LocationWidget> {
   FirebaseController fController = FirebaseController();
 
   String _userLocation = "";
-  //late String lat;
-  //late String long;
-
-  /*
-  // * Getting Current User Location
-  Future<Position> _getCurrentLocation() async {
-    // check if location service is enabled on user device
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error("Location services are disabled.");
-    }
-
-    // check/get permission for location access
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error("Location permissions are denied.");
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          "Location permissions are permanently denied, cannot request permissions.");
-    }
-
-    // when permissions are granted we can
-    // get the current position of device
-    var position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    return position;
-
-    /*return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);*/
-  }*/
-
-  /*@override
-  void initState() {
-    _userLocation =
-        "${fController.getDocFieldData(UserData.city)}, ${fController.getDocFieldData(UserData.country)}";
-    super.initState();
-  }*/
 
   @override
   void initState() {
@@ -101,12 +59,14 @@ class _LocationWidgetState extends State<LocationWidget> {
               height: 40,
               customWidth: true,
               width: 335,
-              child: ThemeText(
-                textString: _userLocation,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                textColor: TravalongColors.primary_text_bright,
-                height: 2, // todo: fjern, prøvede at få tekst i midten
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: ThemeText(
+                  textString: _userLocation,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  textColor: TravalongColors.primary_text_bright,
+                ),
               ),
             ),
             //const Spacer(), // moves button to right side
@@ -114,30 +74,7 @@ class _LocationWidgetState extends State<LocationWidget> {
             ElevatedButton(
               // TODO: change ElevatedButton to custom button
               onPressed: () async {
-                // TODO: move logic to "Domain" layer
-
-                // check if location service is enabled on user device
-                bool serviceEnabled =
-                    await Geolocator.isLocationServiceEnabled();
-                if (!serviceEnabled) {
-                  return Future.error("Location services are disabled.");
-                }
-
-                // check/get permission for location access
-                LocationPermission permission =
-                    await Geolocator.checkPermission();
-
-                if (permission == LocationPermission.denied) {
-                  permission = await Geolocator.requestPermission();
-                  if (permission == LocationPermission.denied) {
-                    return Future.error("Location permissions are denied.");
-                  }
-                }
-
-                if (permission == LocationPermission.deniedForever) {
-                  return Future.error(
-                      "Location permissions are permanently denied, cannot request permissions.");
-                }
+                await LocationServices().getLocationPermissions();
 
                 // when permissions are granted we can
                 // get the current position of device

@@ -15,7 +15,7 @@ class MyGoalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeScaffold(
       topbar: const ThemeTopBar(
-        title: 'My Goals',
+        title: 'Travel Goals',
         backArrow: BackArrow(),
         enableCustomButton: false,
       ),

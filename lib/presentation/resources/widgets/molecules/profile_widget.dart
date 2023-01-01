@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+
+import '../../../screens/profile/profile_page.dart';
 
 class ProfileWidget extends StatefulWidget {
   const ProfileWidget({
@@ -23,6 +24,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   String _age = "";
   String _userLocation = "";
   String _connections = "";
+  String _travelGoals = "";
   List<String>? conList;
 
   @override
@@ -54,10 +56,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(
-                      'https://pfpmaker.com/_nuxt/img/profile-3-1.3e702c5.png'),
+                  backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
                 ),
                 const SizedBox(
                   width: 15.0,
@@ -69,24 +70,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     children: [
                       StreamBuilder(
                         stream: fController.usersCollection
-                            .snapshots()
-                            .takeWhile((event) => event.docs
-                                .any((d) => d.id == fController.userID)),
-                        builder: (context, AsyncSnapshot snapshot) {
+                            .doc(fController.userID)
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot) {
                           if (!snapshot.hasData || snapshot.data == null) {
                             return const Text('Loading...');
                           }
 
-                          var userDocument = (snapshot.data as QuerySnapshot)
-                              .docs
-                              .firstWhere((d) => d.id == fController.userID);
+                          _name = snapshot.data!.get(UserData.name).toString();
+                          _age = snapshot.data!.get(UserData.age).toString();
 
-                          _name = userDocument.get(UserData.name).toString();
-                          _age = userDocument.get(UserData.age).toString();
-
-                          var city = userDocument.get(UserData.city);
-                          var country = userDocument.get(UserData.country);
-                          _userLocation = "$city, $country";
+                          _userLocation =
+                              "${snapshot.data![UserData.city]}, ${snapshot.data![UserData.country]}";
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,31 +147,30 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             ),
             // * bottom row
             StreamBuilder(
-                // ! Streambuilder
-                stream: fController.usersCollection.snapshots().takeWhile(
-                    (event) =>
-                        event.docs.any((d) => d.id == fController.userID)),
-                builder: (context, AsyncSnapshot snapshot) {
+                stream: fController.usersCollection
+                    .doc(fController.userID)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                   if (!snapshot.hasData || snapshot.data == null) {
                     return const Text('Loading...');
                   }
 
-                  var userDocument = (snapshot.data as QuerySnapshot)
-                      .docs
-                      .firstWhere((d) => d.id == fController.userID);
-
-                  List<String> conList = List<String>.from(
-                      userDocument.get('connectionsList') as List<dynamic>);
+                  List<String> conList = List<String>.from(snapshot.data!
+                      .get(UserData.connectionsList) as List<dynamic>);
 
                   _connections = conList.length.toString();
 
                   // updates users collections count
                   if (snapshot.hasData) {
-                    fController.usersCollection
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .set({'connections': _connections},
-                            SetOptions(merge: true));
+                    fController.setDocFieldData(
+                        UserData.connections, _connections);
                   }
+
+                  // * get travel goals
+                  _travelGoals = snapshot.data!
+                      .get(UserData.travelgoals)
+                      .length
+                      .toString();
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -201,7 +196,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Column(
                         children: [
                           Text(
-                            "3", //!TO DO
+                            MediaWidget.sampleImages.length.toString(),
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
@@ -219,14 +214,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Column(
                         children: [
                           Text(
-                            "40%",
+                            _travelGoals,
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Text(
-                            "Goals Acheived",
+                            "Travel Goals",
                             style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
