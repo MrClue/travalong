@@ -60,9 +60,16 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                 Container(
                   margin: const EdgeInsets.all(0),
                   child: Container(
-                    color: TravalongColors.primary_30,
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: TravalongColors.primary_30_stroke,
+                          width: 2,
+                        ),
+                      ),
+                      color: TravalongColors.neutral_60,
+                    ),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    height: 190,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -177,10 +184,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: 20, right: 20, left: 20),
-                        ),
                         Expanded(
                           child: StreamBuilder(
                               //! START STREAMBUILDER
