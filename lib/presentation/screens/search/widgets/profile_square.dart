@@ -32,7 +32,9 @@ class ProfileSquare extends StatelessWidget {
           child: Column(
             children: [
               ProfileImagePreview(
-                  image: image, sharedInterests: sharedInterests),
+                image: image,
+                sharedInterests: sharedInterests,
+              ),
               Expanded(
                 child: Flex(
                   direction: Axis.vertical,

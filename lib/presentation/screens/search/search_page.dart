@@ -315,7 +315,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-// ! det er den widget man kan gribe fat i
+// ! This is the widget you can grab to expand the sheet
 class GrabbingWidget extends StatelessWidget {
   const GrabbingWidget({super.key});
 
@@ -333,13 +333,13 @@ class GrabbingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // * streg i toppen
+          // * small top line
           Container(
             color: TravalongColors.primary_30_stroke, //Colors.grey[200],
             height: 2,
             margin: const EdgeInsets.all(15).copyWith(top: 0, bottom: 0),
           ),
-          // * tyk streg i grabberen
+          // * blue grabbing widget line
           Container(
             margin: const EdgeInsets.only(bottom: 15), // ! top 20
             width: 100,
@@ -354,71 +354,3 @@ class GrabbingWidget extends StatelessWidget {
     );
   }
 }
-
-// ! old stuff
-/*
-class TestWidget extends StatefulWidget {
-  const TestWidget({super.key});
-
-  @override
-  State<TestWidget> createState() => _TestWidgetState();
-}
-
-class _TestWidgetState extends State<TestWidget> {
-  // * creates instance of firebase_controller class
-  FirebaseController fController = FirebaseController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-          future: fController.getDocFieldData(UserData.gender),
-          builder: (context, snapshot) {
-            //fController.setDocFieldData('gender', 'female');
-            return Center(
-              child: Column(
-                children: [
-                  Text(snapshot.data.toString()),
-                  FloatingActionButton(onPressed: () {
-                    print("current users ID: ${fController.userID}");
-                    print("collection type: ${fController.usersCollection}");
-
-                    // * By using "setState()" inside the FutureBuilder, we reload the widget tree,
-                    // * allowing us to see the changes by "setDocFieldData()" in real-time
-                    // The widget tree is reloaded because "setState()" notifies the framework,
-                    // that the state of the app has changed, and forces a reload to reflect these changes.
-                    setState(() {
-                      if (snapshot.data == 'female') {
-                        fController.setDocFieldData(UserData.gender, 'male');
-                      } else {
-                        fController.setDocFieldData(UserData.gender, 'female');
-                      }
-                    });
-                  }),
-                ],
-              ),
-            );
-          },
-        ),
-        FutureBuilder(
-          future: fController.getDocFieldData(UserData.age),
-          builder: (context, snapshot) {
-            return Center(
-              child: Text(snapshot.data.toString()),
-            );
-          },
-        ),
-        FutureBuilder(
-          future: fController.getDocFieldData(UserData.city),
-          builder: (context, snapshot) {
-            return Center(
-              child: Text(snapshot.data.toString()),
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-*/
