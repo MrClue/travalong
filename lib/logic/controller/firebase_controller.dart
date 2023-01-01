@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter/foundation.dart';
-
-//DatabaseService database = DatabaseService();
-//var db = DatabaseService().userCollection;
 
 final docRef =
     FirebaseController().usersCollection.doc(FirebaseController().userID);
@@ -12,6 +9,7 @@ final docRef =
 class FirebaseController {
   var userID = FirebaseAuth.instance.currentUser!.uid;
   var usersCollection = FirebaseFirestore.instance.collection('users');
+  var chatsCollection = FirebaseFirestore.instance.collection('chats');
   var userDataMap = <String, dynamic>{};
 
   // * Get document data-field based on field (JSON key)
@@ -43,7 +41,35 @@ class FirebaseController {
     }
   }
 
-  getUsers() {
-    return usersCollection.get();
+  // * From Database service
+  // todo: check what is being used in code
+
+  
+  // get users collection
+  Future getData() async {
+    QuerySnapshot snapshot = await usersCollection.get();
+    return snapshot;
   }
+
+  // get users collection data
+  Future getUserColData(String uid) async {
+    QuerySnapshot snapshot =
+        await usersCollection.where('uid', isEqualTo: uid).get();
+    return snapshot;
+  }
+
+  // get user document data
+  Stream getUserDocData(String uid) {
+    return usersCollection.doc(uid).snapshots();
+  }
+
+  // getting amount of users
+  Future<int> getCount() async {
+    int count = await FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((value) => value.size);
+    return count;
+  }
+  
 }
