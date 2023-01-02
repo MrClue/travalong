@@ -28,6 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
+      resizeToAvoidBottomInset: true,
       topbar: ThemeTopBar(
         title: widget.name,
         enableCustomButton: false,

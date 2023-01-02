@@ -179,6 +179,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 },
               ),
             ),
+            const SizedBox(
+              height: 40.0,
+            ),
           ],
         ),
       ),
@@ -187,9 +190,13 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //_emailController.text = "";
-
-    return _renderSignIn();
-    //extendBodyBehindAppBar: true,
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+    return Padding(
+      padding: mediaQueryData.viewInsets,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: _renderSignIn(),
+      ),
+    );
   }
 }
