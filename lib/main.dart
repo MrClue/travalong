@@ -9,17 +9,13 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.removeAfter(initialization);
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     //name: "FixError", // ! maybee remove
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const TravalongApp());
-}
-
-Future initialization(BuildContext? context) async {
-  await Future.delayed(const Duration(seconds: 1));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
