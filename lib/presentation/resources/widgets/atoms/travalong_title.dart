@@ -11,30 +11,20 @@ class TravalongTitle extends StatelessWidget {
         TextSpan(
           children: [
             TextSpan(
-              text: 'TRAV',
+              text: 'ami',
               style: GoogleFonts.poppins(
                 color: Colors.black,
-                fontSize: 48,
+                fontSize: 85,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0,
                 height: 1,
               ),
             ),
             TextSpan(
-              text: 'A',
+              text: 'go',
               style: GoogleFonts.poppins(
                 color: TravalongColors.secondary_10,
-                fontSize: 48,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 0,
-                height: 1,
-              ),
-            ),
-            TextSpan(
-              text: 'LONG',
-              style: GoogleFonts.poppins(
-                color: Colors.black,
-                fontSize: 48,
+                fontSize: 85,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 0,
                 height: 1,
