@@ -41,7 +41,6 @@ dependencies:
   firebase_core: ^2.3.0
   cloud_functions: ^4.0.5
   cloud_firestore: ^4.1.0
-  #location: ^4.4.0
   geocoding: ^2.0.5
   geolocator: ^9.0.2
   email_validator: ^2.1.17
@@ -59,6 +58,14 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.11.0
+
+flutter_icons:
+  image_path: "assets/logo.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
