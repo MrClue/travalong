@@ -63,7 +63,6 @@ class SlideUpWidget extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.75,
                             width: MediaQuery.of(context).size.width,
                             child: const SignUpScreen(),
                           );
@@ -93,6 +92,7 @@ class SlideUpWidget extends StatelessWidget {
                       ),
                     ),
                     onPressed: () => showModalBottomSheet(
+                        isScrollControlled: true, // ! test
                         backgroundColor: Colors.transparent,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -102,7 +102,6 @@ class SlideUpWidget extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return SizedBox(
-                              height: 400,
                               width: MediaQuery.of(context).size.width,
                               child: const SignInScreen());
                         }),
