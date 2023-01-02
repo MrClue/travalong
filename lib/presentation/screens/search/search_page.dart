@@ -69,8 +69,8 @@ class _SearchPageState extends State<SearchPage> {
               controller: listViewController,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8 /*14*/, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   child: LayoutBuilder(
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
@@ -79,15 +79,14 @@ class _SearchPageState extends State<SearchPage> {
                           SearchBar.staticSearchBar(),
                           const SizedBox(height: 10),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: ((constraints.maxWidth * 0.66) - 1) + 15,
+                                width: ((constraints.maxWidth / 3) * 2) - 1,
                                 child: _searchDateWidget(),
                               ),
-                              const SizedBox(width: 2),
                               SizedBox(
-                                width: ((constraints.maxWidth * 0.33) - 1) - 15,
+                                width: (constraints.maxWidth / 3) - 1,
                                 child: _searchGenderWidget(),
                               ),
                             ],
@@ -124,21 +123,13 @@ class _SearchPageState extends State<SearchPage> {
 
   // * WIDGETS TIL UI
   Widget _searchDateWidget() {
-    return Container(
-      height: 45,
-      decoration: BoxDecoration(
-        color: TravalongColors.neutral_60,
-        border: Border.all(color: TravalongColors.primary_30_stroke),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          DateButton(
-              date: dateRange.start, onPressed: selectDateRange, isStart: true),
-          const SizedBox(width: 1), // space between start & end date
-          DateButton(date: dateRange.end, onPressed: selectDateRange),
-        ],
-      ),
+    return Row(
+      children: [
+        DateButton(
+            date: dateRange.start, onPressed: selectDateRange, isStart: true),
+        const SizedBox(width: 1), // space between start & end date
+        DateButton(date: dateRange.end, onPressed: selectDateRange),
+      ],
     );
   }
 

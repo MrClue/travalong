@@ -48,6 +48,7 @@ class ChatWidgets {
     ));
   }
 
+  // * Chat cards
   static Widget card({title, time, subtitle, onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0),
@@ -64,20 +65,17 @@ class ChatWidgets {
               backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
             ),
           ),
-          title: Expanded(
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
+          title: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
           subtitle: subtitle != null
-              ? Expanded(
-                  child: Text(
+              ? Text(
                   subtitle,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                ))
+                )
               : null,
           trailing: Padding(
             padding: const EdgeInsets.only(right: 8.0),
