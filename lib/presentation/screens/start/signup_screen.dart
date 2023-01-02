@@ -121,162 +121,167 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20.0,
                       ),
                       // Gender
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: DropdownButtonFormField<String>(
-                              autofocus: false,
-                              borderRadius: BorderRadius.circular(15),
-                              value: _selectedGender,
-                              validator: (value) =>
-                                  value == null || value.isEmpty
-                                      ? 'Please select a gender'
-                                      : null,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: TravalongColors.primary_30,
-                                labelText: 'Gender',
-                                floatingLabelStyle:
-                                    const TextStyle(color: Colors.black),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.primary_30_stroke),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.secondary_10),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.primary_30_stroke),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                              ),
-                              hint: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.female_outlined,
-                                    color: TravalongColors.secondary_10,
+                      LayoutBuilder(
+                        builder: (context, constraints) => SizedBox(
+                          width: constraints.maxWidth,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: constraints.maxWidth * 0.5 - 5,
+                                height: 60,
+                                child: DropdownButtonFormField<String>(
+                                  autofocus: false,
+                                  borderRadius: BorderRadius.circular(15),
+                                  value: _selectedGender,
+                                  validator: (value) =>
+                                      value == null || value.isEmpty
+                                          ? 'Please select a gender'
+                                          : null,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: TravalongColors.primary_30,
+                                    labelText: 'Gender',
+                                    floatingLabelStyle:
+                                        const TextStyle(color: Colors.black),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors
+                                              .primary_30_stroke),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors.secondary_10),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors
+                                              .primary_30_stroke),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
                                   ),
-                                  Icon(
-                                    Icons.male_outlined,
-                                    color: TravalongColors.secondary_10,
-                                  ),
-                                  Text('Gender'),
-                                ],
-                              ),
-                              items: genderList.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Row(
-                                    children: [
-                                      if (value == genderList[0])
-                                        const Icon(
-                                          Icons.male_outlined,
-                                          color: TravalongColors.secondary_10,
-                                        ),
-                                      if (value == genderList[1])
-                                        const Icon(
-                                          Icons.female_outlined,
-                                          color: TravalongColors.secondary_10,
-                                        ),
-                                      Text(value),
+                                  hint: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.female_outlined,
+                                        color: TravalongColors.secondary_10,
+                                      ),
+                                      Icon(
+                                        Icons.male_outlined,
+                                        color: TravalongColors.secondary_10,
+                                      ),
+                                      Text('Gender'),
                                     ],
                                   ),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _selectedGender = value!;
-                                });
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 8,
-                          ),
-                          // Date of birth
-                          Expanded(
-                            child: TextFormField(
-                                autofocus: false,
-                                autocorrect: false,
-                                enableSuggestions: false,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (date) {
-                                  try {
-                                    if (date != '' &&
-                                            !dateRegex.hasMatch(date!) ||
-                                        DateFormat('dd-MM-yyyy')
-                                                .parseStrict(date!)
-                                                .year >
-                                            (DateTime.now().year - 18) ||
-                                        DateFormat('dd-MM-yyyy')
-                                                .parseStrict(date)
-                                                .year <
-                                            (DateTime.now().year - 100)) {
-                                      return 'Date not valid';
-                                    }
-                                  } catch (e) {
-                                    if (e is FormatException) {
-                                      // Handle the FormatException
-                                      return 'Please enter your birthdate';
-                                    } else {
-                                      // Re-throw the exception
-                                      rethrow;
-                                    }
-                                  }
-                                  return null;
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: TravalongColors.primary_30,
-                                  labelText: 'Date of birth',
-                                  hintText: 'dd-MM-yyyy',
-                                  floatingLabelStyle:
-                                      const TextStyle(color: Colors.black),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            TravalongColors.primary_30_stroke),
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: TravalongColors.secondary_10),
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color:
-                                            TravalongColors.primary_30_stroke),
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
+                                  items: genderList.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Row(
+                                        children: [
+                                          if (value == genderList[0])
+                                            const Icon(
+                                              Icons.male_outlined,
+                                              color:
+                                                  TravalongColors.secondary_10,
+                                            ),
+                                          if (value == genderList[1])
+                                            const Icon(
+                                              Icons.female_outlined,
+                                              color:
+                                                  TravalongColors.secondary_10,
+                                            ),
+                                          Text(value),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      _selectedGender = value!;
+                                    });
+                                  },
                                 ),
-                                inputFormatters: [maskFormatter],
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (dateRegex.hasMatch(value)) {
-                                      _birthDate = DateFormat('dd-MM-yyyy')
-                                          .parseStrict(value);
-                                      // Calculate age
-                                      DateTime currentDate = DateTime.now();
-                                      _age = currentDate
-                                              .difference(_birthDate!)
-                                              .inDays ~/
-                                          365;
-                                    } else {
-                                      'Invalid date';
-                                    }
-                                  });
-                                }),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              // Date of birth
+                              SizedBox(
+                                width: constraints.maxWidth * 0.5 - 5,
+                                height: 60,
+                                child: TextFormField(
+                                  autofocus: false,
+                                  autocorrect: false,
+                                  enableSuggestions: false,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (date) => date != '' &&
+                                              !dateRegex.hasMatch(date!) ||
+                                          DateFormat('dd-MM-yyyy')
+                                                  .parseStrict(date!)
+                                                  .year >
+                                              (DateTime.now().year - 18) ||
+                                          DateFormat('dd-MM-yyyy')
+                                                  .parseStrict(date)
+                                                  .year <
+                                              (DateTime.now().year - 100)
+                                      ? 'Date not valid'
+                                      : null,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: TravalongColors.primary_30,
+                                    labelText: 'Date of birth',
+                                    hintText: 'dd-MM-yyyy',
+                                    floatingLabelStyle:
+                                        const TextStyle(color: Colors.black),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors
+                                              .primary_30_stroke),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors.secondary_10),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: TravalongColors
+                                              .primary_30_stroke),
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                  ),
+                                  inputFormatters: [maskFormatter],
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      try {
+                                        if (dateRegex.hasMatch(value)) {
+                                          _birthDate = DateFormat('dd-MM-yyyy')
+                                              .parseStrict(value);
+                                        } else {
+                                          'Invalid date';
+                                        }
+                                        // Calculate age
+                                        DateTime currentDate = DateTime.now();
+                                        _age = currentDate
+                                                .difference(_birthDate!)
+                                                .inDays ~/
+                                            365;
+                                      } catch (e) {
+                                        return;
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       const SizedBox(
                         height: 20.0,
@@ -476,6 +481,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             }),
                       ),
+                      const SizedBox(
+                        height: 40.0,
+                      ),
                     ],
                   ),
                 ),
@@ -486,6 +494,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _renderSignUp();
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    return Padding(
+      padding: mediaQueryData.viewInsets,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: _renderSignUp(),
+      ),
+    );
   }
 }
