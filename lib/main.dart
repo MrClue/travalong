@@ -5,9 +5,11 @@ import 'package:travalong/firebase_options.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/screens.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     //name: "FixError", // ! maybee remove
     options: DefaultFirebaseOptions.currentPlatform,
