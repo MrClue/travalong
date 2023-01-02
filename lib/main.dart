@@ -5,15 +5,21 @@ import 'package:travalong/firebase_options.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/screens.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.removeAfter(initialization);
   await Firebase.initializeApp(
     //name: "FixError", // ! maybee remove
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const TravalongApp());
+}
+
+Future initialization(BuildContext? context) async {
+  await Future.delayed(const Duration(seconds: 1));
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
