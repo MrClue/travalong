@@ -25,6 +25,7 @@ class DateButton extends StatelessWidget {
           height: 45,
           decoration: BoxDecoration(
             color: TravalongColors.secondary_10,
+            border: Border.all(color: TravalongColors.primary_30_stroke),
             borderRadius: BorderRadius.only(
               topLeft: isStart ? const Radius.circular(10) : Radius.zero,
               topRight: isStart ? Radius.zero : const Radius.circular(10),

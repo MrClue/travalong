@@ -211,14 +211,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               // Date of birth
                               SizedBox(
                                 width: constraints.maxWidth * 0.5 - 5,
-                                height: 60,
+                                //height: 60,
                                 child: TextFormField(
                                   autofocus: false,
                                   autocorrect: false,
                                   enableSuggestions: false,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                  validator: (date) => date != '' &&
+                                  validator: (date) {
+                                    try {
+                                      if (date != '' &&
                                               !dateRegex.hasMatch(date!) ||
                                           DateFormat('dd-MM-yyyy')
                                                   .parseStrict(date!)
@@ -227,9 +229,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           DateFormat('dd-MM-yyyy')
                                                   .parseStrict(date)
                                                   .year <
-                                              (DateTime.now().year - 100)
-                                      ? 'Date not valid'
-                                      : null,
+                                              (DateTime.now().year - 100)) {
+                                        return 'Date not valid';
+                                      }
+                                    } catch (e) {
+                                      if (e is FormatException) {
+                                        // Handle the FormatException
+                                        return 'Please enter your birthdate';
+                                      } else {
+                                        // Re-throw the exception
+                                        rethrow;
+                                      }
+                                    }
+                                    return null;
+                                  },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: TravalongColors.primary_30,
