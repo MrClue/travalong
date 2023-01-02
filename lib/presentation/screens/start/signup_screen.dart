@@ -202,69 +202,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           // Date of birth
                           Expanded(
                             child: TextFormField(
-                              autofocus: false,
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              validator: (date) =>
-                                  date != '' && !dateRegex.hasMatch(date!) ||
-                                          DateFormat('dd-MM-yyyy')
-                                                  .parseStrict(date!)
-                                                  .year >
-                                              (DateTime.now().year - 18) ||
-                                          DateFormat('dd-MM-yyyy')
-                                                  .parseStrict(date)
-                                                  .year <
-                                              (DateTime.now().year - 100)
-                                      ? 'Date not valid'
-                                      : null,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: TravalongColors.primary_30,
-                                labelText: 'Date of birth',
-                                hintText: 'dd-MM-yyyy',
-                                floatingLabelStyle:
-                                    const TextStyle(color: Colors.black),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.primary_30_stroke),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.secondary_10),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: TravalongColors.primary_30_stroke),
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                              ),
-                              inputFormatters: [maskFormatter],
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                setState(() {
+                                autofocus: false,
+                                autocorrect: false,
+                                enableSuggestions: false,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (date) {
                                   try {
+                                    if (date != '' &&
+                                            !dateRegex.hasMatch(date!) ||
+                                        DateFormat('dd-MM-yyyy')
+                                                .parseStrict(date!)
+                                                .year >
+                                            (DateTime.now().year - 18) ||
+                                        DateFormat('dd-MM-yyyy')
+                                                .parseStrict(date)
+                                                .year <
+                                            (DateTime.now().year - 100)) {
+                                      return 'Date not valid';
+                                    }
+                                  } catch (e) {
+                                    if (e is FormatException) {
+                                      // Handle the FormatException
+                                      return 'Please enter your birthdate';
+                                    } else {
+                                      // Re-throw the exception
+                                      rethrow;
+                                    }
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: TravalongColors.primary_30,
+                                  labelText: 'Date of birth',
+                                  hintText: 'dd-MM-yyyy',
+                                  floatingLabelStyle:
+                                      const TextStyle(color: Colors.black),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            TravalongColors.primary_30_stroke),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: TravalongColors.secondary_10),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color:
+                                            TravalongColors.primary_30_stroke),
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                ),
+                                inputFormatters: [maskFormatter],
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {
                                     if (dateRegex.hasMatch(value)) {
                                       _birthDate = DateFormat('dd-MM-yyyy')
                                           .parseStrict(value);
+                                      // Calculate age
+                                      DateTime currentDate = DateTime.now();
+                                      _age = currentDate
+                                              .difference(_birthDate!)
+                                              .inDays ~/
+                                          365;
                                     } else {
                                       'Invalid date';
                                     }
-                                    // Calculate age
-                                    DateTime currentDate = DateTime.now();
-                                    _age = currentDate
-                                            .difference(_birthDate!)
-                                            .inDays ~/
-                                        365;
-                                  } catch (e) {
-                                    return;
-                                  }
-                                });
-                              },
-                            ),
+                                  });
+                                }),
                           ),
                         ],
                       ),
