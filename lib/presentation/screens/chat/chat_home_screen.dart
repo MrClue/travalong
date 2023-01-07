@@ -12,17 +12,9 @@ import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 
-class ChatHomeScreen extends StatefulWidget {
+class ChatHomeScreen extends StatelessWidget {
   const ChatHomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<ChatHomeScreen> createState() => _ChatHomeScreenState();
-}
-
-final firestore = FirebaseFirestore.instance;
-final fController = FirebaseController();
-
-class _ChatHomeScreenState extends State<ChatHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeScaffold(
@@ -49,18 +41,19 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
         ),
         title: 'Chats',
       ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Connections(),
-            ChatList(),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Connections(),
+          ChatList(),
+        ],
       ),
     );
   }
 }
+
+final firestore = FirebaseFirestore.instance;
+final fController = FirebaseController();
 
 class Connections extends StatelessWidget {
   const Connections({
@@ -110,8 +103,9 @@ class Connections extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const ConnectionsPage()),
+                          builder: (BuildContext context) =>
+                              const ConnectionsPage(),
+                        ),
                       );
                     },
                     label: Text(

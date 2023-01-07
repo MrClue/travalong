@@ -25,7 +25,7 @@ class ResultsGrid extends StatefulWidget {
 class ResultsGridState extends State<ResultsGrid> {
   FirebaseController fController = FirebaseController();
 
-  final String _userImage = MediaWidget.sampleImages.first;
+  final String _userImage = MediaWidget.sampleImages[2];
 
   // TODO: skal matche søgekriterierne
   List _users = [];
@@ -57,8 +57,7 @@ class ResultsGridState extends State<ResultsGrid> {
 
     // * sort _users by common interests
 
-    Map<dynamic, int> sharedInterestsMap =
-        {}; // <uid, number of shared interests>
+    Map<dynamic, int> sharedInterestsMap = {}; // <uid, shared interests>
 
     List sortedUsers = [];
 
