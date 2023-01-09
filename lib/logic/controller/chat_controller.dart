@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ChatService {
+class ChatController {
   final String? uid;
-  ChatService({this.uid});
+  ChatController({this.uid});
 
   Future createNewChat(controller, widgetId) async {
     Map<String, dynamic> data = {

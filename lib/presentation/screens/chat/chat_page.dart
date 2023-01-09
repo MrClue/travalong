@@ -19,7 +19,7 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-final ChatService chatService = ChatService();
+final ChatController chatController = ChatController();
 
 class _ChatPageState extends State<ChatPage> {
   final firestore = FirebaseFirestore.instance;
@@ -113,9 +113,9 @@ class _ChatPageState extends State<ChatPage> {
             child: ChatWidgets.messageField(onSubmit: (controller) {
               if (controller.text.toString() != '') {
                 if (chatId.isNotEmpty) {
-                  chatService.updateChat(controller, chatId);
+                  chatController.updateChat(controller, chatId);
                 } else {
-                  chatService.createNewChat(controller, widget.id);
+                  chatController.createNewChat(controller, widget.id);
                 }
               }
               controller.clear();
