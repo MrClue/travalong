@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart';
@@ -19,7 +21,8 @@ class ChatWidgets {
             CircleAvatar(
               radius: 25,
               backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
+              backgroundImage: NetworkImage(MediaWidget.sampleImages[
+                  Random().nextInt(MediaWidget.sampleImages.length)]),
             ),
             SizedBox(
               width: 50,
@@ -62,7 +65,8 @@ class ChatWidgets {
             child: CircleAvatar(
               radius: 40,
               backgroundColor: Colors.grey,
-              backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
+              backgroundImage: NetworkImage(MediaWidget.sampleImages[
+                  Random().nextInt(MediaWidget.sampleImages.length)]),
             ),
           ),
           title: Text(
