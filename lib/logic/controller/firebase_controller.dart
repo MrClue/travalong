@@ -37,7 +37,7 @@ class FirebaseController {
     try {
       await docRef.set(data, SetOptions(merge: true));
     } catch (e) {
-      debugPrint("Error seting values into field: $e");
+      debugPrint("Error setting values into field: $e");
     }
   }
 

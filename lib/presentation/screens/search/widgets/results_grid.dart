@@ -6,6 +6,8 @@ import 'package:travalong/presentation/screens/screens.dart';
 import 'package:travalong/presentation/screens/search/view_profile_page.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_square.dart';
 
+import '../../../../logic/search_logic/sort_users.dart';
+
 class ResultsGrid extends StatefulWidget {
   final DateTime startDate, endDate;
   final String genderType, searchType;
@@ -30,80 +32,7 @@ class ResultsGridState extends State<ResultsGrid> {
   // TODO: skal matche søgekriterierne
   List _users = [];
   List currentUserInterests = [];
-  Map<dynamic, int> copyAnotherMap = {}; // ! test
-
-  void initUsersList(AsyncSnapshot<QuerySnapshot> snapshot) {
-    _users = !snapshot.hasData
-        ? []
-        : snapshot.data!.docs
-            .where((element) =>
-                element['uid'].toString().contains(fController.userID) == false)
-            .toList();
-
-    //debugPrint("users: " + _users.length.toString());
-    //debugPrint("selected: " + widget.genderType.toString());
-
-    // * remove users that dont match search criteria
-    List<dynamic> usersCopy = List.from(_users); // copy _users to fix index bug
-
-    for (var i = 0; i < usersCopy.length; i++) {
-      // remove users that dont match gender criteria
-      if (widget.genderType.toLowerCase() != 'any' &&
-          usersCopy[i]['gender'].toString() !=
-              widget.genderType.toLowerCase()) {
-        _users.remove(usersCopy[i]);
-      }
-    }
-
-    // * sort _users by common interests
-
-    Map<dynamic, int> sharedInterestsMap =
-        {}; // <uid, number of shared interests>
-
-    List sortedUsers = [];
-
-    for (var i = 0; i < _users.length; i++) {
-      // make sure interests & travel goals is a list
-      if (_users[i][UserData.interests] == null) {
-        _users[i][UserData.interests] = [];
-      }
-      if (_users[i][UserData.travelgoals] == null) {
-        _users[i][UserData.travelgoals] = [];
-      }
-
-      List interestsAndGoals =
-          _users[i][UserData.interests] + _users[i][UserData.travelgoals];
-      debugPrint("User ${_users[i]['name']} interests: $interestsAndGoals");
-
-      // Calculate the number of shared interests
-      int sharedInterests = 0;
-
-      for (String interest in interestsAndGoals) {
-        if (currentUserInterests.contains(interest)) {
-          sharedInterests++;
-        }
-      }
-      debugPrint(_users[i]['name'] + " shared interests: $sharedInterests");
-
-      sharedInterestsMap[_users[i] /*['uid']*/] = sharedInterests;
-    }
-    // * sort sharedInterestsMap by value (sharedInterests)
-    sharedInterestsMap = Map.fromEntries(sharedInterestsMap.entries.toList()
-      ..sort((e1, e2) => e2.value.compareTo(e1.value)));
-
-    debugPrint("sharedInterestsMap: $sharedInterestsMap");
-
-    // Convert the map to a list containing the keys (sorted users)
-    sortedUsers = sharedInterestsMap.keys.toList();
-    debugPrint("sortedUsers list: $sortedUsers");
-
-    if (sortedUsers.isNotEmpty) {
-      _users = sortedUsers; // * returns correct output
-    }
-
-    // ! test
-    copyAnotherMap = Map.from(sharedInterestsMap);
-  }
+  Map<dynamic, int> sharedInterestsMap = {};
 
   void printStuff() {
     debugPrint("date: ${widget.startDate} - ${widget.endDate}");
@@ -136,7 +65,29 @@ class ResultsGridState extends State<ResultsGrid> {
     return StreamBuilder(
         stream: fController.usersCollection.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          initUsersList(snapshot);
+          // * Remove current user from _users list
+          _users = !snapshot.hasData
+              ? []
+              : snapshot.data!.docs
+                  .where((element) =>
+                      element['uid'].toString().contains(fController.userID) ==
+                      false)
+                  .toList();
+          //debugPrint("users: " + _users.length.toString());
+          //debugPrint("selected: " + widget.genderType.toString());
+
+          // * Sort users based on shared interests
+          if (_users.isNotEmpty) {
+            var result = SortUsers().initUsersList(
+              _users,
+              currentUserInterests,
+              sharedInterestsMap,
+              widget.genderType,
+            );
+            _users = result['users'];
+            sharedInterestsMap = result['sharedInterestsMap'];
+          }
+
           if (snapshot.hasData && _users.isNotEmpty) {
             return GridView.builder(
                 itemCount: _users.length, // ! Using all users from db
@@ -149,7 +100,7 @@ class ResultsGridState extends State<ResultsGrid> {
                   return ProfileSquare(
                     image: _userImage,
                     name: _users[i]['name'],
-                    sharedInterests: copyAnotherMap.values.toList()[i],
+                    sharedInterests: sharedInterestsMap.values.toList()[i],
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
@@ -161,7 +112,8 @@ class ResultsGridState extends State<ResultsGrid> {
                           country: _users[i]['country'],
                           bio: _users[i]['bio'],
                           interests: _users[i]['interests'],
-                          sharedInterests: copyAnotherMap.values.toList()[i],
+                          sharedInterests:
+                              sharedInterestsMap.values.toList()[i],
                           userImage: _userImage,
                         );
                       }));
