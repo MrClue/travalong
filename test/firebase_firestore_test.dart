@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:test/test.dart';
 
 FakeFirebaseFirestore? fakeFirebaseFirestore;
@@ -36,7 +37,7 @@ void main() {
 
       final Map<String, dynamic> actualData = documentSnapshot.data()!;
 
-      print(actualData);
+      debugPrint(actualData.toString());
 
       // Assertion
       expect(actualData, data);
@@ -67,7 +68,7 @@ void main() {
 
       final String actualData = documentSnapshot.get(field);
 
-      print(actualData);
+      debugPrint(actualData);
 
       // Assertion
       expect(actualData, data[field]);
