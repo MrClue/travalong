@@ -7,6 +7,9 @@ final docRef =
     FirebaseController().usersCollection.doc(FirebaseController().userID);
 
 class FirebaseController {
+  FirebaseController([this.firebaseController]);
+  final FirebaseFirestore? firebaseController;
+
   var userID = FirebaseAuth.instance.currentUser!.uid;
   var usersCollection = FirebaseFirestore.instance.collection('users');
   var chatsCollection = FirebaseFirestore.instance.collection('chats');
@@ -44,7 +47,6 @@ class FirebaseController {
   // * From Database service
   // todo: check what is being used in code
 
-  
   // get users collection
   Future getData() async {
     QuerySnapshot snapshot = await usersCollection.get();
@@ -71,5 +73,4 @@ class FirebaseController {
         .then((value) => value.size);
     return count;
   }
-  
 }
