@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 FakeFirebaseFirestore? fakeFirebaseFirestore;
 
 void main() {
-  group('FirestoreController Tests', () {
+  group('Firestore Operations Tests', () {
     setUp(() {
       fakeFirebaseFirestore = FakeFirebaseFirestore();
     });
@@ -41,7 +41,7 @@ void main() {
       // Assertion
       expect(actualData, data);
     });
-    test('getDocData gets data from a doc datafield', () async {
+    test('getDocFieldData gets data from a doc datafield', () async {
       // Initial state
       final FakeFirebaseFirestore fakeFirebaseFirestore =
           FakeFirebaseFirestore();
