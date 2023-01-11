@@ -41,35 +41,36 @@ void main() {
       // Assertion
       expect(actualData, data);
     });
-  });
-  test('getDocData gets data from a doc datafield', () async {
-    // Initial state
-    final FakeFirebaseFirestore fakeFirebaseFirestore = FakeFirebaseFirestore();
+    test('getDocData gets data from a doc datafield', () async {
+      // Initial state
+      final FakeFirebaseFirestore fakeFirebaseFirestore =
+          FakeFirebaseFirestore();
 
-    const String collectionPath = 'users';
-    const String documentPath = 'uid';
-    const String field = 'name';
-    const Map<String, dynamic> data = {
-      'name': 'John Doe',
-    };
+      const String collectionPath = 'users';
+      const String documentPath = 'uid';
+      const String field = 'name';
+      const Map<String, dynamic> data = {
+        'name': 'John Doe',
+      };
 
-    await fakeFirebaseFirestore
-        .collection(collectionPath)
-        .doc(documentPath)
-        .set(data);
+      await fakeFirebaseFirestore
+          .collection(collectionPath)
+          .doc(documentPath)
+          .set(data);
 
-    // Final state
-    final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await fakeFirebaseFirestore
-            .collection(collectionPath)
-            .doc(documentPath)
-            .get();
+      // Final state
+      final DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await fakeFirebaseFirestore
+              .collection(collectionPath)
+              .doc(documentPath)
+              .get();
 
-    final String actualData = documentSnapshot.get(field);
+      final String actualData = documentSnapshot.get(field);
 
-    print(actualData);
+      print(actualData);
 
-    // Assertion
-    expect(actualData, data[field]);
+      // Assertion
+      expect(actualData, data[field]);
+    });
   });
 }
