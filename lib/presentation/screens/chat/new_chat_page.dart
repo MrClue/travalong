@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/search_bar.dart';
+import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/search_bar.dart';
 import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
 
 import '../../resources/colors.dart';
-import '../../resources/widgets/molecules/icon_title_btn_widget.dart';
+import '../../resources/widgets/buttons/icon_title_btn_widget.dart';
 import 'new_group_page.dart';
 
 class NewChatWidget extends StatefulWidget {

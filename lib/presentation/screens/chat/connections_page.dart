@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
 
 class ConnectionsPage extends StatefulWidget {
   const ConnectionsPage({super.key});

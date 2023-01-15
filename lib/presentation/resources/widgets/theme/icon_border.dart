@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travalong/presentation/resources/colors.dart';class IconBorder extends StatelessWidget {
+import 'package:travalong/presentation/resources/colors.dart';
+
+class IconBorder extends StatelessWidget {
   const IconBorder({
     Key? key,
     required this.icon,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../colors.dart';
-import '../atoms/theme_text.dart';
+import '../theme/theme_text.dart';
 
 class ConfirmButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;

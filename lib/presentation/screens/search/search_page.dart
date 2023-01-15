@@ -1,14 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
 import 'package:travalong/presentation/screens/search/widgets/background.dart';
 import 'package:travalong/presentation/screens/search/widgets/date_button.dart';
 
 import '../../resources/colors.dart';
-import '../../resources/widgets/atoms/theme_text.dart';
-import '../../resources/widgets/molecules/search_bar.dart';
-import '../../resources/widgets/molecules/theme_topbar.dart';
+import '../../resources/widgets/theme/theme_text.dart';
+import '../../resources/widgets/navigation/search_bar.dart';
+import '../../resources/widgets/navigation/theme_topbar.dart';
 
 final List<String> genderType = <String>['Any', 'Male', 'Female'];
 final List<String> searchType = <String>['currently in', 'going to'];

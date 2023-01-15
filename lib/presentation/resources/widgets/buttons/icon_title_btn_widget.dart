@@ -13,8 +13,7 @@ class IconTitleButton extends StatelessWidget {
     required this.faIcon,
     required this.label,
     required this.goToPage,
-  }) : /*assert(goToPage != null),*/
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

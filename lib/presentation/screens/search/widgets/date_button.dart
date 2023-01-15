@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 
 import '../../../resources/colors.dart';
 

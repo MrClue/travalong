@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
 
 import '../../../data/model/user.dart';
 import '../../../logic/controller/firebase_controller.dart';
-import '../../resources/widgets/molecules/confirm_button.dart';
-import '../../resources/widgets/molecules/page_text.dart';
+import '../../resources/widgets/buttons/confirm_button.dart';
+import '../../resources/widgets/theme/page_text.dart';
 
 class MyGoalsPage extends StatelessWidget {
   const MyGoalsPage({super.key});

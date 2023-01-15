@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travalong/presentation/screens/search/widgets/profile_image.dart';
 
 import '../../../resources/colors.dart';
-import '../../../resources/widgets/atoms/theme_text.dart';
+import '../../../resources/widgets/theme/theme_text.dart';
 
 class ViewProfileBox extends StatelessWidget {
   final String? id;

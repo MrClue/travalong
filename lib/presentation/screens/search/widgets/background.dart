@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 import 'package:travalong/presentation/screens/search/widgets/results_grid.dart';
 
 class Background extends StatelessWidget {

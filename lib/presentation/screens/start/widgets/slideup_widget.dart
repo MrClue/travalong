@@ -5,8 +5,8 @@ import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/screens/start/signin_screen.dart';
 import 'package:travalong/presentation/screens/start/signup_screen.dart';
 
-import '../atoms/subtext.dart';
-import '../atoms/travalong_title.dart';
+import '../../../resources/widgets/theme/subtext.dart';
+import '../../../resources/widgets/theme/app_title.dart';
 
 class SlideUpWidget extends StatelessWidget {
   const SlideUpWidget({super.key});
@@ -23,7 +23,7 @@ class SlideUpWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 25, left: 51, right: 51),
                   child: Column(
                     children: const [
-                      TravalongTitle(),
+                      AppTitle(),
                       Subtext(
                         text:
                             "Finding friends to travel alongside you, has never been easier.",

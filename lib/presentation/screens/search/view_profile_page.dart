@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/logic/controller/connections_controller.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
 import 'package:travalong/presentation/screens/search/widgets/view_profile_box.dart';
 
 FirebaseController fController = FirebaseController();

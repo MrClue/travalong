@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/send_button.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/buttons/send_button.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 
 import '../../profile/profile_page.dart';
 

@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/back_arrow.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/safe_scaffold.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/about_form.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/icon_text_btn_widget.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/location_widget.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/sign_out_btn_widget.dart';
-import 'package:travalong/presentation/resources/widgets/molecules/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
+import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
+import 'package:travalong/presentation/screens/profile/widgets/about_form.dart';
+import 'package:travalong/presentation/resources/widgets/buttons/icon_text_btn_widget.dart';
+import 'package:travalong/presentation/screens/profile/widgets/location_widget.dart';
+import 'package:travalong/presentation/resources/widgets/buttons/sign_out_btn_widget.dart';
+import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
 import 'package:travalong/presentation/screens/profile/interests_subpage.dart';
 
 import 'my_goals_page.dart';

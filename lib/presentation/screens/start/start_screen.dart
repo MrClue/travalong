@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../resources/widgets/atoms/safe_scaffold.dart';
-import '../../resources/widgets/molecules/slideup_widget.dart';
+import '../../resources/widgets/theme/safe_scaffold.dart';
+import 'widgets/slideup_widget.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});

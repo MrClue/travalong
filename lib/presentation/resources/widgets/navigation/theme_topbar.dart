@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 
 class ThemeTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

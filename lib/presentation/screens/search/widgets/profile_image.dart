@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 
 import '../../../resources/colors.dart';
-import '../../../resources/widgets/atoms/theme_text.dart';
+import '../../../resources/widgets/theme/theme_text.dart';
 
 class ProfileImagePreview extends StatefulWidget {
   final String image;

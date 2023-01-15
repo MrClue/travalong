@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-class TravalongTitle extends StatelessWidget {
-  const TravalongTitle({super.key});
+class AppTitle extends StatelessWidget {
+  const AppTitle({super.key});
 
   @override
   Widget build(BuildContext context) => AutoSizeText.rich(

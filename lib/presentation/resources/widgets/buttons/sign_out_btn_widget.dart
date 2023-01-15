@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_container.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_container.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 import 'package:travalong/presentation/screens/screens.dart';
 
 class SignOutBtnWidget extends StatelessWidget {

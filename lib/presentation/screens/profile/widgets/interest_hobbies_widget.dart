@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 
-import '../atoms/theme_container.dart';
-import '../atoms/theme_text.dart';
+import '../../../resources/widgets/theme/theme_container.dart';
+import '../../../resources/widgets/theme/theme_text.dart';
 
 class InterestsHobbiesWidget extends StatelessWidget {
   final Widget goToPage;

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:travalong/data/model/user.dart';
 import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
-import 'package:travalong/presentation/resources/widgets/atoms/theme_text.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 
 // Flutter documentation: https://docs.flutter.dev/cookbook/forms/text-field-changes
 class AboutFormWidget extends StatefulWidget {
