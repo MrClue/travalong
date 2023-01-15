@@ -10,4 +10,4 @@ Travalong is a cross platform app currently in development for iOS and Android. 
 - Sorting search results based on interests in common, making it easy for users to find compatible travel companions
 - A chat function for users to easily communicate with their connections
 
-Travalong is a useful tool for solo travellers or those seeking travel companions to enhance their travel experiences.
+Travalong is a useful tool for travellers seeking travel companions to enhance their travel experiences.
