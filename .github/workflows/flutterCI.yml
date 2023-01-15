@@ -1,12 +1,12 @@
-name: CIV2
+name: CI
 on:
   push:
-    branches: [ "main", "dev"]
+    branches: [ "main", "development"]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "development" ]
 
 jobs:
-  flutter_test:
+  Flutter_test:
     name: Run Flutter test and analyze
     runs-on: ubuntu-latest
     steps:
@@ -18,5 +18,7 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
+#      - name: Verify formatting
+#        run: dart format --output=none --set-exit-if-changed .
       - run: flutter analyze
       - run: flutter test

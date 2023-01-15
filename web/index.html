@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
+<!DOCTYPE html><html><head>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -27,19 +25,54 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png">
 
   <title>travalong</title>
   <link rel="manifest" href="manifest.json">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+  <script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+    import {  } from 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+    import { getAuth } from 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBPbZYzpFnjSK099uCQL7W12GG7VWa-M8c",
+      authDomain: "travalong-33ad7.firebaseapp.com",
+      projectId: "travalong-33ad7",
+      storageBucket: "travalong-33ad7.appspot.com",
+      messagingSenderId: "881914006921",
+      appId: "1:881914006921:web:7f1917cf3ffabb01926558"
+    };
+  
+    // Initialize Firebase
+    // const app = initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
+
+  </script>
+    
 
   <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="flutter.js" defer=""></script>
+  <link rel="stylesheet" type="text/css" href="splash/style.css">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <script src="splash/splash.js"></script>
 </head>
-<body>
+<body>  <picture id="splash">
+      <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
+      <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
+      <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
+  </picture>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -54,5 +87,6 @@
       });
     });
   </script>
-</body>
-</html>
+
+
+</body></html>
