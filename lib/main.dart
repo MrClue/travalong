@@ -11,7 +11,6 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.remove();
   await Firebase.initializeApp(
-    //name: "FixError", // ! maybee remove
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -23,8 +22,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 class TravalongApp extends StatelessWidget {
   const TravalongApp({super.key});
 
-  // This widget is the root of your application.
-
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     // * wrapping top of widget tree with a "gesture detector",
@@ -48,7 +46,7 @@ class TravalongApp extends StatelessWidget {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'TRAVALONG',
+        title: 'Amigo',
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
@@ -61,15 +59,17 @@ class TravalongApp extends StatelessWidget {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (snapshot.hasData) // * User is signed in
-              {
+              }
+              // * User is signed in
+              else if (snapshot.hasData) {
                 return const TravalongNavbar();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("Something went wrong..."),
                 );
-              } else // * User needs to sign in
-              {
+              }
+              // * User needs to sign in
+              else {
                 return const StartScreen(); //StartScreen();
               }
             },

@@ -4,7 +4,6 @@ import 'package:travalong/logic/services/auth_service.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/theme/theme_container.dart';
 import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
-import 'package:travalong/presentation/screens/screens.dart';
 
 class SignOutBtnWidget extends StatelessWidget {
   const SignOutBtnWidget({super.key});
@@ -13,12 +12,8 @@ class SignOutBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AuthService().signOut();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const StartScreen(),
-          ),
-        );
+        AuthService().signOut().then((value) =>
+            Navigator.of(context).popUntil((route) => route.isFirst));
       },
       child: ThemeContainerAlt(
         height: 45,

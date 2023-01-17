@@ -3,22 +3,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-final docRef =
-    FirebaseController().usersCollection.doc(FirebaseController().userID);
-
 class FirebaseController {
-  FirebaseController([this.firebaseController]);
-  final FirebaseFirestore? firebaseController;
+  //FirebaseController([this.firebaseController]);
+  //final FirebaseFirestore? firebaseController;
 
   var userID = FirebaseAuth.instance.currentUser!.uid;
   var usersCollection = FirebaseFirestore.instance.collection('users');
   var chatsCollection = FirebaseFirestore.instance.collection('chats');
   var userDataMap = <String, dynamic>{};
 
+  //var docRef = usersCollection.doc(FirebaseAuth.instance.currentUser!.uid);
+
   // * Get document data-field based on field (JSON key)
   Future<String> getDocFieldData(String field) async {
     try {
-      await docRef.get().then(
+      await usersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then(
         (DocumentSnapshot doc) {
           final data = doc.data() as Map<String, dynamic>;
           // userDataMap!.addEntries({field: data[field]}.entries); // ! shows warning
@@ -38,7 +40,9 @@ class FirebaseController {
     //debugPrint("setDocfieldData - docRef: " + docRef.toString());
     final data = {field: value};
     try {
-      await docRef.set(data, SetOptions(merge: true));
+      await usersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(data, SetOptions(merge: true));
     } catch (e) {
       debugPrint("Error setting values into field: $e");
     }
