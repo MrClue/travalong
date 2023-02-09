@@ -32,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.3
   sliding_up_panel: ^2.0.0+1
   font_awesome_flutter: ^10.2.1
   jiffy: ^5.0.0
@@ -44,7 +44,8 @@ dependencies:
   geocoding: ^2.0.5
   geolocator: ^9.0.2
   email_validator: ^2.1.17
-  password_validator: ^0.0.1
+  # password_validator: ^0.0.1
+  flutter_pw_validator: ^1.5.0
   fan_carousel_image_slider: ^0.0.1
   auto_size_text: ^3.0.0
   dropdown_button2: ^1.9.2

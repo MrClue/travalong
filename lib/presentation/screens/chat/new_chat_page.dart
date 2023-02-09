@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/navigation/search_bar.dart';
-import 'package:travalong/presentation/screens/chat/chat_home_screen.dart';
 import 'package:travalong/presentation/screens/chat/chat_page.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';

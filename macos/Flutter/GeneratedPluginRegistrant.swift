@@ -10,7 +10,7 @@ import cloud_functions
 import firebase_auth
 import firebase_core
 import geolocator_apple
-import path_provider_macos
+import path_provider_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
