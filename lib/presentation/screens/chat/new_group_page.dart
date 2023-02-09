@@ -7,6 +7,7 @@ import 'package:travalong/presentation/resources/widgets/theme/back_arrow.dart';
 import 'package:travalong/presentation/resources/widgets/theme/safe_scaffold.dart';
 import 'package:travalong/presentation/resources/widgets/navigation/search_bar.dart';
 import 'package:travalong/presentation/resources/widgets/navigation/theme_topbar.dart';
+import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 import 'package:travalong/presentation/screens/chat/widgets/chatwidgets.dart';
 
 class NewGroupChat extends StatefulWidget {
@@ -24,6 +25,7 @@ class NewGroupChatState extends State<NewGroupChat> {
   final firestore = FirebaseFirestore.instance;
   String _search = '';
   bool check = true;
+  List selectedUsers = [];
 
   @override
   void dispose() {
@@ -53,7 +55,7 @@ class NewGroupChatState extends State<NewGroupChat> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 20,
                   width: MediaQuery.of(context).size.width,
@@ -77,11 +79,50 @@ class NewGroupChatState extends State<NewGroupChat> {
               ),
               Container(
                 margin: const EdgeInsets.all(8.0),
-                height: 60,
+                height: 90,
                 width: MediaQuery.of(context).size.width,
-                color: TravalongColors.primary_30,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  color: TravalongColors.primary_30,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                  child: selectedUsers.isNotEmpty
+                      ? ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: selectedUsers.length,
+                          itemBuilder: ((context, i) {
+                            // Uses first name only
+                            String name = selectedUsers[i];
+                            List<String> nameParts = name.split(" ");
+                            String firstName = nameParts[0];
+                            return Row(
+                              children: [
+                                ChatWidgets.circleProfile(
+                                  name: firstName,
+                                  onTap: () {
+                                    setState(() {
+                                      if (selectedUsers[i]
+                                          .contains(firstName)) {
+                                        selectedUsers.remove(selectedUsers[i]);
+                                      }
+                                      debugPrint('User removed');
+                                    });
+                                  },
+                                ),
+                                ChatWidgets.chatDivider(),
+                              ],
+                            );
+                          }),
+                        )
+                      : const Center(
+                          child: ThemeText(
+                            textString: 'Select users from list',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            textColor: TravalongColors.secondary_text_bright,
+                          ),
+                        ),
                 ),
               ),
               SearchBar.searchBar(
@@ -148,7 +189,16 @@ class NewGroupChatState extends State<NewGroupChat> {
                               // time: DateFormat('EEE hh:mm')
                               //     .format(time.toDate()),
                               time: '',
-                              onTap: () {},
+                              onTap: () {
+                                setState(() {
+                                  if (!selectedUsers
+                                      .contains(data[i]['name'])) {
+                                    selectedUsers.add(data[i]['name']);
+                                  }
+
+                                  debugPrint(selectedUsers.toString());
+                                });
+                              },
                             ),
                             ChatWidgets.chatDivider(),
                           ],

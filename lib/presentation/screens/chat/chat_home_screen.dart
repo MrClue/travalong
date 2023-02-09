@@ -152,11 +152,15 @@ class Connections extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: userData.length,
                           itemBuilder: (context, i) {
+                            // Uses first name only
+                            String name = userData[i]['name'];
+                            List<String> nameParts = name.split(' ');
+                            String firstName = nameParts[0];
                             //! BUILD USER CIRCLEPROFILES
                             return !snapshot.hasData
                                 ? ChatWidgets.loading()
                                 : ChatWidgets.circleProfile(
-                                    name: userData[i]['name'],
+                                    name: firstName,
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(builder: (context) {
