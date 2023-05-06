@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 class StorageService {
   final firebase_storage.FirebaseStorage storage =
@@ -11,13 +12,24 @@ class StorageService {
   late final picker = ImagePicker();
   XFile? file;
 
+  // Define a list to store uploaded image paths
+  List<String> uploadedImagePaths = [];
+
   Future<void> uploadImage(
       String userId, XFile imageFile, String fileName) async {
+    // Generate a UUID
+    final uuid = Uuid();
+    final String uniqueId = uuid.v4();
+    // Use the UUID as the filename
+    final fileName = '$uniqueId.jpg';
     try {
-      final storageRef =
-          storage.ref().child('user_images').child(userId).child(fileName);
-      await storageRef.putFile(File(imageFile.path));
-      debugPrint('Succeeded uploaded image');
+      // Upload the image with the unique filename
+      await storage
+          .ref()
+          .child('user_images')
+          .child('$userId/$fileName')
+          .putFile(File(imageFile.path));
+      debugPrint('Image uploaded: $fileName');
     } catch (e) {
       debugPrint('Failed to upload image: $e');
     }
@@ -28,15 +40,20 @@ class StorageService {
     final pickedFile = await picker.pickImage(source: source);
     try {
       if (pickedFile != null) {
-        final fileName = path.basename(pickedFile.path);
-        await uploadImage(userId, XFile(pickedFile.path), fileName);
-        return XFile(pickedFile.path);
+        final filePath = pickedFile.path;
+        // Check if the image is already uploaded
+        if (uploadedImagePaths.contains(filePath)) {
+          debugPrint('Image already uploaded');
+        } else {
+          uploadedImagePaths.add(filePath);
+        }
+        return XFile(filePath);
       } else {
         debugPrint('No image selected.');
         return null;
       }
     } catch (e) {
-      debugPrint('Failed to get image: $e');
+      debugPrint('Failed');
     }
     return null;
   }
