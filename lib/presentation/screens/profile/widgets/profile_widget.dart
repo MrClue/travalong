@@ -199,7 +199,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         UserData.connections, _connections);
                   }
 
-                  // * get travel goals
+                  // get travel goals
                   _travelGoals = snapshot.data!
                       .get(UserData.travelgoals)
                       .length

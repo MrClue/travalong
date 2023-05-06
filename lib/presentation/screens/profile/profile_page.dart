@@ -37,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                     goToPage: MyProfilePage(),
                   ),
                   const SizedBox(height: 14),
-                  MediaWidget(), // todo: not done
+                  MediaWidget(),
                 ],
               ),
             ),
