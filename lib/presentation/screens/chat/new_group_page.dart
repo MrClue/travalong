@@ -55,17 +55,17 @@ class NewGroupChatState extends State<NewGroupChat> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: SizedBox(
                   height: 20,
                   width: MediaQuery.of(context).size.width,
                   child: TextField(
                     textAlign: TextAlign.start,
                     controller: groupNameController,
-                    textAlignVertical: TextAlignVertical.top,
+                    textAlignVertical: TextAlignVertical.center,
                     cursorColor: Colors.black,
                     decoration: InputDecoration(
-                      border: InputBorder.none,
+                      border: const UnderlineInputBorder(),
                       hintText: 'Group name (required)',
                       hintStyle: GoogleFonts.poppins(
                         color: TravalongColors.secondary_text_bright,
