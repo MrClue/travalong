@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +10,7 @@ import 'package:travalong/logic/controller/firebase_controller.dart';
 import 'package:travalong/presentation/resources/colors.dart';
 import 'package:travalong/presentation/resources/widgets/theme/theme_text.dart';
 
+import '../../../../logic/services/storage_service.dart';
 import '../profile_page.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -20,12 +25,14 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget> {
   // * creates instance of firebase_controller class
   FirebaseController fController = FirebaseController();
+  StorageService storageService = StorageService();
   String _name = "";
   String _age = "";
   String _userLocation = "";
   String _connections = "";
   String _travelGoals = "";
   List<String>? conList;
+  XFile? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,33 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage(MediaWidget.sampleImages.first),
+                  backgroundImage: _image != null
+                      ? FileImage(File(_image!.path))
+                      : NetworkImage(MediaWidget.sampleImages.first)
+                          as ImageProvider?,
+                  child: IconButton(
+                    icon: const Icon(Icons.camera_alt),
+                    onPressed: () async {
+                      final pickedFile = await storageService.getImage(
+                        source: ImageSource.gallery,
+                        userId: fController.userID,
+                      );
+                      setState(() {
+                        if (pickedFile != null) {
+                          _image = pickedFile;
+                        } else {
+                          debugPrint('No image selected.');
+                        }
+                      });
+                      final fileName = path.basename(_image!.path);
+                      storageService.uploadImage(
+                        fController.userID,
+                        _image!,
+                        fileName,
+                      );
+                      debugPrint('Image btn pressed: $fileName');
+                    },
+                  ),
                 ),
                 const SizedBox(
                   width: 15.0,
