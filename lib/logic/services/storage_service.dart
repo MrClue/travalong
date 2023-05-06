@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -11,8 +12,7 @@ class StorageService {
       firebase_storage.FirebaseStorage.instance;
   late final picker = ImagePicker();
   XFile? file;
-
-  // Define a list to store uploaded image paths
+  List<String> userImages = [];
   List<String> uploadedImagePaths = [];
 
   Future<void> uploadImage(
@@ -56,5 +56,17 @@ class StorageService {
       debugPrint('Failed');
     }
     return null;
+  }
+
+  Stream<List<String>> getUserImagesStream(String userId) {
+    return storage
+        .ref()
+        .child('user_images')
+        .child(userId)
+        .listAll()
+        .then((ListResult result) => result.items)
+        .then((List<Reference> refs) =>
+            Future.wait(refs.map((ref) => ref.getDownloadURL())))
+        .asStream();
   }
 }

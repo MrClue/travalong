@@ -65,10 +65,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: _image != null
-                      ? FileImage(File(_image!.path))
-                      : NetworkImage(MediaWidget.sampleImages.first)
-                          as ImageProvider?,
+                  backgroundColor:
+                      _image != null ? null : TravalongColors.secondary_10,
+                  backgroundImage:
+                      _image != null ? FileImage(File(_image!.path)) : null,
                   child: IconButton(
                     icon: const Icon(Icons.camera_alt),
                     onPressed: () async {
@@ -229,7 +229,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       Column(
                         children: [
                           Text(
-                            MediaWidget.sampleImages.length.toString(),
+                            storageService.userImages.length.toString(),
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
